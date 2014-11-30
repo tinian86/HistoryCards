@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="History2000Ultra">History</string>
+    <string name="heyho_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_gane">GaneActivity</string>
+
+    
+    <string name="acceptButton">Annehmen</string>
+    <string name="abortButton">Schließen</string>
+    <string name="scoreView">Spielstand</string>
+    <string name="lifeView">Versuche</string>
+	<string name="appName">Gui</string>
+    
+</resources>
