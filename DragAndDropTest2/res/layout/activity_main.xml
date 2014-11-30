@@ -9,7 +9,7 @@
         android:layout_height="320dp"
         android:columnCount="2"
         android:columnWidth="320dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:rowCount="2"
         android:stretchMode="columnWidth" >
 
@@ -18,52 +18,64 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_row="0"
-            android:background="@drawable/shape" >
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <ImageView
                 android:id="@+id/myimage1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/topright"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:background="@drawable/shape" >
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <ImageView
                 android:id="@+id/myimage2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bottomleft"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:background="@drawable/shape" >
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <ImageView
                 android:id="@+id/myimage3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bottomright"
             android:layout_width="160dp"
             android:layout_height="160dp"
-            android:background="@drawable/shape" >
+            android:background="@drawable/shape"
+            android:gravity="center"
+            android:orientation="vertical" >
 
             <ImageView
                 android:id="@+id/myimage4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher" />
+
         </LinearLayout>
     </GridLayout>
 
@@ -96,6 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_launcher" />
+
     </LinearLayout>
 
 </LinearLayout>
