@@ -32,7 +32,7 @@ import android.widget.LinearLayout;
     findViewById(R.id.myimage6).setOnTouchListener(new MyTouchListener());
     findViewById(R.id.myimage7).setOnTouchListener(new MyTouchListener());
     findViewById(R.id.myimage8).setOnTouchListener(new MyTouchListener());
-    findViewById(R.id.myimage9).setOnTouchListener(new MyTouchListener());
+    findViewById(R.id.myimage11).setOnTouchListener(new MyTouchListener());
     findViewById(R.id.topleft).setOnDragListener(new MyDragListener());
     findViewById(R.id.topright).setOnDragListener(new MyDragListener());
     findViewById(R.id.bottomleft).setOnDragListener(new MyDragListener());
