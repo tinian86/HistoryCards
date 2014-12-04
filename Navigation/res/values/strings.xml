@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Navigation</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="haupt_btn">Weiter gehts!</string>
+    <string name="title_activity_seite2">Seite2</string>
+    <string name="txt_seite2">Jetzt bist du auf Seite2!</string>
+
+</resources>
