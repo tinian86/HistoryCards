@@ -1,0 +1,190 @@
+<fragenDB>
+	<frage>
+		<bezeichnung>Teflon</bezeichnung>
+		<name>Teflon</name>
+		<inhalt>Wann wurde das Teflon erfunden?</inhalt>
+		<jahr>1934</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Mondlandung</bezeichnung>
+		<name>Mondlandung</name>
+		<inhalt>Wann btrat der erste Mensch den Mond?</inhalt>
+		<jahr>1969</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Issos</bezeichnung>
+		<name>Issos</name>
+		<inhalt>Wann war die Keilerei bei Issos?</inhalt>
+		<jahr>333</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Tesla</bezeichnung>
+		<name>Tesla</name>
+		<inhalt>Wann wurde Nikola Tesla geboren?</inhalt>
+		<jahr>1856</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Guernica</bezeichnung>
+		<name>Guernica</name>
+		<inhalt>Wann malte Picasso seine 'Guernica'?</inhalt>
+		<jahr>1937</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Olymp. Spiele</bezeichnung>
+		<name>Olympische Spiele</name>
+		<inhalt>Wann fanden die Olympischen Spiele das erste mal statt?</inhalt>
+		<jahr>1896</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Nobelpreis</bezeichnung>
+		<name>Nobelpreis</name>
+		<inhalt>Wann wurde der Nobelpreis erstmalig verliehen?</inhalt>
+		<jahr>1901</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Columbus</bezeichnung>
+		<name>Columbus</name>
+		<inhalt>Wann entdeckte Christoph Columbus Amerika?</inhalt>
+		<jahr>1492</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Auto</bezeichnung>
+		<name>Auto</name>
+		<inhalt>Wann wurde das erste Auto entwickelt?</inhalt>
+		<jahr>1886</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Kinder</bezeichnung>
+		<name>Kinder Schokolade</name>
+		<inhalt>Wann kam die Kinder Schokolade auf den Markt?</inhalt>
+		<jahr>1967</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Kaugummi</bezeichnung>
+		<name>Kaugummi</name>
+		<inhalt>Wann wurde die erste Kaugummifabrik eröffnet?</inhalt>
+		<jahr>1848</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Bier</bezeichnung>
+		<name>Pilsner Bier</name>
+		<inhalt>Wann wurde das erste Pilsner Bier gebraut?</inhalt>
+		<jahr>1842</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Niki</bezeichnung>
+		<name>Niki de Saint Phalle</name>
+		<inhalt>Wann wurde Niki de Saint Phalle geboren?</inhalt>
+		<jahr>1930</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Rollstuhl</bezeichnung>
+		<name>Rollstuhl mit Selbstantrieb</name>
+		<inhalt>Wann wurde der erste Rollstuhl mit Selbstantrieb konstruiert?</inhalt>
+		<jahr>1655</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Herzschrittmacher</bezeichnung>
+		<name>Tragbarer Herzschrittmacher</name>
+		<inhalt>Wann wurden die ersten tragbaren Herzschrittmacher entwickelt?</inhalt>
+		<jahr>1957</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Game Boy</bezeichnung>
+		<name>Game Boy</name>
+		<inhalt>Wann erschien der erste Game Boy?</inhalt>
+		<jahr>1989</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Odometer</bezeichnung>
+		<name>Odometer</name>
+		<inhalt>Wann wurde der Odometer erfunden?</inhalt>
+		<jahr>1000bc</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Chuck Norris</bezeichnung>
+		<name>Chuck Norris</name>
+		<inhalt>Wann wurde Chuck Norris das erste mal Weltmeister?</inhalt>
+		<jahr>1962</jahr>
+	</frage>
+	
+	<frage>
+		<bezeichnung>Disney</bezeichnung>
+		<name>Disney</name>
+		<inhalt>Wann wurde der erste Disney Film veröffentlicht?</inhalt>
+		<jahr>1937</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Pokémon</bezeichnung>
+		<name>Pokémon</name>
+		<inhalt>Wann kam das erste Pokémon Spiel in Japan heraus?</inhalt>
+		<jahr>1996</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Mauerfall</bezeichnung>
+		<name>Mauerfall</name>
+		<inhalt>Wann wurde die Berliner Mauer zu Fall gebracht?</inhalt>
+		<jahr>1989</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Bush</bezeichnung>
+		<name>George W. Bush</name>
+		<inhalt>Wann begann die Amtszeit von George W. Bush?</inhalt>
+		<jahr>2001</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Weltkrieg</bezeichnung>
+		<name>Erster Weltkrieg</name>
+		<inhalt>Wann brach der erste Weltkrieg aus?</inhalt>
+		<jahr>1914</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Digitalrechner</bezeichnung>
+		<name>Digitalrechner</name>
+		<inhalt>Wann wurde der erste funktionsfähige Digitalrechner gebaut?</inhalt>
+		<jahr>1941</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Relativitätstheorie</bezeichnung>
+		<name>Relativitätstheorie</name>
+		<inhalt>Wann publizierte Albert Einstein die Relativitätstheorie?</inhalt>
+		<jahr>1915</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Jungfrau</bezeichnung>
+		<name>Jungfrau von Orléans</name>
+		<inhalt>Wann wurde die Jungfrau von Orléans verbrannt?</inhalt>
+		<jahr>1431</jahr>
+	</frage>
+
+	<frage>
+		<bezeichnung>Romeo und julia</bezeichnung>
+		<name>Romeo und Julia</name>
+		<inhalt>Wann wurde die Tragödie 'Romeo und Julia' von William Shakespeare zum ersten mal aufgeführt?</inhalt>
+		<jahr>1597</jahr>
+	</frage>
+
