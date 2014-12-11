@@ -7,9 +7,12 @@ import android.annotation.TargetApi;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.ClipData;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Display;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 
@@ -33,9 +37,9 @@ public class MainActivity extends Activity {
         
         findViewById(R.id.button1).setOnTouchListener(new MyTouchListener());
         findViewById(R.id.button2).setOnTouchListener(new MyTouchListener());
-        findViewById(R.id.button3).setOnTouchListener(new MyTouchListener());
-        findViewById(R.id.button4).setOnTouchListener(new MyTouchListener());
-        findViewById(R.id.button5).setOnTouchListener(new MyTouchListener());
+//        findViewById(R.id.button3).setOnTouchListener(new MyTouchListener());
+//        findViewById(R.id.button4).setOnTouchListener(new MyTouchListener());
+//        findViewById(R.id.button5).setOnTouchListener(new MyTouchListener());
         
         findViewById(R.id.bottomButton1).setOnTouchListener(new MyTouchListener());
         findViewById(R.id.bottomButton2).setOnTouchListener(new MyTouchListener());
@@ -49,6 +53,38 @@ public class MainActivity extends Activity {
         findViewById(R.id.grid6).setOnDragListener(new MyDragListener());
         findViewById(R.id.grid7).setOnDragListener(new MyDragListener());
         findViewById(R.id.grid8).setOnDragListener(new MyDragListener());
+        
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        
+       
+        
+        HorizontalScrollView hv = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
+        hv.setMinimumHeight(height/2);
+        
+        
+        
+       
+        
+       // Log.d("bla", String.valueOf(gl.getHeight()));
+        
+       findViewById(R.id.button1).setMinimumHeight(height/3);
+       findViewById(R.id.button2).setMinimumHeight(height/3);
+       //findViewById(R.id.button3).setMinimumHeight(height/3);
+       //findViewById(R.id.grid1).setMinimumHeight(height/2);
+//        findViewById(R.id.grid2).setLayoutParams(params);
+//        findViewById(R.id.grid3).setLayoutParams(params);
+//        findViewById(R.id.grid4).setLayoutParams(params);
+//        findViewById(R.id.grid5).setLayoutParams(params);
+//        findViewById(R.id.grid6).setLayoutParams(params);
+//        findViewById(R.id.grid7).setLayoutParams(params);
+//        findViewById(R.id.grid8).setLayoutParams(params);
+        
+        
+        
     }
 
 
