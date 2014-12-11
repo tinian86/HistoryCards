@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">History Cards Alpha</string>
+    <string name="btn_single">Einzelspieler</string>
+    <string name="btn_multi">Mehrspieler</string>
+    <string name="btn_tutorial">Tutorial</string>
+    <string name="btn_score">Highscore</string>
+    <string name="btn_exit">Schließen</string>
+	<string name="action_settings">Schließen</string>
+    
+</resources>
