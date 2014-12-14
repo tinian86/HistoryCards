@@ -1,9 +1,12 @@
 package de.historyalpha;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MenueActivity extends Activity {
 
@@ -11,6 +14,15 @@ public class MenueActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menue);
+		Button singlePlayerButton = (Button) findViewById(R.id.btn_single);
+		singlePlayerButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent nextScreen = new Intent(getApplicationContext(),
+						GameActivity.class);
+				startActivity(nextScreen);
+			}
+		});
 	}
 
 	@Override
@@ -31,6 +43,5 @@ public class MenueActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	
+
 }

@@ -1,5 +1,7 @@
 package de.historyalpha;
 
-public class GameActivity {
+import android.app.Activity;
+
+public class GameActivity extends Activity{
 
 }

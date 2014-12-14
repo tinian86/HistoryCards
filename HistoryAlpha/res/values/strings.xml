@@ -8,5 +8,6 @@
     <string name="btn_score">Highscore</string>
     <string name="btn_exit">Schließen</string>
 	<string name="action_settings">Schließen</string>
+	<string name="title_game_activity">GameActivity</string>
     
 </resources>
