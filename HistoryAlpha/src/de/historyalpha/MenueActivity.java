@@ -14,15 +14,15 @@ public class MenueActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menue);
-		Button singlePlayerButton = (Button) findViewById(R.id.btn_single);
-		singlePlayerButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View arg0) {
-				Intent nextScreen = new Intent(getApplicationContext(),
-						GameActivity.class);
-				startActivity(nextScreen);
-			}
-		});
+//		Button singlePlayerButton = (Button) findViewById(R.id.btn_single);
+//		singlePlayerButton.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View arg0) {
+//				Intent nextScreen = new Intent(getApplicationContext(),
+//						GameActivity.class);
+//				startActivity(nextScreen);
+//			}
+//		});
 	}
 
 	@Override
@@ -43,5 +43,21 @@ public class MenueActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
+	public void startGame(View view){
+		Intent intent = new Intent(this, GameActivity.class);
+		startActivity(intent);
+	}
+	
+	public void showScore(View view){
+		Intent intent = new Intent(this, HighscoreAcitvity.class);
+		startActivity(intent);
+	}
+	
+	public void closeApp(View view){
+		super.onStop();
+	}
+	
 
 }

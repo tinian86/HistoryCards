@@ -7,7 +7,11 @@
     <string name="btn_tutorial">Tutorial</string>
     <string name="btn_score">Highscore</string>
     <string name="btn_exit">Schließen</string>
-	<string name="action_settings">Schließen</string>
-	<string name="title_game_activity">GameActivity</string>
+    <string name="action_settings">Schließen</string>
+    <string name="title_game_activity">GameActivity</string>
+    <string name="title_activity_highscore_acitvity">HighscoreAcitvity</string>
+    <string name="hello_world">Hello world!</string>
     
+    <string name="new_highscore_extra_key">newHighscore</string>
+
 </resources>
