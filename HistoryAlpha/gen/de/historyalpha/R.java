@@ -28,11 +28,10 @@ public final class R {
     }
     public static final class id {
         public static final int BottomLayout=0x7f080003;
-        public static final int action_settings=0x7f080017;
+        public static final int action_settings=0x7f080016;
         public static final int bottomButton1=0x7f08000f;
         public static final int bottomButton2=0x7f080010;
         public static final int bottomButton3=0x7f080011;
-        public static final int btn_exit=0x7f080016;
         public static final int btn_multi=0x7f080013;
         public static final int btn_score=0x7f080015;
         public static final int btn_single=0x7f080012;
