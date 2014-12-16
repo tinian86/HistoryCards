@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -20,6 +21,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 public class GameActivity extends Activity{
+	public String NAMETAG = "Alpha - GameActivity";
+	
 	 @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -140,10 +143,18 @@ public class GameActivity extends Activity{
 	            if (container.getChildCount() > 0){
 	            	
 	            	int number = Integer.parseInt(container.getTag().toString());
+	            	/** Hier entsteht der Fehler: Verschiebt man einen Button in ein leeres Feld, so crashed das Programm
+	            	 * Grund unklar.
+	            	 * container.getChildCount liefer 1, also hat der Container nur 1 Child an Position 0?
+	            	 **/
 	            	View b = container.getChildAt(1);
+	            	Log.d(NAMETAG,String.valueOf(container.getChildCount()));
 	            	number++;
+//	            	Log.d(NAMETAG,String.valueOf(number));
 	            	LinearLayout nextContainer = (LinearLayout) ((View) container.getParent()).findViewWithTag(String.valueOf(number));
+//	            	Log.d(NAMETAG, "container.getParent()" + ((View) container.getParent()).findViewWithTag(String.valueOf(number)).toString());
 	            	nextContainer.removeAllViews();
+//	            	Log.d(NAMETAG,b.toString());
 	        		nextContainer.addView(b);
 	            	
 
