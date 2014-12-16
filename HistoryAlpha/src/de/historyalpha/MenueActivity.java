@@ -3,10 +3,10 @@ package de.historyalpha;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 public class MenueActivity extends Activity {
 
@@ -48,6 +48,8 @@ public class MenueActivity extends Activity {
 	public void startGame(View view){
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
+		//Hier koennen ueber getRandomCards() neue Karten aus dem Stapel-Array geholt werden
+		Log.d("MenueActivity", "Stapel" + CardQuestion.getRandomCards().toString());
 	}
 	
 	public void showScore(View view){
