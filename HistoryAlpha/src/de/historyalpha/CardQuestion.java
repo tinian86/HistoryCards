@@ -14,4 +14,6 @@ public class CardQuestion {
 	Card card9 = new Card(9, "Auto", "Wann wurde das erste Auto entwickelt?", 1886);
 	Card card10 = new Card(10, "Kinder Schokolade", "Wann kam die Kinder Schokolade auf den Markt?", 1967);
 
+	//TODO: Randomisiert 1 oder 3 Karten rausholen
+	
 }
