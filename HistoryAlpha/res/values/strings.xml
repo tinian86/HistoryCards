@@ -11,7 +11,10 @@
     <string name="title_game_activity">GameActivity</string>
     <string name="title_activity_highscore_acitvity">HighscoreAcitvity</string>
     <string name="hello_world">Hello world!</string>
-    
     <string name="new_highscore_extra_key">newHighscore</string>
+    <string name="title_activity_card_viewer">CardViewer</string>
+    <string name="cardviewer1">Card1</string>
+    <string name="cardviewer2">Card2</string>
+    <string name="cardviewer3">Card3</string>
 
 </resources>

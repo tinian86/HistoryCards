@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.historyalpha"
     android:versionCode="1"
-    android:versionName="1.0"  >
-    
+    android:versionName="1.0" >
+
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
@@ -25,16 +25,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
             android:name=".GameActivity"
-            android:label="@string/title_game_activity" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_game_activity"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
             android:name=".HighscoreAcitvity"
-            android:label="@string/title_activity_highscore_acitvity" >
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/title_activity_highscore_acitvity"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".CardViewer"
+            android:label="@string/title_activity_card_viewer" >
         </activity>
     </application>
 
