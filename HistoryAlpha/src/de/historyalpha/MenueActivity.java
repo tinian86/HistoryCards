@@ -7,13 +7,29 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 
-public class MenueActivity extends Activity {
+public class MenueActivity extends Activity implements OnClickListener {
+	
+	//German/English_Button on First_Menue
+	public ImageButton img_btn_de;
+	public ImageButton img_btn_en;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startseite);
+		
+		//German_Button on First_Menue
+		img_btn_de = (ImageButton) findViewById(R.id.img_de);
+		img_btn_de.setOnClickListener(this);
+		
+		//English_Button on First_Menue
+		img_btn_en = (ImageButton) findViewById(R.id.img_en);
+		img_btn_en.setOnClickListener(this);
+		
+		
 //		Button singlePlayerButton = (Button) findViewById(R.id.btn_single);
 //		singlePlayerButton.setOnClickListener(new View.OnClickListener() {
 //			@Override
@@ -23,6 +39,21 @@ public class MenueActivity extends Activity {
 //				startActivity(nextScreen);
 //			}
 //		});
+	}
+	
+	//Click on German
+	@Override
+	public void onClick(View v) {
+		switch(v.getId()){
+		case R.id.img_en:
+			img_btn_de.setVisibility(v.VISIBLE);
+			img_btn_en.setVisibility(v.INVISIBLE);
+			Log.d("check", "yes");
+		case R.id.img_de:
+			img_btn_de.setVisibility(v.INVISIBLE);
+			img_btn_en.setVisibility(v.VISIBLE);
+		}
+		
 	}
 
 	@Override
@@ -60,6 +91,8 @@ public class MenueActivity extends Activity {
 	public void closeApp(View view){
 		super.onStop();
 	}
+
+	
 	
 
 }
