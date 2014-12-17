@@ -8,19 +8,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MenueActivity extends Activity implements OnClickListener {
 	
+	//GUI_Elemente
+	Button btn_single;
+	Button btn_multi;
+	Button btn_tut;
+	Button btn_score;
+	
 	//German/English_Button on First_Menue
-	public ImageButton img_btn_de;
-	public ImageButton img_btn_en;
+	ImageButton img_btn_de;
+	ImageButton img_btn_en;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.startseite);
 		
+		//GUI_Elemente
+		btn_single = (Button) findViewById(R.id.btn_single);
+		btn_multi = (Button) findViewById(R.id.btn_multi);
+		btn_tut = (Button) findViewById(R.id.btn_tutorial);
+		btn_score = (Button) findViewById(R.id.btn_score);
+			
 		//German_Button on First_Menue
 		img_btn_de = (ImageButton) findViewById(R.id.img_de);
 		img_btn_de.setOnClickListener(this);
@@ -48,9 +61,17 @@ public class MenueActivity extends Activity implements OnClickListener {
 		case R.id.img_en:
 			img_btn_en.setVisibility(v.INVISIBLE);
 			img_btn_de.setVisibility(v.VISIBLE);
+			btn_single.setText("Single Player");
+			btn_multi.setText("Multi Player");
+			btn_tut.setText("Tutorial");
+			btn_score.setText("Highscore");
 		case R.id.img_de:
 			img_btn_de.setVisibility(v.INVISIBLE);
 			img_btn_en.setVisibility(v.VISIBLE);
+			//btn_single.setText("Einzelspieler");
+			//btn_multi.setText("Mehrspieler");
+			//btn_tut.setText("Anleitung");
+			//btn_score.setText("Punktestand");
 		}
 		
 	}
