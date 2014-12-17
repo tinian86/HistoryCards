@@ -46,9 +46,8 @@ public class MenueActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch(v.getId()){
 		case R.id.img_en:
-			img_btn_de.setVisibility(v.VISIBLE);
 			img_btn_en.setVisibility(v.INVISIBLE);
-			Log.d("check", "yes");
+			img_btn_de.setVisibility(v.VISIBLE);
 		case R.id.img_de:
 			img_btn_de.setVisibility(v.INVISIBLE);
 			img_btn_en.setVisibility(v.VISIBLE);
