@@ -25,88 +25,7 @@
             android:orientation="vertical"
             android:rowCount="2" >
 
-            <LinearLayout
-                android:id="@+id/grid1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:tag="1" >
-
-                <Button
-                    android:id="@+id/button1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/grid2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:orientation="horizontal"
-                android:tag="2" >
-
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Button" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/grid3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:orientation="horizontal"
-                android:tag="3" >
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/grid4"
-               android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:orientation="horizontal"
-                android:tag="4" >
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/grid5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:orientation="horizontal"
-                android:tag="5" >
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/grid6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:orientation="horizontal"
-                android:tag="6" >
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/grid7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:orientation="horizontal"
-                android:tag="7" >
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/grid8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape"
-                android:orientation="horizontal"
-                android:tag="8" >
-            </LinearLayout>
+            
         </GridLayout>
     </HorizontalScrollView>
 
@@ -122,19 +41,19 @@
             android:id="@+id/bottomButton1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Karte1" />
 
         <Button
             android:id="@+id/bottomButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Karte2" />
 
         <Button
             android:id="@+id/bottomButton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Karte3" />
     </LinearLayout>
 
 </RelativeLayout>
