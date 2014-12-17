@@ -16,6 +16,7 @@
         <activity
             android:name=".MenueActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:background="@drawable/afrikanischholz"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -27,12 +28,14 @@
         <activity
             android:name=".GameActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:background="@drawable/afrikanischholz"
             android:label="@string/title_game_activity"
             android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name=".HighscoreAcitvity"
             android:configChanges="orientation|keyboardHidden"
+            android:background="@drawable/afrikanischholz"
             android:label="@string/title_activity_highscore_acitvity"
             android:screenOrientation="landscape" >
         </activity>
