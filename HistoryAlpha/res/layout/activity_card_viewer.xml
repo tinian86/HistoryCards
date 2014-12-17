@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <Button
+        android:id="@+id/cardviewer1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="19dp"
+        android:text="@string/cardviewer1" />
+
+    <Button
+        android:id="@+id/cardviewer2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cardviewer1"
+        android:layout_alignBottom="@+id/cardviewer1"
+        android:layout_toRightOf="@+id/cardviewer1"
+        android:text="@string/cardviewer2" />
+
+    <Button
+        android:id="@+id/cardviewer3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cardviewer2"
+        android:layout_alignBottom="@+id/cardviewer2"
+        android:layout_toRightOf="@+id/cardviewer2"
+        android:text="@string/cardviewer3" />
+
+</RelativeLayout>
