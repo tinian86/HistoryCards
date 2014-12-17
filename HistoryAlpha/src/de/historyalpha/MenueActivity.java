@@ -13,7 +13,7 @@ public class MenueActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_menue);
+		setContentView(R.layout.startseite);
 //		Button singlePlayerButton = (Button) findViewById(R.id.btn_single);
 //		singlePlayerButton.setOnClickListener(new View.OnClickListener() {
 //			@Override
