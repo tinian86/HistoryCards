@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.DragEvent;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.HorizontalScrollView;
@@ -28,6 +30,7 @@ public class GameActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 
 		// findViewById(R.id.button1).setOnTouchListener(new MyTouchListener());
@@ -35,6 +38,8 @@ public class GameActivity extends Activity {
 		// findViewById(R.id.button3).setOnTouchListener(new MyTouchListener());
 		// findViewById(R.id.button4).setOnTouchListener(new MyTouchListener());
 		// findViewById(R.id.button5).setOnTouchListener(new MyTouchListener());
+		
+		try{
 
 		findViewById(R.id.bottomButton1).setOnTouchListener(
 				new MyTouchListener());
@@ -58,22 +63,22 @@ public class GameActivity extends Activity {
 		int width = size.x;
 		int height = size.y;
 
-		int bottomheight = height / 6; // Höhe der unteren Leiste
-		int bottomwidth = width / 6; // Breite der unteren Leiste
+		int bottomheight = height / 5; // Höhe der unteren Leiste
+		int bottomwidth = width / 5; // Breite der unteren Leiste
 
 		// Setze Größe der Karten in der unteren Leiste:
-		findViewById(R.id.bottomButton1).setMinimumHeight(bottomheight);
-		findViewById(R.id.bottomButton1).setMinimumWidth(bottomwidth);
-		findViewById(R.id.bottomButton2).setMinimumHeight(bottomheight);
-		findViewById(R.id.bottomButton2).setMinimumWidth(bottomwidth);
-		findViewById(R.id.bottomButton3).setMinimumHeight(bottomheight);
-		findViewById(R.id.bottomButton3).setMinimumWidth(bottomwidth);
+		findViewById(R.id.bottomButton1).getLayoutParams().height = bottomheight;
+		findViewById(R.id.bottomButton1).getLayoutParams().width = bottomwidth;
+		findViewById(R.id.bottomButton2).getLayoutParams().height = bottomheight;
+		findViewById(R.id.bottomButton2).getLayoutParams().width = bottomwidth;
+		findViewById(R.id.bottomButton3).getLayoutParams().height = bottomheight;
+		findViewById(R.id.bottomButton3).getLayoutParams().width = bottomwidth;
 
-		int topheight = height * 3 / 6; // Höhe des Spielfensters (ScrollView)
+		int topheight = height * 3 / 5; // Höhe des Spielfensters (ScrollView)
 		int topwidth = width; // ganze Breite des Spielfensters (ScrollView)
 
 		HorizontalScrollView hv = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
-		hv.setMinimumHeight(topheight);
+		//hv.setMinimumHeight(topheight);
 
 		// Höhe und Breite eines Kästchens in der ScrollView
 		int cardheight = topheight / 2;
@@ -82,7 +87,7 @@ public class GameActivity extends Activity {
 		GridLayout gl = (GridLayout) findViewById(R.id.gridlayout);
 
 		// Füge 3 LinearLayouts hinzu für Kartenplätze
-		LinearLayout l1 = new LinearLayout(getApplicationContext());
+		LinearLayout l1 = new LinearLayout(getBaseContext());
 		l1.setMinimumHeight(cardheight);
 		l1.setMinimumWidth(cardwidth);
 		l1.setGravity(Gravity.CENTER);
@@ -90,7 +95,7 @@ public class GameActivity extends Activity {
 		gl.addView(l1);
 		l1.setOnDragListener(new MyDragListener());
 
-		LinearLayout l2 = new LinearLayout(getApplicationContext());
+		LinearLayout l2 = new LinearLayout(getBaseContext());
 		l2.setMinimumHeight(cardheight);
 		l2.setMinimumWidth(cardwidth);
 		l2.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape));
@@ -98,7 +103,7 @@ public class GameActivity extends Activity {
 		gl.addView(l2);
 		l2.setOnDragListener(new MyDragListener());
 
-		LinearLayout l3 = new LinearLayout(getApplicationContext());
+		LinearLayout l3 = new LinearLayout(getBaseContext());
 		l3.setMinimumHeight(cardheight);
 		l3.setMinimumWidth(cardwidth);
 		l3.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape));
@@ -127,13 +132,17 @@ public class GameActivity extends Activity {
 		// findViewById(R.id.grid6).setLayoutParams(params);
 		// findViewById(R.id.grid7).setLayoutParams(params);
 		// findViewById(R.id.grid8).setLayoutParams(params);
+		
+		}catch(Exception e){
+			Log.d("bla", e.getMessage());
+		}
 
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menue, menu);
+		//getMenuInflater().inflate(R.menu.menue, menu);
 		return true;
 	}
 
@@ -142,10 +151,10 @@ public class GameActivity extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
+//		int id = item.getItemId();
+//		if (id == R.id.action_settings) {
+//			return true;
+//		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -195,7 +204,7 @@ public class GameActivity extends Activity {
 				int width = size.x;
 				int height = size.y;
 
-				int topheight = height * 3 / 6; // Höhe des Spielfensters
+				int topheight = height * 3 / 5; // Höhe des Spielfensters
 												// (ScrollView)
 				int topwidth = width; // ganze Breite des Spielfensters
 										// (ScrollView)
@@ -223,7 +232,7 @@ public class GameActivity extends Activity {
 					// Füge neues LinearLayout als Container hinzu
 					GridLayout gl = (GridLayout) findViewById(R.id.gridlayout);
 
-					LinearLayout l1 = new LinearLayout(getApplicationContext());
+					LinearLayout l1 = new LinearLayout(getBaseContext());
 					l1.setMinimumHeight(cardheight);
 					l1.setMinimumWidth(cardwidth);
 					l1.setGravity(Gravity.CENTER);

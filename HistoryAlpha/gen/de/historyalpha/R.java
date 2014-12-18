@@ -31,10 +31,9 @@ public final class R {
         public static final int gradientgelb=0x7f020006;
         public static final int gradientgruen=0x7f020007;
         public static final int gradientlila=0x7f020008;
-        public static final int gradientrot=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
-        public static final int shape=0x7f02000b;
-        public static final int shape_droptarget=0x7f02000c;
+        public static final int ic_launcher=0x7f020009;
+        public static final int shape=0x7f02000a;
+        public static final int shape_droptarget=0x7f02000b;
     }
     public static final class id {
         public static final int BottomLayout=0x7f080007;

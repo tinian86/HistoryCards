@@ -48,6 +48,6 @@
         android:textSize="10sp"
         android:textStyle="bold"
         android:typeface="serif"
-        android:background="@drawable/gradientrot"/>
+        android:background="@drawable/gradientgruen"/>
 
 </RelativeLayout>
