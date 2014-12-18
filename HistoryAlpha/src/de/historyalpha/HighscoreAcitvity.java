@@ -10,6 +10,7 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.View;
 import android.view.Window;
 //import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
@@ -152,6 +153,11 @@ public class HighscoreAcitvity extends Activity {
 	@Override
 	public void onBackPressed() {
 		Intent i = new Intent(this, de.historyalpha.MenueActivity.class);
+		startActivity(i);
+	}
+	
+	public void goBack(View view){
+		Intent i = new Intent(this, MenueActivity.class);
 		startActivity(i);
 	}
 	

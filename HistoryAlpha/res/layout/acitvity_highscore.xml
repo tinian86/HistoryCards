@@ -49,6 +49,6 @@
         android:textStyle="bold"
         android:typeface="serif"
         android:background="@drawable/gradientrot"
-        android:onClick="onBackPressed" />
+        android:onClick="goBack" />
 
 </RelativeLayout>
