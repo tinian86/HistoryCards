@@ -79,16 +79,21 @@ public class GameActivity extends Activity {
 
 		playableCards.clear();
 
+		Card[] test = CardQuestion.getRandomCards();
 		for (int i = 0; i < 3; i++) {
 
-			int rand = (int) (Math.random() * 100);
-			Card c1 = new Card(rand, String.valueOf(rand), "", rand);
+//			int rand = (int) (Math.random() * 100);
+//			Card c1 = new Card(rand, String.valueOf(rand), "", rand);
+			Card c1 = new Card(test[0].getCardId(), test[0].getSchlagwort(), "", test[0].getJahr());
+			
 
-			int rand2 = (int) (Math.random() * 100);
-			Card c2 = new Card(rand2, String.valueOf(rand2), "", rand2);
-
-			int rand3 = (int) (Math.random() * 100);
-			Card c3 = new Card(rand3, String.valueOf(rand3), "", rand3);
+//			int rand2 = (int) (Math.random() * 100);
+//			Card c2 = new Card(rand2, String.valueOf(rand2), "", rand2);
+			Card c2 = new Card(test[1].getCardId(), test[1].getSchlagwort(), "", test[1].getJahr());
+			
+//			int rand3 = (int) (Math.random() * 100);
+//			Card c3 = new Card(rand3, String.valueOf(rand3), "", rand3);
+			Card c3 = new Card(test[2].getCardId(), test[2].getSchlagwort(), "", test[2].getJahr());
 
 			playableCards.add(c1);
 			playableCards.add(c2);
