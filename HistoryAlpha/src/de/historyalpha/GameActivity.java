@@ -3,7 +3,6 @@ package de.historyalpha;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.ClipData;
 import android.graphics.Color;
@@ -25,10 +24,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 
 public class GameActivity extends Activity {
+	
+	// TODO: Zur Zeit werden mit dem Button "Neue Karten" ALLE der drei Karten neu geholt -> sollten eigentlich nur die fehlenden ersetzt werden
 	public String NAMETAG = "Alpha - GameActivity";
 
 	private List<Card> cardList = new ArrayList<Card>();
@@ -67,38 +67,24 @@ public class GameActivity extends Activity {
 			setupCardArea(cardList);
 
 		} catch (Exception e) {
-			Log.d("bla", e.getMessage());
+			Log.d("GameActivity", e.getMessage());
 		}
 
 	}
 
 	public void setupBottomBar() {
-
-		// TODO Hier noch die Namen der Buttons durch 3 random Karten
-		// ersetzen. Nur zum testen mit random Zahlen!
-
 		playableCards.clear();
-
-		Card[] test = CardQuestion.getRandomCards();
-		for (int i = 0; i < 3; i++) {
-
-//			int rand = (int) (Math.random() * 100);
-//			Card c1 = new Card(rand, String.valueOf(rand), "", rand);
-			Card c1 = new Card(test[0].getCardId(), test[0].getSchlagwort(), "", test[0].getJahr());
-			
-
-//			int rand2 = (int) (Math.random() * 100);
-//			Card c2 = new Card(rand2, String.valueOf(rand2), "", rand2);
-			Card c2 = new Card(test[1].getCardId(), test[1].getSchlagwort(), "", test[1].getJahr());
-			
-//			int rand3 = (int) (Math.random() * 100);
-//			Card c3 = new Card(rand3, String.valueOf(rand3), "", rand3);
-			Card c3 = new Card(test[2].getCardId(), test[2].getSchlagwort(), "", test[2].getJahr());
+		Card[] threeCards = CardQuestion.getRandomCards();
+		// TODO: @Dennis war diese for-Schleife noetig? Scheint auch ohne zu funktionieren
+//		for (int i = 0; i < 3; i++) {
+			Card c1 = new Card(threeCards[0].getCardId(), threeCards[0].getSchlagwort(), "", threeCards[0].getJahr());
+			Card c2 = new Card(threeCards[1].getCardId(), threeCards[1].getSchlagwort(), "", threeCards[1].getJahr());
+			Card c3 = new Card(threeCards[2].getCardId(), threeCards[2].getSchlagwort(), "", threeCards[2].getJahr());
 
 			playableCards.add(c1);
 			playableCards.add(c2);
 			playableCards.add(c3);
-		}
+//		}
 
 		LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
 
@@ -158,6 +144,7 @@ public class GameActivity extends Activity {
 		setupBottomBar();
 	}
 
+	@SuppressWarnings("deprecation")
 	public void setupCardArea(List<Card> cL) {
 
 		GridLayout gl = (GridLayout) findViewById(R.id.gridlayout);
@@ -301,9 +288,10 @@ public class GameActivity extends Activity {
 		Drawable normalShape = getResources().getDrawable(
 				R.drawable.background01);
 
+		@SuppressWarnings("deprecation")
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
-			int action = event.getAction();
+//			int action = event.getAction();
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
 				// do nothing
