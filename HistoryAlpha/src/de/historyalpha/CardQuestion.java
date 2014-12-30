@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class CardQuestion {
-
+ 
 	// eine Card besteht aus: Card(int cardId, String schlagwort, String text, int jahr)
 
 	static Card card1 = new Card(1, "Teflon", "Wann wurde das Teflon erfunden?", 1934);

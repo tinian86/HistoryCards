@@ -45,7 +45,7 @@
             android:layout_alignParentLeft="true"
             android:orientation="horizontal" >
         </LinearLayout>
-        
+
         <LinearLayout
             android:id="@+id/menuLayout"
             android:layout_width="wrap_content"
@@ -55,15 +55,19 @@
             android:orientation="horizontal" >
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/btn_newCards"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Neue Karten" 
-                android:onClick="getNewCards"/>
+                android:onClick="getNewCards"
+                android:text="@string/btn_newCards" />
 
+            <Button
+                android:id="@+id/btn_revealCards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="revealCards"
+                android:text="@string/btn_revealCards" />
         </LinearLayout>
-        
-        
     </LinearLayout>
 
 </RelativeLayout>

@@ -27,8 +27,9 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 public class GameActivity extends Activity {
-	
-	// TODO: Zur Zeit werden mit dem Button "Neue Karten" ALLE der drei Karten neu geholt -> sollten eigentlich nur die fehlenden ersetzt werden
+
+	// TODO: Zur Zeit werden mit dem Button "Neue Karten" ALLE der drei Karten
+	// neu geholt -> sollten eigentlich nur die fehlenden ersetzt werden
 	public String NAMETAG = "Alpha - GameActivity";
 
 	private List<Card> cardList = new ArrayList<Card>();
@@ -75,16 +76,20 @@ public class GameActivity extends Activity {
 	public void setupBottomBar() {
 		playableCards.clear();
 		Card[] threeCards = CardQuestion.getRandomCards();
-		// TODO: @Dennis war diese for-Schleife noetig? Scheint auch ohne zu funktionieren
-//		for (int i = 0; i < 3; i++) {
-			Card c1 = new Card(threeCards[0].getCardId(), threeCards[0].getSchlagwort(), "", threeCards[0].getJahr());
-			Card c2 = new Card(threeCards[1].getCardId(), threeCards[1].getSchlagwort(), "", threeCards[1].getJahr());
-			Card c3 = new Card(threeCards[2].getCardId(), threeCards[2].getSchlagwort(), "", threeCards[2].getJahr());
+		// TODO: @Dennis war diese for-Schleife noetig? Scheint auch ohne zu
+		// funktionieren
+		// for (int i = 0; i < 3; i++) {
+		Card c1 = new Card(threeCards[0].getCardId(),
+				threeCards[0].getSchlagwort(), "", threeCards[0].getJahr());
+		Card c2 = new Card(threeCards[1].getCardId(),
+				threeCards[1].getSchlagwort(), "", threeCards[1].getJahr());
+		Card c3 = new Card(threeCards[2].getCardId(),
+				threeCards[2].getSchlagwort(), "", threeCards[2].getJahr());
 
-			playableCards.add(c1);
-			playableCards.add(c2);
-			playableCards.add(c3);
-//		}
+		playableCards.add(c1);
+		playableCards.add(c2);
+		playableCards.add(c3);
+		// }
 
 		LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
 
@@ -142,6 +147,17 @@ public class GameActivity extends Activity {
 
 	public void getNewCards(View view) {
 		setupBottomBar();
+		
+	}
+
+	// Methode, um die Karten aufzudecken und ihre Jahreszahl anzuzeigen
+	// TODO: Jahreszahl wird nicht sofort angezeigt, erst wenn weitere Karte gelegt wird! Fix!
+	public void revealCards(View view) {
+
+		for (int i = 0; i < cardList.size(); i++) {
+			cardList.get(i).schlagwort = String.valueOf(cardList.get(i).jahr);
+		}
+		setupCardArea(cardList);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -245,6 +261,14 @@ public class GameActivity extends Activity {
 				counter = 0;
 			}
 
+
+		}
+		// TODO: Zum Debuggen, entfernen wenn fertig
+		for (int i = 0; i < cardDrawList.size(); i++) {
+			Log.d("cardDrawList" , "CDL: " + cardDrawList.get(i).schlagwort.toString());	
+		}
+		for (int i = 0; i < cardList.size(); i++) {	
+			Log.d("cardList", "CL: " + cardList.get(i).schlagwort.toString());
 		}
 	}
 
@@ -291,7 +315,7 @@ public class GameActivity extends Activity {
 		@SuppressWarnings("deprecation")
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
-//			int action = event.getAction();
+			// int action = event.getAction();
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
 				// do nothing
@@ -371,8 +395,6 @@ public class GameActivity extends Activity {
 			return true;
 		}
 
-		public void replaceItem() {
-		}
-
+		
 	}
 }
