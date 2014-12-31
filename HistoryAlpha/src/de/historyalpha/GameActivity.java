@@ -25,11 +25,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class GameActivity extends Activity {
 
-	// TODO: Zur Zeit werden mit dem Button "Neue Karten" ALLE der drei Karten
-	// neu geholt -> sollten eigentlich nur die fehlenden ersetzt werden
 	public String NAMETAG = "Alpha - GameActivity";
 
 	private List<Card> cardList = new ArrayList<Card>();
@@ -147,17 +146,33 @@ public class GameActivity extends Activity {
 
 	public void getNewCards(View view) {
 		setupBottomBar();
-		
+
 	}
 
+	// TODO: Zur Zeit werden mit dem Button "Neue Karten" ALLE der drei Karten
+	// neu geholt -> sollten eigentlich nur die fehlenden ersetzt werden
+	
 	// Methode, um die Karten aufzudecken und ihre Jahreszahl anzuzeigen
-	// TODO: Jahreszahl wird nicht sofort angezeigt, erst wenn weitere Karte gelegt wird! Fix!
+	// TODO: Jahreszahl wird nicht sofort angezeigt, erst wenn weitere Karte
+	// gelegt wird! Fix!
 	public void revealCards(View view) {
+
+		// Zwei counter, um die Punkte aufzusummieren die man fuer Karten
+		// bekommt
+		// TODO Summe enthaelt am Ende noch Werte fuer Start- und Endkarte (6) zuviel! 
+		int counter = 0;
+		int sum = 0;
 
 		for (int i = 0; i < cardList.size(); i++) {
 			cardList.get(i).schlagwort = String.valueOf(cardList.get(i).jahr);
+			counter = counter + 1;
+			sum = sum + counter;
 		}
+		// Spielfeld neuzeichnen
 		setupCardArea(cardList);
+		// Scorefeld setzen
+		TextView score = (TextView) findViewById(R.id.score_id);
+		score.setText(String.valueOf(sum));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -261,15 +276,15 @@ public class GameActivity extends Activity {
 				counter = 0;
 			}
 
-
 		}
-		// TODO: Zum Debuggen, entfernen wenn fertig
-		for (int i = 0; i < cardDrawList.size(); i++) {
-			Log.d("cardDrawList" , "CDL: " + cardDrawList.get(i).schlagwort.toString());	
-		}
-		for (int i = 0; i < cardList.size(); i++) {	
-			Log.d("cardList", "CL: " + cardList.get(i).schlagwort.toString());
-		}
+		// Zum debuggen
+		// for (int i = 0; i < cardDrawList.size(); i++) {
+		// Log.d("cardDrawList" , "CDL: " +
+		// cardDrawList.get(i).schlagwort.toString());
+		// }
+		// for (int i = 0; i < cardList.size(); i++) {
+		// Log.d("cardList", "CL: " + cardList.get(i).schlagwort.toString());
+		// }
 	}
 
 	@Override
@@ -395,6 +410,5 @@ public class GameActivity extends Activity {
 			return true;
 		}
 
-		
 	}
 }

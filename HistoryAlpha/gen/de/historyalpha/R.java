@@ -41,15 +41,15 @@ public final class R {
         public static final int shape_droptarget=0x7f020010;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f080011;
-        public static final int action_settings=0x7f080014;
+        public static final int LinearLayout1=0x7f080012;
+        public static final int action_settings=0x7f080015;
         public static final int bottomLayout=0x7f080007;
-        public static final int btn_multi=0x7f08000e;
+        public static final int btn_multi=0x7f08000f;
         public static final int btn_newCards=0x7f08000b;
         public static final int btn_revealCards=0x7f08000c;
-        public static final int btn_score=0x7f080010;
-        public static final int btn_single=0x7f08000d;
-        public static final int btn_tutorial=0x7f08000f;
+        public static final int btn_score=0x7f080011;
+        public static final int btn_single=0x7f08000e;
+        public static final int btn_tutorial=0x7f080010;
         public static final int button1=0x7f080002;
         public static final int cardviewer1=0x7f080003;
         public static final int cardviewer2=0x7f080004;
@@ -57,10 +57,11 @@ public final class R {
         public static final int gridlayout=0x7f080008;
         public static final int highscoreList=0x7f080001;
         public static final int horizontalScrollView1=0x7f080006;
-        public static final int img_de=0x7f080012;
-        public static final int img_en=0x7f080013;
+        public static final int img_de=0x7f080013;
+        public static final int img_en=0x7f080014;
         public static final int menuLayout=0x7f08000a;
         public static final int playableCardLayout=0x7f080009;
+        public static final int score_id=0x7f08000d;
         public static final int textView1=0x7f080000;
     }
     public static final class layout {
@@ -91,6 +92,7 @@ public final class R {
         public static final int title_activity_card_viewer=0x7f05000c;
         public static final int title_activity_highscore_acitvity=0x7f05000a;
         public static final int title_game_activity=0x7f050009;
+        public static final int txt_score=0x7f050010;
     }
     public static final class style {
         /** 

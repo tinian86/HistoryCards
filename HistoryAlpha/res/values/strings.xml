@@ -17,5 +17,7 @@
     <string name="cardviewer1">Card1</string>
     <string name="cardviewer2">Card2</string>
     <string name="cardviewer3">Card3</string>
+    <string name="txt_score">Score</string>
+    
 
 </resources>
