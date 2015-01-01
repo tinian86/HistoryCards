@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameActivity extends Activity {
 
@@ -35,6 +37,7 @@ public class GameActivity extends Activity {
 	private List<Card> playableCards = new ArrayList<Card>();
 	private int width;
 	private int height;
+	private int lifes = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,46 +76,48 @@ public class GameActivity extends Activity {
 	}
 
 	public void setupBottomBar() {
+
 		playableCards.clear();
+
 		Card[] threeCards = CardQuestion.getRandomCards();
 		// TODO: @Dennis war diese for-Schleife noetig? Scheint auch ohne zu
 		// funktionieren
 		// for (int i = 0; i < 3; i++) {
-		Card c1 = new Card(threeCards[0].getCardId(),
+		Card card1 = new Card(threeCards[0].getCardId(),
 				threeCards[0].getSchlagwort(), "", threeCards[0].getJahr());
-		Card c2 = new Card(threeCards[1].getCardId(),
+		Card card2 = new Card(threeCards[1].getCardId(),
 				threeCards[1].getSchlagwort(), "", threeCards[1].getJahr());
-		Card c3 = new Card(threeCards[2].getCardId(),
+		Card card3 = new Card(threeCards[2].getCardId(),
 				threeCards[2].getSchlagwort(), "", threeCards[2].getJahr());
 
-		playableCards.add(c1);
-		playableCards.add(c2);
-		playableCards.add(c3);
+		playableCards.add(card1);
+		playableCards.add(card2);
+		playableCards.add(card3);
 		// }
 
 		LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
 
 		bottomBar.removeAllViews();
 
-		Button b1 = new Button(getBaseContext());
-		Button b2 = new Button(getBaseContext());
-		Button b3 = new Button(getBaseContext());
+		Button button1 = new Button(getBaseContext());
+		Button button2 = new Button(getBaseContext());
+		Button button3 = new Button(getBaseContext());
 
 		// b1.setId(11);
 		// b1.setId(22);
 		// b1.setId(33);
 
-		b1.setTextColor(Color.WHITE);
-		b2.setTextColor(Color.WHITE);
-		b3.setTextColor(Color.WHITE);
+		button1.setTextColor(Color.WHITE);
+		button2.setTextColor(Color.WHITE);
+		button3.setTextColor(Color.WHITE);
 
-		b1.setOnTouchListener(new MyTouchListener());
-		b2.setOnTouchListener(new MyTouchListener());
-		b3.setOnTouchListener(new MyTouchListener());
+		button1.setOnTouchListener(new MyTouchListener());
+		button2.setOnTouchListener(new MyTouchListener());
+		button3.setOnTouchListener(new MyTouchListener());
 
-		b1.setText(playableCards.get(0).getSchlagwort());
-		b2.setText(playableCards.get(1).getSchlagwort());
-		b3.setText(playableCards.get(2).getSchlagwort());
+		button1.setText(playableCards.get(0).getSchlagwort());
+		button2.setText(playableCards.get(1).getSchlagwort());
+		button3.setText(playableCards.get(2).getSchlagwort());
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
@@ -123,27 +128,29 @@ public class GameActivity extends Activity {
 		int bottomheight = height / 5; // Höhe der unteren Leiste
 		int bottomwidth = width / 5; // Breite der unteren Leiste
 
-		b1.setMinimumHeight(bottomheight);
-		b1.setMaxHeight(bottomheight);
-		b1.setMinimumWidth(bottomwidth);
-		b1.setMaxWidth(bottomwidth);
+		button1.setMinimumHeight(bottomheight);
+		button1.setMaxHeight(bottomheight);
+		button1.setMinimumWidth(bottomwidth);
+		button1.setMaxWidth(bottomwidth);
 
-		b2.setMinimumHeight(bottomheight);
-		b2.setMaxHeight(bottomheight);
-		b2.setMinimumWidth(bottomwidth);
-		b2.setMaxWidth(bottomwidth);
+		button2.setMinimumHeight(bottomheight);
+		button2.setMaxHeight(bottomheight);
+		button2.setMinimumWidth(bottomwidth);
+		button2.setMaxWidth(bottomwidth);
 
-		b3.setMinimumHeight(bottomheight);
-		b3.setMaxHeight(bottomheight);
-		b3.setMinimumWidth(bottomwidth);
-		b3.setMaxWidth(bottomwidth);
+		button3.setMinimumHeight(bottomheight);
+		button3.setMaxHeight(bottomheight);
+		button3.setMinimumWidth(bottomwidth);
+		button3.setMaxWidth(bottomwidth);
 
-		bottomBar.addView(b1);
-		bottomBar.addView(b2);
-		bottomBar.addView(b3);
+		bottomBar.addView(button1);
+		bottomBar.addView(button2);
+		bottomBar.addView(button3);
 
 	}
 
+	// TODO Ist die Methode so noetig? Sie ruft ja lediglich setupBottomBar()
+	// auf, daher besser direkt machen?
 	public void getNewCards(View view) {
 		setupBottomBar();
 
@@ -151,28 +158,89 @@ public class GameActivity extends Activity {
 
 	// TODO: Zur Zeit werden mit dem Button "Neue Karten" ALLE der drei Karten
 	// neu geholt -> sollten eigentlich nur die fehlenden ersetzt werden
-	
+
 	// Methode, um die Karten aufzudecken und ihre Jahreszahl anzuzeigen
-	// TODO: Jahreszahl wird nicht sofort angezeigt, erst wenn weitere Karte
-	// gelegt wird! Fix!
 	public void revealCards(View view) {
 
 		// Zwei counter, um die Punkte aufzusummieren die man fuer Karten
 		// bekommt
-		// TODO Summe enthaelt am Ende noch Werte fuer Start- und Endkarte (6) zuviel! 
+		// TODO Summe enthaelt am Ende noch Werte fuer Start- und Endkarte (6)
+		// zuviel!
+		// Einfach 6 abziehen geht nicht, da geometrisch aufsummiert wird!
 		int counter = 0;
 		int sum = 0;
+		
+		boolean wrongCard = false;
 
+		// Methode testet, ob Karten in der falschen Reihenfolge angelegt wurden. Falls ja, so wird ein Leben abgezogen
+		// TODO: Funktionalitaet fehlt bisher noch. 
 		for (int i = 0; i < cardList.size(); i++) {
+
+			Log.d("Listeninhalt", cardList.get(i).schlagwort.toString()
+					+ String.valueOf(cardList.get(i).jahr));
+
+			Log.d("listsize-1",
+					cardList.get(cardList.size() - 2).schlagwort.toString());
+
+			int checkYear = cardList.get(cardList.size() - 2).jahr;
+			// Jahreszahlen vergleichen
+			if (checkYear < cardList.get(i).jahr) {
+				Log.d("checkYear",
+						String.valueOf(checkYear) + " "
+								+ String.valueOf(cardList.get(i).jahr));
+				// Wenn eine Karte falsch liegt, Variable auf true setzen
+				wrongCard = true;
+			}
+
 			cardList.get(i).schlagwort = String.valueOf(cardList.get(i).jahr);
+			setupCardArea(cardList);
+
 			counter = counter + 1;
 			sum = sum + counter;
 		}
+
+		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste wird geleert und das Spielfeld neu initialisiert
+		if (wrongCard) {
+			Context context = getApplicationContext();
+			CharSequence text = "Sie haben eine Karte falsch angelegt und verlieren ein Leben!";
+			int duration = Toast.LENGTH_LONG;
+
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+			
+			lifes = lifes - 1;
+
+//			// Alle Karten aus der Liste entfernen
+//			// TODO: Buggy, unklar wieso
+//			for (int i = 0; i < cardList.size(); i++) {
+//				cardList.remove(i);
+//			}
+//			
+//			setupBottomBar();
+//			
+//			Card startCard = new Card(1, "startkarte",
+//					"Wann wurde das Teflon erfunden?", 1934);
+//
+//			// Dummykarte für Anfangs und Endpunkt (nicht sichtbar)
+//
+//			Card dummyCardBegin = new Card(0, "begin", "", 0);
+//			Card dummyCardEnd = new Card(0, "end", "", 0);
+//
+//			this.cardList.add(dummyCardBegin);
+//			this.cardList.add(startCard);
+//			this.cardList.add(dummyCardEnd);
+		}
+
 		// Spielfeld neuzeichnen
+		// TODO: Ist noch buggy
 		setupCardArea(cardList);
 		// Scorefeld setzen
 		TextView score = (TextView) findViewById(R.id.score_id);
 		score.setText(String.valueOf(sum));
+		// Verbleibende Leben setzen
+		// TODO: Hat noch keine Funktionalitaet
+		TextView actualLife = (TextView) findViewById(R.id.life_id);
+		actualLife.setText(" " + String.valueOf(lifes));
 	}
 
 	@SuppressWarnings("deprecation")

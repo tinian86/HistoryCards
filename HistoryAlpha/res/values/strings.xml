@@ -18,6 +18,6 @@
     <string name="cardviewer2">Card2</string>
     <string name="cardviewer3">Card3</string>
     <string name="txt_score">Score</string>
-    
+    <string name="txt_life">Leben</string>
 
 </resources>

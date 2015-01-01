@@ -74,6 +74,13 @@
                 android:layout_height="wrap_content"
                 android:capitalize="characters"
                 android:text="@string/txt_score" />
+            <TextView
+                android:id="@+id/life_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:capitalize="characters"
+                android:text="@string/txt_life"  />
+            
         </LinearLayout>
     </LinearLayout>
 

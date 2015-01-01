@@ -21,6 +21,8 @@ public class CardQuestion {
 
 	// Ein Stapel wird erstellt, der alle Karten beinhaltet
 	// TODO: Die Karten werden zur Zeit noch per Hand in den Stapel getan, automatisieren?
+	
+	
 	static Card stapel[] = new Card[] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10 };
 	static Card auswahlKarten[] = new Card[10];
 
@@ -32,6 +34,7 @@ public class CardQuestion {
 	// TODO: Wenn eine Karte bereits auf dem Spielfeld liegt, darf diese nicht erneut aus dem Stapel der vorhandenen Karten geholt werden!
 	// Daher Methode finden, um auszuschliessen dass das passiert
 	public static Card[] getRandomCards() {
+		
 //		Random rand = new Random();
 //		int max = 9;
 //		int min = 0;
