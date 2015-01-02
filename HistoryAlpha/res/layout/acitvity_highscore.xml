@@ -38,7 +38,7 @@
     </LinearLayout>
     
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/card1"
         android:layout_width="100dp"
         android:layout_height="25dp"
         android:layout_alignParentBottom="true"
