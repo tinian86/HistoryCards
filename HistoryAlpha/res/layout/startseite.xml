@@ -107,7 +107,7 @@
             android:id="@+id/img_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/LinearLayout1"
+            android:layout_alignLeft="@+id/img_de"
             android:layout_alignTop="@+id/img_de"
             android:src="@drawable/engl1"
             android:visibility="invisible" />
