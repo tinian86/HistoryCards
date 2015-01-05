@@ -6,6 +6,9 @@ import java.util.List;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
@@ -38,7 +41,52 @@ public class GameActivity extends Activity {
 	private int width;
 	private int height;
 	private int lifes = 3;
+	
+	public static String PREFS_NAME = "game";
+	private static String CURRENT_SCORE_KEY = "current_score";
+	private static String QUESTION_INDEX_KEY = "questionIdx";
+	private static String GAME_DIFFICULTY = "difficulty";
 
+	private int score = 0;
+	
+	private void setScore(int i){
+		score = i;
+	}
+	
+	private int getScore(){
+		return score;
+	}
+	
+	private void decreaseLifes(){
+		if(lifes > 0){
+			lifes--;
+		}
+	}
+	
+	private int getLifes(){
+		return lifes;
+	}
+	
+	// Hier wird nachdem alle leben aufgebraucht sind, die Highscore Aktivity aufgerufen und der score
+	// dem intent uebergeben und für das naechste spiel auf 0 gesetzt(in dem globaen Speicher)
+	private void gotoHighscore(){
+		SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, 0);
+		
+		Editor editor = prefs.edit();
+		editor.putInt(CURRENT_SCORE_KEY, score);
+		editor.commit();
+		
+		Intent intent = new Intent(this, HighscoreAcitvity.class);
+		intent.putExtra(
+				getResources().getString(R.string.new_highscore_extra_key),
+				score);
+		
+		editor.putInt(CURRENT_SCORE_KEY, 0);
+		editor.commit();
+		
+		startActivity(intent);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -195,6 +243,7 @@ public class GameActivity extends Activity {
 //									+ String.valueOf(cardList.get(i).jahr));
 					// Wenn eine Karte falsch liegt, Variable auf true setzen
 					wrongCard = true;
+					
 				}
 
 				cardList.get(i).schlagwort = String
@@ -205,6 +254,8 @@ public class GameActivity extends Activity {
 				sum = sum + counter;
 			}
 		}
+		
+		score = sum;
 
 		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste
 		// wird geleert und das Spielfeld neu initialisiert
@@ -216,7 +267,14 @@ public class GameActivity extends Activity {
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
 
-			lifes = lifes - 1;
+			
+			//TODO methode benutzen
+			if (getLifes() > 0){
+				decreaseLifes();
+			}else{
+				gotoHighscore();
+			}
+//			lifes = lifes - 1;
 
 			// // Alle Karten aus der Liste entfernen
 			// // TODO: Buggy, unklar wieso
@@ -243,8 +301,8 @@ public class GameActivity extends Activity {
 		// TODO: Ist noch buggy
 		setupCardArea(cardList);
 		// Scorefeld setzen
-		TextView score = (TextView) findViewById(R.id.score_id);
-		score.setText(String.valueOf(sum));
+		TextView scoreField = (TextView) findViewById(R.id.score_id);
+		scoreField.setText(String.valueOf(score));
 		// Verbleibende Leben setzen
 		// TODO: Hat noch keine Funktionalitaet
 		TextView actualLife = (TextView) findViewById(R.id.life_id);
