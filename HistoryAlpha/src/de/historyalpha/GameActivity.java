@@ -169,37 +169,45 @@ public class GameActivity extends Activity {
 		// Einfach 6 abziehen geht nicht, da geometrisch aufsummiert wird!
 		int counter = 0;
 		int sum = 0;
-		
+
 		boolean wrongCard = false;
 
-		// Methode testet, ob Karten in der falschen Reihenfolge angelegt wurden. Falls ja, so wird ein Leben abgezogen
-		// TODO: Funktionalitaet fehlt bisher noch. 
-		for (int i = 0; i < cardList.size(); i++) {
+		// Methode testet, ob Karten in der falschen Reihenfolge angelegt
+		// wurden. Falls ja, so wird ein Leben abgezogen
+		// TODO: Funktionalitaet fehlt bisher noch.
+		for (int j = cardList.size() - 2; j > 0; j--) {
 
-			Log.d("Listeninhalt", cardList.get(i).schlagwort.toString()
-					+ String.valueOf(cardList.get(i).jahr));
+			for (int i = 0; i < cardList.size(); i++) {
 
-			Log.d("listsize-1",
-					cardList.get(cardList.size() - 2).schlagwort.toString());
+//				Log.d("Listeninhalt", cardList.get(i).schlagwort.toString()
+//						+ String.valueOf(cardList.get(i).jahr));
 
-			int checkYear = cardList.get(cardList.size() - 2).jahr;
-			// Jahreszahlen vergleichen
-			if (checkYear < cardList.get(i).jahr) {
-				Log.d("checkYear",
-						String.valueOf(checkYear) + " "
-								+ String.valueOf(cardList.get(i).jahr));
-				// Wenn eine Karte falsch liegt, Variable auf true setzen
-				wrongCard = true;
+				int checkYear = cardList.get(j).jahr;
+				
+				Log.d("checkYear", "checkYear: " + String.valueOf(checkYear) + " " + cardList.get(j).schlagwort + String.valueOf(cardList.get(j).jahr));
+				
+				
+				// Jahreszahlen vergleichen
+				// TODO Glaube das ist noch nicht ganz korrekt?
+				if (checkYear < cardList.get(i).jahr) {
+//					Log.d("checkYear",
+//							"checkYear: " + String.valueOf(checkYear) + " "
+//									+ String.valueOf(cardList.get(i).jahr));
+					// Wenn eine Karte falsch liegt, Variable auf true setzen
+					wrongCard = true;
+				}
+
+				cardList.get(i).schlagwort = String
+						.valueOf(cardList.get(i).jahr);
+				setupCardArea(cardList);
+
+				counter = counter + 1;
+				sum = sum + counter;
 			}
-
-			cardList.get(i).schlagwort = String.valueOf(cardList.get(i).jahr);
-			setupCardArea(cardList);
-
-			counter = counter + 1;
-			sum = sum + counter;
 		}
 
-		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste wird geleert und das Spielfeld neu initialisiert
+		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste
+		// wird geleert und das Spielfeld neu initialisiert
 		if (wrongCard) {
 			Context context = getApplicationContext();
 			CharSequence text = "Sie haben eine Karte falsch angelegt und verlieren ein Leben!";
@@ -207,28 +215,28 @@ public class GameActivity extends Activity {
 
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
-			
+
 			lifes = lifes - 1;
 
-//			// Alle Karten aus der Liste entfernen
-//			// TODO: Buggy, unklar wieso
-//			for (int i = 0; i < cardList.size(); i++) {
-//				cardList.remove(i);
-//			}
-//			
-//			setupBottomBar();
-//			
-//			Card startCard = new Card(1, "startkarte",
-//					"Wann wurde das Teflon erfunden?", 1934);
-//
-//			// Dummykarte für Anfangs und Endpunkt (nicht sichtbar)
-//
-//			Card dummyCardBegin = new Card(0, "begin", "", 0);
-//			Card dummyCardEnd = new Card(0, "end", "", 0);
-//
-//			this.cardList.add(dummyCardBegin);
-//			this.cardList.add(startCard);
-//			this.cardList.add(dummyCardEnd);
+			// // Alle Karten aus der Liste entfernen
+			// // TODO: Buggy, unklar wieso
+			// for (int i = 0; i < cardList.size(); i++) {
+			// cardList.remove(i);
+			// }
+			//
+			// setupBottomBar();
+			//
+			// Card startCard = new Card(1, "startkarte",
+			// "Wann wurde das Teflon erfunden?", 1934);
+			//
+			// // Dummykarte für Anfangs und Endpunkt (nicht sichtbar)
+			//
+			// Card dummyCardBegin = new Card(0, "begin", "", 0);
+			// Card dummyCardEnd = new Card(0, "end", "", 0);
+			//
+			// this.cardList.add(dummyCardBegin);
+			// this.cardList.add(startCard);
+			// this.cardList.add(dummyCardEnd);
 		}
 
 		// Spielfeld neuzeichnen
@@ -263,12 +271,12 @@ public class GameActivity extends Activity {
 		int cardheight = topheight / 2;
 		int cardwidth = topwidth / 4; // nicht Quadratisch
 
-		Log.d("height", String.valueOf(cardheight));
-		Log.d("width", String.valueOf(cardwidth));
+//		Log.d("height", String.valueOf(cardheight));
+//		Log.d("width", String.valueOf(cardwidth));
 
 		int margin = (int) (cardwidth * 0.1);
 
-		Log.d("margin", String.valueOf(margin));
+//		Log.d("margin", String.valueOf(margin));
 
 		// Sortiere Elemente der Liste für Layout neu (vertauschen von 3 und 4,
 		// 7 und 8, etc.)

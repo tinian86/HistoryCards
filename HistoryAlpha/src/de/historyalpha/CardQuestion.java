@@ -38,8 +38,9 @@ public class CardQuestion {
 	// TODO: Die Karten werden zur Zeit noch per Hand in den Stapel getan, automatisieren?
 	
 	
-	static Card stapel[] = new Card[] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10 };
-	static Card auswahlKarten[] = new Card[10];
+	static Card stapel[] = new Card[] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, 
+		card18, card19, card20, card21, card22, card23, card24, card25 };
+	static Card auswahlKarten[] = new Card[25];
 
 	/**
 	 * Liefert drei zufaellige Karten. Dazu wird eine ArrayListe erstellt und geshuffelt (gemischt).
@@ -62,8 +63,8 @@ public class CardQuestion {
 		// auswahlKarten[1] = stapel[randomNum2];
 		// auswahlKarten[2] = stapel[randomNum3];
 
-		final List<Integer> sack = new ArrayList<Integer>(10);
-		for (int i = 0; i < 10; i++) {
+		final List<Integer> sack = new ArrayList<Integer>(25);
+		for (int i = 0; i < 25; i++) {
 			sack.add(i);
 		}
 		Collections.shuffle(sack);
