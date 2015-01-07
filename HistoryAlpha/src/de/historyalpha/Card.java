@@ -1,12 +1,12 @@
 package de.historyalpha;
 
 public class Card {
-	
+
 	int cardId;
 	String schlagwort;
 	String text;
 	int jahr;
-	
+
 	public Card(int cardId, String schlagwort, String text, int jahr) {
 		this.cardId = cardId;
 		this.schlagwort = schlagwort;
@@ -37,7 +37,7 @@ public class Card {
 	public void setText(String text) {
 		this.text = text;
 	}
-	
+
 	public int getJahr() {
 		return jahr;
 	}
@@ -50,5 +50,4 @@ public class Card {
 		return "Card [cardId=" + cardId + ", schlagwort=" + schlagwort
 				+ ", text=" + text + ", jahr=" + jahr + "]";
 	}
-
 }

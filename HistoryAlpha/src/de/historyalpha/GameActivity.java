@@ -41,52 +41,56 @@ public class GameActivity extends Activity {
 	private int width;
 	private int height;
 	private int lifes = 3;
-	
+
 	public static String PREFS_NAME = "game";
 	private static String CURRENT_SCORE_KEY = "current_score";
 	private static String QUESTION_INDEX_KEY = "questionIdx";
 	private static String GAME_DIFFICULTY = "difficulty";
 
+	public static String CARD_TEMP = "leer";
+
 	private int score = 0;
-	
-	private void setScore(int i){
+
+	private void setScore(int i) {
 		score = i;
 	}
-	
-	private int getScore(){
+
+	private int getScore() {
 		return score;
 	}
-	
-	private void decreaseLifes(){
-		if(lifes > 0){
+
+	private void decreaseLifes() {
+		if (lifes > 0) {
 			lifes--;
 		}
 	}
-	
-	private int getLifes(){
+
+	private int getLifes() {
 		return lifes;
 	}
-	
-	// Hier wird nachdem alle leben aufgebraucht sind, die Highscore Aktivity aufgerufen und der score
-	// dem intent uebergeben und für das naechste spiel auf 0 gesetzt(in dem globaen Speicher)
-	private void gotoHighscore(){
+
+	// Hier wird nachdem alle leben aufgebraucht sind, die Highscore Aktivity
+	// aufgerufen und der score
+	// dem intent uebergeben und für das naechste spiel auf 0 gesetzt(in dem
+	// globaen Speicher)
+	private void gotoHighscore() {
 		SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, 0);
-		
+
 		Editor editor = prefs.edit();
 		editor.putInt(CURRENT_SCORE_KEY, score);
 		editor.commit();
-		
+
 		Intent intent = new Intent(this, HighscoreAcitvity.class);
 		intent.putExtra(
 				getResources().getString(R.string.new_highscore_extra_key),
 				score);
-		
+
 		editor.putInt(CURRENT_SCORE_KEY, 0);
 		editor.commit();
-		
+
 		startActivity(intent);
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -227,34 +231,43 @@ public class GameActivity extends Activity {
 
 			for (int i = 0; i < cardList.size(); i++) {
 
-//				Log.d("Listeninhalt", cardList.get(i).schlagwort.toString()
-//						+ String.valueOf(cardList.get(i).jahr));
+				// Log.d("Listeninhalt", cardList.get(i).schlagwort.toString()
+				// + String.valueOf(cardList.get(i).jahr));
 
 				int checkYear = cardList.get(j).jahr;
-				
-				Log.d("checkYear", "checkYear: " + String.valueOf(checkYear) + " " + cardList.get(j).schlagwort + String.valueOf(cardList.get(j).jahr));
-				
-				
+
+				Log.d("checkYear",
+						"checkYear: " + String.valueOf(checkYear) + " "
+								+ cardList.get(j).schlagwort
+								+ String.valueOf(cardList.get(j).jahr));
+
 				// Jahreszahlen vergleichen
 				// TODO Glaube das ist noch nicht ganz korrekt?
 				if (checkYear < cardList.get(i).jahr) {
-//					Log.d("checkYear",
-//							"checkYear: " + String.valueOf(checkYear) + " "
-//									+ String.valueOf(cardList.get(i).jahr));
+					// Log.d("checkYear",
+					// "checkYear: " + String.valueOf(checkYear) + " "
+					// + String.valueOf(cardList.get(i).jahr));
 					// Wenn eine Karte falsch liegt, Variable auf true setzen
 					wrongCard = true;
-					
+
+					// TODO Kartenfarbe aendern, muss vermutlich direkt im Container gemacht werden
+					cardList.get(i).schlagwort = String
+							.valueOf(cardList.get(i).jahr) + " falsch";
 				}
 
-				cardList.get(i).schlagwort = String
-						.valueOf(cardList.get(i).jahr);
+				else {
+					// TODO Karten werden noch falsch mit "falsch / korrekt" bezeichnet
+					cardList.get(i).schlagwort = String
+							.valueOf(cardList.get(i).jahr) + " korrekt";
+				}
+
 				setupCardArea(cardList);
 
 				counter = counter + 1;
 				sum = sum + counter;
 			}
 		}
-		
+
 		score = sum;
 
 		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste
@@ -267,14 +280,13 @@ public class GameActivity extends Activity {
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
 
-			
-			//TODO methode benutzen
-			if (getLifes() > 0){
+			// TODO methode benutzen
+			if (getLifes() > 0) {
 				decreaseLifes();
-			}else{
+			} else {
 				gotoHighscore();
 			}
-//			lifes = lifes - 1;
+			// lifes = lifes - 1;
 
 			// // Alle Karten aus der Liste entfernen
 			// // TODO: Buggy, unklar wieso
@@ -329,12 +341,12 @@ public class GameActivity extends Activity {
 		int cardheight = topheight / 2;
 		int cardwidth = topwidth / 4; // nicht Quadratisch
 
-//		Log.d("height", String.valueOf(cardheight));
-//		Log.d("width", String.valueOf(cardwidth));
+		// Log.d("height", String.valueOf(cardheight));
+		// Log.d("width", String.valueOf(cardwidth));
 
 		int margin = (int) (cardwidth * 0.1);
 
-//		Log.d("margin", String.valueOf(margin));
+		// Log.d("margin", String.valueOf(margin));
 
 		// Sortiere Elemente der Liste für Layout neu (vertauschen von 3 und 4,
 		// 7 und 8, etc.)
