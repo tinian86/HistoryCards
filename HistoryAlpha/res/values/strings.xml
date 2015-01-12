@@ -19,7 +19,11 @@
     <string name="card3">Card3</string>
     <string name="txt_score">Score</string>
     <string name="txt_life">Leben</string>
-    <string name="choose_Player">Wähle die Spieleranzahl aus</string>
-    <string name="btn_back">Zurück </string>
+    <string name="choose_Player">Anzahl der Spieler?</string>
+    <string name="btn_back">Zurück</string>
+    <string name="title_activity_multi">MultiActivity</string>
+    <string name="btn_4">4</string>
+    <string name="btn_3">3</string>
+    <string name="btn_2">2</string>
 
 </resources>

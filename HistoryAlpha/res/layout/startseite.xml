@@ -23,7 +23,8 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="6dp"
-                android:text="History Cards"
+                
+                android:text="@string/app_name"
                 android:textColor="#000000"
                 android:textSize="50sp"
                 android:textStyle="bold"

@@ -37,11 +37,11 @@
     
     <Button
         android:id="@+id/btn_back"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/gradientrot"
         android:onClick="goBack"
         android:text="@string/btn_back"

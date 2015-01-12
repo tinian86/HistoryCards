@@ -42,7 +42,7 @@ public final class R {
         public static final int verlaufblau=0x7f020011;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f080015;
+        public static final int LinearLayout1=0x7f080016;
         public static final int action_settings=0x7f08001c;
         public static final int bottomLayout=0x7f080009;
         public static final int btn_back=0x7f080002;
@@ -58,7 +58,7 @@ public final class R {
         public static final int card1=0x7f080005;
         public static final int card2=0x7f080006;
         public static final int card3=0x7f080007;
-        public static final int choose_Player=0x7f080016;
+        public static final int choose_Player=0x7f080015;
         public static final int gridlayout=0x7f08000a;
         public static final int highscoreList=0x7f080001;
         public static final int horizontalScrollView1=0x7f080008;
@@ -88,6 +88,9 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f050008;
         public static final int app_name=0x7f050000;
+        public static final int btn_2=0x7f050017;
+        public static final int btn_3=0x7f050016;
+        public static final int btn_4=0x7f050015;
         public static final int btn_back=0x7f050013;
         public static final int btn_exit=0x7f050005;
         public static final int btn_multi=0x7f050002;
@@ -103,6 +106,7 @@ public final class R {
         public static final int new_highscore_extra_key=0x7f05000b;
         public static final int title_activity_card_viewer=0x7f05000c;
         public static final int title_activity_highscore_acitvity=0x7f05000a;
+        public static final int title_activity_multi=0x7f050014;
         public static final int title_game_activity=0x7f050009;
         public static final int txt_life=0x7f050011;
         public static final int txt_score=0x7f050010;
