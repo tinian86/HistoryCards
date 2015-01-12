@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
+import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements OnClickListener {
 
 	public String NAMETAG = "Alpha - GameActivity";
 
@@ -96,7 +97,7 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-
+		
 		try {
 
 			setupBottomBar();
@@ -556,5 +557,9 @@ public class GameActivity extends Activity {
 			return true;
 		}
 
+	}
+	
+	public void onClick(View e){
+		
 	}
 }
