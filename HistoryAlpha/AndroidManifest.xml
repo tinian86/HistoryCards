@@ -43,6 +43,13 @@
         <activity
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
+            android:name=".TutorialActivity"
+            android:label="@string/title_tutorial" >
+        </activity>
+        
+        <activity
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
             android:name=".HighscoreAcitvity"
             android:label="@string/title_activity_highscore_acitvity" >
         </activity>

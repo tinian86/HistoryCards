@@ -108,6 +108,7 @@ public final class R {
         public static final int title_activity_highscore_acitvity=0x7f05000a;
         public static final int title_activity_multi=0x7f050014;
         public static final int title_game_activity=0x7f050009;
+        public static final int title_tutorial=0x7f050018;
         public static final int txt_life=0x7f050011;
         public static final int txt_score=0x7f050010;
     }

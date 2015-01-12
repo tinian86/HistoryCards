@@ -124,5 +124,10 @@ public class MenueActivity extends Activity implements OnClickListener {
 		startActivity(intent);
 	}
 	
+	public void readMe(View view){
+		Intent intent = new Intent(this, TutorialActivity.class);
+		startActivity(intent);
+	}
+	
 
 }

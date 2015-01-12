@@ -1,18 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/afrikanischholz" >
     
     
+
+	    
+    <RelativeLayout 
+         xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+	    android:paddingRight="@dimen/activity_horizontal_margin"  
+	    android:background="@drawable/afrikanischholz" >
+	    
+        
+    
+    
+        <ScrollView
+       
+  		android:layout_width="match_parent"
+  		android:layout_height="match_parent" 
+	    android:fillViewport="true"
+	    android:background="@drawable/afrikanischholz" >
+	    
      <LinearLayout
             android:id="@+id/LinearLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-    
+            android:orientation="vertical" >
 			
          
-     </LinearLayout>
+   			 <TextView
+                android:id="@+id/choose_Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                
+                android:text="@string/btn_tutorial"
+                android:textColor="#000000"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
     
-</RelativeLayout>
+    
+    		<TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                
+                android:text="\tZiel des Spiels ist es, die aufgeführten Karten durch Beantworten der Fragen, in die richtige historisch-zeitliche Reihenfolge einzusortieren.\n
+					Als Starthilfe ist die erste Karte vorgegeben, welche das Bestimmten der Jahreszahl unterstützen soll.
+                								\n
+						Wenn alle drei Karten sortiert wurden, kann mit einem Klick auf 'Neue Karten' weitergespielt werden.
+												\n
+						Sobald eine Karte falsch einsortiert wird, erscheinen die Jahreszahlen der bisher gelegten Karten. Eins von den drei Leben geht dabei verloren. 
+						\n
+						Bei jeder richtig eingesetzten Karte gibt es 5 Punkte. Bei jeder falsch gelegten gibt es kein Punktabzug."
+						
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
+         	
+    		
+    		<Button
+		        android:id="@+id/btn_back"
+		        android:layout_width="100dp"
+		        android:layout_height="25dp"
+		        
+		        android:layout_alignParentBottom="true"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginBottom="10dp"
+		        android:layout_gravity="center"
+                
+		        android:text="@string/btn_back" 
+		        android:textColor="#000000"
+		        android:textSize="12sp"
+		        android:textStyle="bold"
+		        android:typeface="serif"
+		        android:background="@drawable/gradientrot"
+		        android:onClick="goBack" />
+    
+     
+     	</LinearLayout>
+     
+     </ScrollView>
+    		
+         	
+            
+      </RelativeLayout>
+    
