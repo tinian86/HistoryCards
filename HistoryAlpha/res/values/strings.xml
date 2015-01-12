@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <string name="app_name">History Cards Alpha</string>
+    <string name="app_name">History Cards</string>
     <string name="btn_single">Einzelspieler</string>
     <string name="btn_multi">Mehrspieler</string>
     <string name="btn_tutorial">Anleitung</string>
@@ -19,5 +19,7 @@
     <string name="card3">Card3</string>
     <string name="txt_score">Score</string>
     <string name="txt_life">Leben</string>
+    <string name="choose_Player">Wähle die Spieleranzahl aus</string>
+    <string name="btn_back">Zurück </string>
 
 </resources>

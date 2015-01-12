@@ -60,21 +60,26 @@ public class MenueActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
+		
 		case R.id.img_en:
-			img_btn_en.setVisibility(v.INVISIBLE);
-			img_btn_de.setVisibility(v.VISIBLE);
+			//img_btn_en.setVisibility(v.INVISIBLE);
+			//img_btn_de.setVisibility(v.VISIBLE);
 			btn_single.setText("Single Player");
 			btn_multi.setText("Multi Player");
 			btn_tut.setText("Tutorial");
 			btn_score.setText("Highscore");
+		
 		case R.id.img_de:
 			img_btn_de.setVisibility(v.INVISIBLE);
 			img_btn_en.setVisibility(v.VISIBLE);
+			
 			//btn_single.setText("Einzelspieler");
 			//btn_multi.setText("Mehrspieler");
 			//btn_tut.setText("Anleitung");
 			//btn_score.setText("Punktestand");
 		}
+		
+		
 		
 	}
 
@@ -114,7 +119,10 @@ public class MenueActivity extends Activity implements OnClickListener {
 		super.onStop();
 	}
 
-	
+	public void showMulti(View view){
+		Intent intent = new Intent(this, MultiActivity.class);
+		startActivity(intent);
+	}
 	
 
 }

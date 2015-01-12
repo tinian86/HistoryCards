@@ -36,6 +36,19 @@
             android:name=".HighscoreAcitvity"
             android:label="@string/title_activity_highscore_acitvity" >
         </activity>
+        
     </application>
+        
+    <supports-screens
+        android:resizeable="true"
+        android:smallScreens="true" 
+        android:normalScreens="true" 
+        android:largeScreens="true"
+        android:xlargeScreens="true"
+        android:anyDensity="true"
+        android:requiresSmallestWidthDp="320"
+        android:compatibleWidthLimitDp="320"
+        android:largestWidthLimitDp="320">
+    </supports-screens>
 
 </manifest>
