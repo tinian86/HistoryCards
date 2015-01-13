@@ -26,5 +26,6 @@
     <string name="btn_3">3</string>
     <string name="btn_2">2</string>
     <string name="title_tutorial">TutorialActivity</string>
+    <string name="title_card_viewer">CardViewer</string>
 
 </resources>

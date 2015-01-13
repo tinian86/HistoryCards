@@ -3,6 +3,10 @@
     android:id="@+id/relativeViewer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin" 
+    android:paddingBottom="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_horizontal_margin" 
     android:background="@drawable/afrikanischholz"
     tools:context="${relativePackage}.${activityClass}" >
 
@@ -10,28 +14,51 @@
         android:id="@+id/linearViewer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
+        
+        android:layout_centerVertical="true"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/card1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/card1" />
+            android:layout_width="130dp"
+            android:layout_height="200dp"
+            android:layout_marginRight="10dp"
+            
+            android:onClick="startGame"
+            android:text="Wann erschuf Picasso seine Guernica?"
+            android:background="@drawable/farbekarten"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/card2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/card2" />
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            
+            android:onClick="startGame"
+            android:text="Wann fiel die Berliner Mauer?"
+            android:background="@drawable/farbekarten"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
         <Button
             android:id="@+id/card3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/card3" />
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            
+            android:onClick="startGame"
+            android:text="Wann war der erste Weltkrieg?"
+            android:background="@drawable/farbekarten"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:typeface="serif" />
 
     </LinearLayout>
 

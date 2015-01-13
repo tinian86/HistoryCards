@@ -17,12 +17,7 @@ public class MultiActivity extends Activity{
 		setContentView(R.layout.activity_multi_player);
 	}
 	
-	//test mit einzelspieler
-	public void startGame(View view){
-		Intent intent = new Intent(this, GameActivity.class);
-		startActivity(intent);
-	}
-		
+	
 	public void goBack(View view){
 		Intent i = new Intent(this, MenueActivity.class);
 		startActivity(i);

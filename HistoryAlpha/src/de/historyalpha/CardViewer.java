@@ -1,9 +1,11 @@
 package de.historyalpha;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -75,6 +77,12 @@ public class CardViewer extends Activity {
 		linear.addView(card2);
 		linear.addView(card3);		
 		
+	}
+	
+	
+	public void startGame(View view){
+		Intent intent = new Intent(this, GameActivity.class);
+		startActivity(intent);
 	}
 	
 }

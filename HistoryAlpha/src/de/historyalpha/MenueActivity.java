@@ -102,12 +102,21 @@ public class MenueActivity extends Activity implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/*
 	
 	public void startGame(View view){
 		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 		//Hier koennen ueber getRandomCards() neue Karten aus dem Stapel-Array geholt werden
 		//Log.d("MenueActivity", "Stapel" + CardQuestion.getRandomCards().toString());
+	}
+	
+	
+	*/
+	
+	public void cardView(View view){
+		Intent intent = new Intent(this, CardViewer.class);
+		startActivity(intent);
 	}
 	
 	public void showScore(View view){

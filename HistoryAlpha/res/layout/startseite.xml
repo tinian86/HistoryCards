@@ -42,7 +42,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:typeface="serif"
-                android:onClick="startGame" />
+                android:onClick="cardView" />
 
             <Button
                 android:id="@+id/btn_multi"

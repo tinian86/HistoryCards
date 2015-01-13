@@ -29,6 +29,13 @@
         <activity
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
+            android:name=".CardViewer"
+            android:label="@string/title_card_viewer" >
+        </activity>
+        
+        <activity
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
             android:name=".GameActivity"
             android:label="@string/title_game_activity" >
         </activity>

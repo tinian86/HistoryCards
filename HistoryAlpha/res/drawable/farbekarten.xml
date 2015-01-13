@@ -5,13 +5,13 @@
     android:shape="rectangle" >
 
     <gradient
-        android:angle="270"
-        android:endColor="#154F6B"
-        android:startColor="#27C6E6"
+        android:angle="90"
+        android:endColor="#FFD39B"
+        android:startColor="#8B7355"
         android:type="linear" />
 
     <corners 
-        android:radius="30dp"/>
+        android:radius="10dp"/>
     
     <stroke
 		android:width="1dp"

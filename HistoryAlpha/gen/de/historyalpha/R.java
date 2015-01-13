@@ -29,17 +29,18 @@ public final class R {
         public static final int background04=0x7f020004;
         public static final int engl1=0x7f020005;
         public static final int engl1web=0x7f020006;
-        public static final int german1=0x7f020007;
-        public static final int german1web=0x7f020008;
-        public static final int gradientblau=0x7f020009;
-        public static final int gradientgelb=0x7f02000a;
-        public static final int gradientgruen=0x7f02000b;
-        public static final int gradientlila=0x7f02000c;
-        public static final int gradientrot=0x7f02000d;
-        public static final int ic_launcher=0x7f02000e;
-        public static final int shape=0x7f02000f;
-        public static final int shape_droptarget=0x7f020010;
-        public static final int verlaufblau=0x7f020011;
+        public static final int farbekarten=0x7f020007;
+        public static final int german1=0x7f020008;
+        public static final int german1web=0x7f020009;
+        public static final int gradientblau=0x7f02000a;
+        public static final int gradientgelb=0x7f02000b;
+        public static final int gradientgruen=0x7f02000c;
+        public static final int gradientlila=0x7f02000d;
+        public static final int gradientrot=0x7f02000e;
+        public static final int ic_launcher=0x7f02000f;
+        public static final int shape=0x7f020010;
+        public static final int shape_droptarget=0x7f020011;
+        public static final int verlaufgruen=0x7f020012;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f080016;
@@ -107,6 +108,7 @@ public final class R {
         public static final int title_activity_card_viewer=0x7f05000c;
         public static final int title_activity_highscore_acitvity=0x7f05000a;
         public static final int title_activity_multi=0x7f050014;
+        public static final int title_card_viewer=0x7f050019;
         public static final int title_game_activity=0x7f050009;
         public static final int title_tutorial=0x7f050018;
         public static final int txt_life=0x7f050011;
