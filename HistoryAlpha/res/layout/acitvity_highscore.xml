@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/afrikanischholz"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="100dp"
+    android:paddingRight="100dp"
     tools:context=".HighscoreActivity" >
 
     <TextView
@@ -14,6 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/btn_score"
         android:textColor="#000000"
 		android:textSize="30sp"

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -41,6 +42,20 @@ public class HighscoreAcitvity extends Activity {
 	public int score = 0;
 	int sc;
 
+	
+	public void screenSize(){
+		DisplayMetrics metrics = getResources().getDisplayMetrics(); 
+		 
+		double ySize = metrics.heightPixels / metrics.ydpi;
+		double xSize = metrics.widthPixels / metrics.xdpi;
+		 
+		// Bildschirmgrösse in Zoll
+		double screenSize = Math.sqrt(xSize * xSize + ySize * ySize);
+	}
+	
+	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -84,8 +99,10 @@ public class HighscoreAcitvity extends Activity {
 			scoreView.setGravity(Gravity.RIGHT);
 			scoreView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 			
-			nameView.setText(++count + ". " + entry.playerName);
-			scoreView.setText("" + entry.playerScore);
+			nameView.setText(++count + ". " + entry.playerName + "....");
+			scoreView.setText("...." + entry.playerScore);
+			nameView.setTextColor(android.graphics.Color.BLUE);
+			scoreView.setTextColor(android.graphics.Color.BLUE);
 			
 			highscoreLine.addView(nameView);
 			highscoreLine.addView(scoreView);

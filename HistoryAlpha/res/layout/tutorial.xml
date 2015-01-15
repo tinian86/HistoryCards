@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    
-    
-
-	    
-    <RelativeLayout 
-         xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:paddingLeft="@dimen/activity_horizontal_margin"
 	    android:paddingRight="@dimen/activity_horizontal_margin"  
 	    android:background="@drawable/afrikanischholz" >
 	    
-        
-    
     
         <ScrollView
-       
-  		android:layout_width="match_parent"
-  		android:layout_height="match_parent" 
-	    android:fillViewport="true"
-	    android:background="@drawable/afrikanischholz" >
+	  		android:layout_width="match_parent"
+	  		android:layout_height="match_parent"
+	  		android:layout_marginLeft="6dp" 
+		    android:fillViewport="true"
+		    android:background="@drawable/afrikanischholz" >
 	    
-     <LinearLayout
-            android:id="@+id/LinearLayout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+     		<LinearLayout
+	            android:id="@+id/LinearLayout1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
 			
          
    			 <TextView
@@ -47,20 +41,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="40dp"
+               
                 
-                android:text="\tZiel des Spiels ist es, die aufgeführten Karten durch Beantworten der Fragen, in die richtige historisch-zeitliche Reihenfolge einzusortieren.\n
-					Als Starthilfe ist die erste Karte vorgegeben, welche das Bestimmten der Jahreszahl unterstützen soll.
+                android:text="\tZiel des Spiels ist es, die unten aufgeführten Karten durch Beantworten der Fragen mit einem Klick erscheinen, in die richtige historisch-zeitliche Reihenfolge einzusortieren.\n
+					Als Starthilfe ist die erste Karte vorgegeben, welche das Bestimmen der Jahreszahl unterstützen soll.
                 								\n
-						Wenn alle drei Karten sortiert wurden, kann mit einem Klick auf 'Neue Karten' weitergespielt werden.
-												\n
-						Sobald eine Karte falsch einsortiert wird, erscheinen die Jahreszahlen der bisher gelegten Karten. Eins von den drei Leben geht dabei verloren. 
+						Sobald eine Karte falsch einsortiert wird, erscheint die Jahreszahl der gelegten Karte. Eins von den drei Leben geht dabei verloren. Nach einem antippen auf diesem kann eine weitere Karten eingesetzt werden.
 						\n
-						Bei jeder richtig eingesetzten Karte gibt es 5 Punkte. Bei jeder falsch gelegten gibt es kein Punktabzug."
+						Die Anzahl jeder richtig eingesetzten Karte wird summiert und gibt den Punktestand an. Bei jeder falsch gelegten gibt es keinen Punktabzug."
 						
-                android:textColor="#000000"
+                android:textColor="#191970"
                 android:textSize="15sp"
-                android:textStyle="bold"
+                
                 android:typeface="serif" />
          	
     		
@@ -71,6 +63,7 @@
 		        
 		        android:layout_alignParentBottom="true"
 		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="10dp"
 		        android:layout_marginBottom="10dp"
 		        android:layout_gravity="center"
                 

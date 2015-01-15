@@ -88,6 +88,9 @@
             
         </LinearLayout>
         
+        
+     <!--    
+        
         <ImageButton
             android:id="@+id/img_de"
             android:layout_width="wrap_content"
@@ -104,5 +107,7 @@
             android:layout_alignTop="@+id/img_de"
             android:src="@drawable/engl1"
             android:visibility="invisible" />
+       
+       -->
        
 </RelativeLayout>

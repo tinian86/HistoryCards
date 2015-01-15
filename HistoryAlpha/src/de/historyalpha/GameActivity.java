@@ -129,7 +129,8 @@ public class GameActivity extends Activity implements OnClickListener {
 		final EditText nameInput = (EditText) popupView
 				.findViewById(R.id.userName);
 
-		tex.setText("Spiel vorbei! Sie haben " + score + " Punkte erreicht");
+		tex.setText("Das Spiel ist vorbei! \nSie haben " + score + " Punkte erreicht.");
+		tex.setTextSize(25f);
 
 		Button btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
 		btnDismiss.setOnClickListener(new Button.OnClickListener() {
@@ -146,13 +147,14 @@ public class GameActivity extends Activity implements OnClickListener {
 				 */
 
 				name = nameInput.getText().toString();
+				
 
-				popupWindow.dismiss();
+				//popupWindow.dismiss();
 				gotoHighscore();
 			}
 		});
 
-		// popupWindow.showAsDropDown(mapView, -50, +30);
+		//popupWindow.showAsDropDown(mapView, -50, +30);
 		popupWindow.showAtLocation(v, 1, 50, 50);
 	}
 
@@ -226,7 +228,7 @@ public class GameActivity extends Activity implements OnClickListener {
 		button1.setText(playableCards.get(0).getSchlagwort());
 		button2.setText(playableCards.get(1).getSchlagwort());
 		button3.setText(playableCards.get(2).getSchlagwort());
-
+		
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
@@ -257,10 +259,12 @@ public class GameActivity extends Activity implements OnClickListener {
 
 		TextView txtScore = (TextView) findViewById(R.id.score_id);
 		TextView txtLife = (TextView) findViewById(R.id.life_id);
+		txtScore.setTextColor(android.graphics.Color.YELLOW);
+		txtLife.setTextColor(android.graphics.Color.GREEN);
 
-		//TODO Schriftgröße dynamisch
-		//txtScore.setTextSize(50f);
-		//txtLife.setTextSize(50f);
+		//TODO Schriftgröße dynamisch -> fuer Tablet 40f
+		txtScore.setTextSize(30f);
+		txtLife.setTextSize(30f);
 
 	}
 
@@ -396,13 +400,13 @@ public class GameActivity extends Activity implements OnClickListener {
 		setupCardArea(cardList);
 		// Scorefeld setzen
 		TextView scoreField = (TextView) findViewById(R.id.score_id);
-		scoreField.setText("Score: " + String.valueOf(score));
-		scoreField.setHeight(height / 5);
-		scoreField.setWidth(width / 6);
+		scoreField.setText("Punkte: " + String.valueOf(score));
+		//scoreField.setHeight(height / 5);
+		//scoreField.setWidth(width / 6);
 		// scoreField.setTextSize(1.0f);
 		// Verbleibende Leben setzen
 		TextView actualLife = (TextView) findViewById(R.id.life_id);
-		actualLife.setText("Life: " + String.valueOf(lifes));
+		actualLife.setText("Leben: " + String.valueOf(lifes));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -525,7 +529,8 @@ public class GameActivity extends Activity implements OnClickListener {
 
 						Button bigButton = (Button) popupView
 								.findViewById(R.id.cardDescriptionButton);
-						bigButton.setText(schlagwort + "\n" + beschreibung);
+						bigButton.setText(schlagwort + "\n\n" + beschreibung);
+						//bigButton.setTextSize(20f);
 						bigButton.setMinimumHeight(height * 3 / 5);
 						bigButton.setMinimumWidth(width / 2);
 
@@ -546,6 +551,7 @@ public class GameActivity extends Activity implements OnClickListener {
 				if (!card.isCorrect()) {
 					b1.setText(String.valueOf(card.getJahr()));
 					b1.setBackgroundColor(Color.RED);
+					b1.setTextSize(40f);
 					b1.setOnClickListener(new OnClickListener() {
 
 						@Override

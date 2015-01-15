@@ -63,7 +63,10 @@
         android:normalScreens="true" 
         android:largeScreens="true"
         android:xlargeScreens="true"
-        android:anyDensity="true">
+        android:anyDensity="true"
+        android:requiresSmallestWidthDp="320"
+        android:compatibleWidthLimitDp="600"
+        >
     </supports-screens>
 
 </manifest>

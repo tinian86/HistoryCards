@@ -13,26 +13,26 @@ public class CardQuestion {
 	static Card card3 = new Card(3, "Kaugummi", "Wann wurde die erste Kaugummifabrik eröffnet?", 1848);
 	static Card card4 = new Card(4, "Tesla", "Wann wurde Nikola Tesla geboren?", 1856);
 	static Card card5 = new Card(5, "Guernica", "Wann malte Picasso seine 'Guernica'?", 1937);
-	static Card card6 = new Card(6, "Olympische Spiele", "Wann fanden die Olympischen Spiele das erste mal statt?", 1896);
+	static Card card6 = new Card(6, "Olympia", "Wann fanden die Olympischen Spiele das erste mal statt?", 1896);
 	static Card card7 = new Card(7, "Nobelpreis", "Wann wurde der Nobelpreis erstmalig verliehen?", 1901);
 	static Card card8 = new Card(8, "Columbus", "Wann entdeckte Christoph Columbus Amerika?", 1492);
 	static Card card9 = new Card(9, "Auto", "Wann wurde das erste Auto entwickelt?", 1886);
-	static Card card10 = new Card(10, "Kinder Schokolade", "Wann kam die Kinder Schokolade auf den Markt?", 1967);
+	static Card card10 = new Card(10, "Kinder Schoko", "Wann kam die Kinder Schokolade auf den Markt?", 1967);
 	static Card card11 = new Card(11, "Pilsner Bier", "Wann wurde das erste Pilsner Bier gebraut?", 1842);
-	static Card card12 = new Card(12, "Niki de Saint Phalle", "Wann wurde Niki de Saint Phalle geboren?", 1930);
-	static Card card13 = new Card(13, "Rollstuhl mit Selbstantrieb", "Wann wurde der erste Rollstuhl mit Selbstantrieb konstruiert?", 1655);
-	static Card card14 = new Card(14, "Tragbarer Herzschrittmacher", "Wann wurden die ersten tragbaren Herzschrittmacher entwickelt?", 1957);
+	static Card card12 = new Card(12, "Saint Phalle", "Wann wurde Niki de Saint Phalle geboren?", 1930);
+	static Card card13 = new Card(13, "Rollstuhl", "Wann wurde der erste Rollstuhl mit Selbstantrieb konstruiert?", 1655);
+	static Card card14 = new Card(14, "Herzschrittmacher", "Wann wurden die ersten tragbaren Herzschrittmacher entwickelt?", 1957);
 	static Card card15 = new Card(15, "Game Boy", "Wann erschien der erste Game Boy?", 1989);
 	static Card card16 = new Card(16, "Chuck Norris", "Wann wurde Chuck Norris das erste mal Weltmeister?", 1962);
 	static Card card17 = new Card(17, "Disney", "Wann wurde der erste Disney Film veröffentlicht?", 1937);
 	static Card card18 = new Card(18, "Pokémon", "Wann kam das erste Pokémon Spiel in Japan heraus?", 1996);
 	static Card card19 = new Card(19, "Mauerfall", "Wann wurde die Berliner Mauer zu Fall gebracht?", 1989);
 	static Card card20 = new Card(20, "George W. Bush", "Wann begann die Amtszeit von George W. Bush?", 2001);
-	static Card card21 = new Card(21, "Erster Weltkrieg", "Wann brach der erste Weltkrieg aus?", 1914);
+	static Card card21 = new Card(21, "1. Weltkrieg", "Wann brach der erste Weltkrieg aus?", 1914);
 	static Card card22 = new Card(22, "Digitalrechner", "Wann wurde der erste funktionsfähige Digitalrechner gebaut?", 1941);
-	static Card card23 = new Card(23, "Relativitätstheorie", "Wann publizierte Albert Einstein die Relativitätstheorie?", 1915);
+	static Card card23 = new Card(23, "Einstein", "Wann publizierte Albert Einstein die Relativitätstheorie?", 1915);
 	static Card card24 = new Card(24, "Jungfrau von Orléans", "Wann wurde die Jungfrau von Orléans verbrannt?", 1431);
-	static Card card25 = new Card(25, "Romeo und Julia", "Wann wurde die Tragödie 'Romeo und Julia' von William Shakespeare zum ersten mal aufgeführt?", 1597);
+	static Card card25 = new Card(25, "Romeo & Julia", "Wann wurde die Tragödie 'Romeo und Julia' von William Shakespeare zum ersten mal aufgeführt?", 1597);
 	
 	// Ein Stapel wird erstellt, der alle Karten beinhaltet
 	// TODO: Die Karten werden zur Zeit noch per Hand in den Stapel getan, automatisieren?

@@ -17,8 +17,8 @@
     <string name="card1">Card1</string>
     <string name="card2">Card2</string>
     <string name="card3">Card3</string>
-    <string name="txt_score">Score: 0</string>
-    <string name="txt_life">Leben: 0</string>
+    <string name="txt_score"> Punkte: 0</string>
+    <string name="txt_life"> Leben: 0</string>
     <string name="choose_Player">Anzahl der Spieler?</string>
     <string name="btn_back">Zurück</string>
     <string name="title_activity_multi">MultiActivity</string>

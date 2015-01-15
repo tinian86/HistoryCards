@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/afrikanischholz"
-     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:paddingRight="@dimen/activity_horizontal_margin"  
+    android:background="@drawable/afrikanischholz">
 
-     <!-- 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/LinearLayout1"
-            android:src="@drawable/engl" />
-         -->
 
         <LinearLayout
             android:id="@+id/LinearLayout1"
@@ -31,9 +21,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="18dp"
-                android:layout_marginTop="10dp"
-                android:text="History Cards"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="6dp"
+                
+                android:text="@string/app_name"
                 android:textColor="#000000"
                 android:textSize="50sp"
                 android:textStyle="bold"
@@ -48,10 +39,10 @@
                 android:background="@drawable/gradientgelb"
                 android:text="@string/btn_single"
                 android:textColor="#000000"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:typeface="serif"
-                android:onClick="startGame" />
+                android:onClick="cardView" />
 
             <Button
                 android:id="@+id/btn_multi"
@@ -62,9 +53,10 @@
                 android:background="@drawable/gradientgruen"
                 android:text="@string/btn_multi"
                 android:textColor="#000000"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:typeface="serif" />
+                android:typeface="serif" 
+                android:onClick="showMulti"/>
 
             <Button
                 android:id="@+id/btn_tutorial"
@@ -75,9 +67,10 @@
                 android:background="@drawable/gradientblau"
                 android:text="@string/btn_tutorial"
                 android:textColor="#000000"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:typeface="serif" 
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:onClick="readMe"/>
 
             <Button
                 android:id="@+id/btn_score"
@@ -88,12 +81,15 @@
                 android:background="@drawable/gradientlila"
                 android:text="@string/btn_score"
                 android:textColor="#000000"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:typeface="serif" 
                 android:textStyle="bold"
                 android:onClick="showScore"/>
             
         </LinearLayout>
+        
+        
+     <!--    
         
         <ImageButton
             android:id="@+id/img_de"
@@ -111,5 +107,7 @@
             android:layout_alignTop="@+id/img_de"
             android:src="@drawable/engl1"
             android:visibility="invisible" />
+       
+       -->
        
 </RelativeLayout>

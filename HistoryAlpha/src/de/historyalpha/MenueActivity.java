@@ -12,7 +12,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class MenueActivity extends Activity implements OnClickListener {
+public class MenueActivity extends Activity {	//implements OnClickListener {
 	
 	//GUI_Elemente
 	Button btn_single;
@@ -36,6 +36,8 @@ public class MenueActivity extends Activity implements OnClickListener {
 		btn_tut = (Button) findViewById(R.id.btn_tutorial);
 		btn_score = (Button) findViewById(R.id.btn_score);
 			
+		
+		/*
 		//German_Button on First_Menue
 		img_btn_de = (ImageButton) findViewById(R.id.img_de);
 		img_btn_de.setOnClickListener(this);
@@ -79,7 +81,7 @@ public class MenueActivity extends Activity implements OnClickListener {
 			//btn_score.setText("Punktestand");
 		}
 		
-		
+		*/
 		
 	}
 

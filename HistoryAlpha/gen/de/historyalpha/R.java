@@ -44,7 +44,7 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f080014;
-        public static final int action_settings=0x7f08001e;
+        public static final int action_settings=0x7f08001c;
         public static final int bottomLayout=0x7f080009;
         public static final int btn_back=0x7f080002;
         public static final int btn_multi=0x7f080010;
@@ -63,8 +63,6 @@ public final class R {
         public static final int gridlayout=0x7f08000a;
         public static final int highscoreList=0x7f080001;
         public static final int horizontalScrollView1=0x7f080008;
-        public static final int img_de=0x7f08001c;
-        public static final int img_en=0x7f08001d;
         public static final int life_id=0x7f08000e;
         public static final int linearViewer=0x7f080004;
         public static final int menuLayout=0x7f08000c;
