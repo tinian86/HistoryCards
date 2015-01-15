@@ -115,7 +115,7 @@ public class MenueActivity extends Activity implements OnClickListener {
 	*/
 	
 	public void cardView(View view){
-		Intent intent = new Intent(this, CardViewer.class);
+		Intent intent = new Intent(this, GameActivity.class);
 		startActivity(intent);
 	}
 	

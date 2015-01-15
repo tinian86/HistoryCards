@@ -54,32 +54,24 @@
             android:layout_alignParentRight="true"
             android:orientation="horizontal" >
 
-            <Button
-                android:id="@+id/btn_newCards"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="getNewCards"
-                android:text="@string/btn_newCards" />
+         
 
-            <Button
-                android:id="@+id/btn_revealCards"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="revealCards"
-                android:text="@string/btn_revealCards" />
+
 
             <TextView
                 android:id="@+id/score_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:capitalize="characters"
-                android:text="@string/txt_score" />
+                android:text="@string/txt_score"
+                />
             <TextView
                 android:id="@+id/life_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:capitalize="characters"
-                android:text="@string/txt_life"  />
+                android:text="@string/txt_life"
+                />
             
         </LinearLayout>
     </LinearLayout>

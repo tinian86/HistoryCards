@@ -40,7 +40,7 @@ public class CardQuestion {
 	
 	static Card stapel[] = new Card[] { card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, 
 		card18, card19, card20, card21, card22, card23, card24, card25 };
-	static Card auswahlKarten[] = new Card[25];
+	static ArrayList<Card> KartenStapel = new ArrayList<Card>();
 
 	/**
 	 * Liefert drei zufaellige Karten. Dazu wird eine ArrayListe erstellt und geshuffelt (gemischt).
@@ -49,7 +49,7 @@ public class CardQuestion {
 	 */
 	// TODO: Wenn eine Karte bereits auf dem Spielfeld liegt, darf diese nicht erneut aus dem Stapel der vorhandenen Karten geholt werden!
 	// Daher Methode finden, um auszuschliessen dass das passiert
-	public static Card[] getRandomCards() {
+	public static ArrayList<Card> getCardStack() {
 		
 //		Random rand = new Random();
 //		int max = 9;
@@ -71,15 +71,19 @@ public class CardQuestion {
 //		Log.d("CardQuestion Test", "Sack0 = " + String.valueOf(sack.get(0)));
 //		Log.d("CardQuestion Test", "Sack1 = " + String.valueOf(sack.get(1)));
 //		Log.d("CardQuestion Test", "Sack2 = " + String.valueOf(sack.get(2)));
-		auswahlKarten[0] = stapel[sack.get(0)];
-		auswahlKarten[1] = stapel[sack.get(1)];
-		auswahlKarten[2] = stapel[sack.get(2)];
+//		auswahlKarten[0] = stapel[sack.get(0)];
+//		auswahlKarten[1] = stapel[sack.get(1)];
+//		auswahlKarten[2] = stapel[sack.get(2)];
 //		Log.d("CardQuestion Test", sack.toString());
 //		Log.d("CardQuestion0", auswahlKarten[0].toString());
 //		Log.d("CardQuestion1", auswahlKarten[1].toString());
 //		Log.d("CardQuestion2", auswahlKarten[2].toString());
+		
+		for (int i=0; i<25; i++){
+			KartenStapel.add(stapel[sack.get(i)]);
+		}
 
-		return auswahlKarten;
+		return KartenStapel;
 	}
 
 }

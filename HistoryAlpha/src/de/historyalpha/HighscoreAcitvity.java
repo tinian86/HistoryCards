@@ -56,9 +56,10 @@ public class HighscoreAcitvity extends Activity {
 		if (intent.hasExtra(newHighscoreExtraKey)) {
 				
 			int newHighscore = intent.getIntExtra(newHighscoreExtraKey, -1);
+			String newName = intent.getStringExtra("Name");
 			if (newHighscore > 0) {
 				// valid new highscore value received - insert
-				setScore(newHighscore);
+				setScore(newHighscore, newName);
 			}
 			}initiate();
 		}
@@ -94,12 +95,12 @@ public class HighscoreAcitvity extends Activity {
 	}
 
 	// insert new Highscoore, if any, in the right slot
-	private void setScore(int score) {
+	private void setScore(int score, String newName) {
 		List<HighscoreEntry> highscore = getHighscore();
 		List<HighscoreEntry> newHighscore = new LinkedList<HighscoreEntry>();
 		
 		SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, 0);
-		String playerName = prefs.getString(PLAYER_NAME, "abc");
+		String playerName = newName;
 		boolean inserted = false;
 				
 		for(HighscoreEntry entry : highscore) {

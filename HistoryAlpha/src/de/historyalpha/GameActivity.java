@@ -29,6 +29,7 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -46,6 +47,8 @@ public class GameActivity extends Activity implements OnClickListener {
 	private int width;
 	private int height;
 	private int lifes = 3;
+	ArrayList<Card> cardStack = CardQuestion.getCardStack();
+	boolean wrongCardOnTable = false;
 
 	public static String PREFS_NAME = "game";
 	private static String CURRENT_SCORE_KEY = "current_score";
@@ -55,6 +58,16 @@ public class GameActivity extends Activity implements OnClickListener {
 	public static String CARD_TEMP = "leer";
 
 	private int score = 0;
+	private String name = "";
+	
+	float touchX = 0;
+	float touchY = 0;
+	float currentTouchX = 0;
+	float currentTouchY = 0;
+	
+	private long pressStartTime;
+	
+	boolean descriptionShown = false;
 
 	private void setScore(int i) {
 		score = i;
@@ -83,36 +96,41 @@ public class GameActivity extends Activity implements OnClickListener {
 
 		Editor editor = prefs.edit();
 		editor.putInt(CURRENT_SCORE_KEY, score);
+
 		editor.commit();
-		
-		
-			
-		
+
 		Intent intent = new Intent(this, HighscoreAcitvity.class);
 		intent.putExtra(
 				getResources().getString(R.string.new_highscore_extra_key),
 				score);
+
+		intent.putExtra("Name", name);
 
 		editor.putInt(CURRENT_SCORE_KEY, 0);
 		editor.commit();
 
 		startActivity(intent);
 	}
-	
-	public void popup(View v){
+
+	public void popup(View v) {
+
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 		LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
 				.getSystemService(LAYOUT_INFLATER_SERVICE);
 		View popupView = layoutInflater.inflate(R.layout.popup, null);
 		final PopupWindow popupWindow = new PopupWindow(popupView,
 				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		
+		popupWindow.setFocusable(true);
+		popupWindow.update();
+
 		TextView tex = (TextView) popupView.findViewById(R.id.text);
 		TextView texPoints = (TextView) popupView.findViewById(R.id.userName);
-		EditText nameInput  = (EditText) popupView.findViewById(R.id.userName);
+		final EditText nameInput = (EditText) popupView
+				.findViewById(R.id.userName);
 
-		tex.setText("Spiel vorbei! Sie haben "+ score +" Punkte erreicht");
-		
-		
+		tex.setText("Spiel vorbei! Sie haben " + score + " Punkte erreicht");
+
 		Button btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
 		btnDismiss.setOnClickListener(new Button.OnClickListener() {
 
@@ -120,13 +138,15 @@ public class GameActivity extends Activity implements OnClickListener {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				/*
-				SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, 0);
+				 * SharedPreferences prefs =
+				 * this.getSharedPreferences(PREFS_NAME, 0);
+				 * 
+				 * Editor editor = prefs.edit();
+				 * editor.putInt(CURRENT_SCORE_KEY, score); editor.commit();
+				 */
 
-				Editor editor = prefs.edit();
-				editor.putInt(CURRENT_SCORE_KEY, score);
-				editor.commit();
-				*/
-				
+				name = nameInput.getText().toString();
+
 				popupWindow.dismiss();
 				gotoHighscore();
 			}
@@ -141,14 +161,13 @@ public class GameActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
-		
+
 		try {
 
 			setupBottomBar();
 
 			// Temporär startkarte manuell:
-			Card startCard = new Card(1, "startkarte",
-					"Wann wurde das Teflon erfunden?", 1934);
+			Card startCard = cardStack.remove(0);
 
 			// Dummykarte für Anfangs und Endpunkt (nicht sichtbar)
 
@@ -176,16 +195,12 @@ public class GameActivity extends Activity implements OnClickListener {
 
 		playableCards.clear();
 
-		Card[] threeCards = CardQuestion.getRandomCards();
 		// TODO: @Dennis war diese for-Schleife noetig? Scheint auch ohne zu
 		// funktionieren
 		// for (int i = 0; i < 3; i++) {
-		Card card1 = new Card(threeCards[0].getCardId(),
-				threeCards[0].getSchlagwort(), "", threeCards[0].getJahr());
-		Card card2 = new Card(threeCards[1].getCardId(),
-				threeCards[1].getSchlagwort(), "", threeCards[1].getJahr());
-		Card card3 = new Card(threeCards[2].getCardId(),
-				threeCards[2].getSchlagwort(), "", threeCards[2].getJahr());
+		Card card1 = cardStack.remove(0);
+		Card card2 = cardStack.remove(0);
+		Card card3 = cardStack.remove(0);
 
 		playableCards.add(card1);
 		playableCards.add(card2);
@@ -199,10 +214,6 @@ public class GameActivity extends Activity implements OnClickListener {
 		Button button1 = new Button(getBaseContext());
 		Button button2 = new Button(getBaseContext());
 		Button button3 = new Button(getBaseContext());
-
-		// b1.setId(11);
-		// b1.setId(22);
-		// b1.setId(33);
 
 		button1.setTextColor(Color.WHITE);
 		button2.setTextColor(Color.WHITE);
@@ -244,6 +255,12 @@ public class GameActivity extends Activity implements OnClickListener {
 		bottomBar.addView(button2);
 		bottomBar.addView(button3);
 
+		TextView txtScore = (TextView) findViewById(R.id.score_id);
+		TextView txtLife = (TextView) findViewById(R.id.life_id);
+
+		txtScore.setTextSize(50f);
+		txtLife.setTextSize(50f);
+
 	}
 
 	// TODO Ist die Methode so noetig? Sie ruft ja lediglich setupBottomBar()
@@ -269,49 +286,66 @@ public class GameActivity extends Activity implements OnClickListener {
 
 		boolean wrongCard = false;
 
+		for (int j = 1; j < cardList.size() - 2; j++) {
+
+			int checkYear1 = cardList.get(j).jahr;
+			int checkYear2 = cardList.get(j + 1).jahr;
+
+			if (checkYear1 < checkYear2) {
+				counter = counter + 1;
+				sum = sum + counter;
+			} else {
+
+				Button button1 = (Button) view;
+
+				if (button1.getText().equals(cardList.get(j).getSchlagwort())) {
+					wrongCard = true;
+					wrongCardOnTable = true;
+					cardList.get(j).setCorrect(false);
+				} else {
+					wrongCard = true;
+					wrongCardOnTable = true;
+					cardList.get(j + 1).setCorrect(false);
+				}
+
+			}
+
+		}
+
 		// Methode testet, ob Karten in der falschen Reihenfolge angelegt
 		// wurden. Falls ja, so wird ein Leben abgezogen
 		// TODO: Funktionalitaet fehlt bisher noch.
-		for (int j = cardList.size() - 2; j > 0; j--) {
-
-			for (int i = 0; i < cardList.size(); i++) {
-
-				// Log.d("Listeninhalt", cardList.get(i).schlagwort.toString()
-				// + String.valueOf(cardList.get(i).jahr));
-
-				int checkYear = cardList.get(j).jahr;
-
-				Log.d("checkYear",
-						"checkYear: " + String.valueOf(checkYear) + " "
-								+ cardList.get(j).schlagwort
-								+ String.valueOf(cardList.get(j).jahr));
-
-				// Jahreszahlen vergleichen
-				// TODO Glaube das ist noch nicht ganz korrekt?
-				if (checkYear < cardList.get(i).jahr) {
-					// Log.d("checkYear",
-					// "checkYear: " + String.valueOf(checkYear) + " "
-					// + String.valueOf(cardList.get(i).jahr));
-					// Wenn eine Karte falsch liegt, Variable auf true setzen
-					wrongCard = true;
-
-					// TODO Kartenfarbe aendern, muss vermutlich direkt im Container gemacht werden
-					cardList.get(i).schlagwort = String
-							.valueOf(cardList.get(i).jahr) + " falsch";
-				}
-
-				else {
-					// TODO Karten werden noch falsch mit "falsch / korrekt" bezeichnet
-					cardList.get(i).schlagwort = String
-							.valueOf(cardList.get(i).jahr) + " korrekt";
-				}
-
-				setupCardArea(cardList);
-
-				counter = counter + 1;
-				sum = sum + counter;
-			}
-		}
+		/*
+		 * for (int j = cardList.size() - 2; j > 0; j--) {
+		 * 
+		 * for (int i = 0; i < cardList.size(); i++) {
+		 * 
+		 * // Log.d("Listeninhalt", cardList.get(i).schlagwort.toString() // +
+		 * String.valueOf(cardList.get(i).jahr));
+		 * 
+		 * int checkYear = cardList.get(j).jahr;
+		 * 
+		 * Log.d("checkYear", "checkYear: " + String.valueOf(checkYear) + " " +
+		 * cardList.get(j).schlagwort + String.valueOf(cardList.get(j).jahr));
+		 * 
+		 * // Jahreszahlen vergleichen // TODO Glaube das ist noch nicht ganz
+		 * korrekt? if (checkYear < cardList.get(i).jahr) { //
+		 * Log.d("checkYear", // "checkYear: " + String.valueOf(checkYear) + " "
+		 * // + String.valueOf(cardList.get(i).jahr)); // Wenn eine Karte falsch
+		 * liegt, Variable auf true setzen wrongCard = true;
+		 * 
+		 * // TODO Kartenfarbe aendern, muss vermutlich direkt im Container
+		 * gemacht werden cardList.get(i).schlagwort = String
+		 * .valueOf(cardList.get(i).jahr) + " falsch"; }
+		 * 
+		 * else { // TODO Karten werden noch falsch mit "falsch / korrekt"
+		 * bezeichnet cardList.get(i).schlagwort = String
+		 * .valueOf(cardList.get(i).jahr) + " korrekt"; }
+		 * 
+		 * setupCardArea(cardList);
+		 * 
+		 * counter = counter + 1; sum = sum + counter; } }
+		 */
 
 		score = sum;
 
@@ -329,9 +363,10 @@ public class GameActivity extends Activity implements OnClickListener {
 			if (getLifes() > 0) {
 				decreaseLifes();
 			} else {
-				//gotoHighscore();
+				// gotoHighscore();
 				popup(view);
 			}
+
 			// lifes = lifes - 1;
 
 			// // Alle Karten aus der Liste entfernen
@@ -360,11 +395,13 @@ public class GameActivity extends Activity implements OnClickListener {
 		setupCardArea(cardList);
 		// Scorefeld setzen
 		TextView scoreField = (TextView) findViewById(R.id.score_id);
-		scoreField.setText(String.valueOf(score));
+		scoreField.setText("Score: " + String.valueOf(score));
+		scoreField.setHeight(height / 5);
+		scoreField.setWidth(width / 6);
+		// scoreField.setTextSize(1.0f);
 		// Verbleibende Leben setzen
-		// TODO: Hat noch keine Funktionalitaet
 		TextView actualLife = (TextView) findViewById(R.id.life_id);
-		actualLife.setText(" " + String.valueOf(lifes));
+		actualLife.setText("Life: " + String.valueOf(lifes));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -446,6 +483,9 @@ public class GameActivity extends Activity implements OnClickListener {
 
 			container.setGravity(Gravity.CENTER);
 
+			container.setMinimumHeight(cardheight);
+			container.setMinimumWidth(cardwidth);
+
 			container.setOnDragListener(new MyDragListener());
 
 			// Buttons hinzufügen wenn nicht das erste oder letzte Element
@@ -456,6 +496,79 @@ public class GameActivity extends Activity implements OnClickListener {
 				b1.setMinimumWidth(cardwidth - margin);
 				b1.setMaxHeight(cardheight - margin);
 				b1.setMaxWidth(cardwidth - margin);
+
+				b1.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+
+						LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+								.getSystemService(LAYOUT_INFLATER_SERVICE);
+						View popupView = layoutInflater.inflate(
+								R.layout.popupcarddescription, null);
+						final PopupWindow popupWindow2 = new PopupWindow(
+								popupView, LayoutParams.WRAP_CONTENT,
+								LayoutParams.WRAP_CONTENT);
+
+						Button button = (Button) v;
+
+						String schlagwort = "";
+						String beschreibung = "";
+
+						for (Card card2 : cardList) {
+							if (button.getText().equals(card2.getSchlagwort())) {
+								schlagwort = card2.getSchlagwort();
+								beschreibung = card2.getBeschreibung();
+							}
+						}
+
+						Button bigButton = (Button) popupView
+								.findViewById(R.id.cardDescriptionButton);
+						bigButton.setText(schlagwort + "\n" + beschreibung);
+						bigButton.setMinimumHeight(height * 3 / 5);
+						bigButton.setMinimumWidth(width / 2);
+
+						bigButton.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								popupWindow2.dismiss();
+
+							}
+						});
+
+						popupWindow2.showAtLocation(v, 1, 50, 50);
+
+					}
+				});
+
+				if (!card.isCorrect()) {
+					b1.setText(String.valueOf(card.getJahr()));
+					b1.setBackgroundColor(Color.RED);
+					b1.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+
+							Card wrongCard = new Card(0, "dummy", "du dummy",
+									2042);
+
+							for (Card card2 : cardList) {
+
+								if (!card2.isCorrect()) {
+									wrongCard = card2;
+								}
+							}
+
+							if (wrongCard.getCardId() != 0) {
+								cardList.remove(wrongCard);
+								wrongCardOnTable = false;
+								setupCardArea(cardList);
+							}
+
+						}
+					});
+				}
 
 				container.addView(b1);
 			}
@@ -499,14 +612,28 @@ public class GameActivity extends Activity implements OnClickListener {
 	}
 
 	private final class MyTouchListener implements OnTouchListener {
+
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+			
+			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN
+					&& !wrongCardOnTable) {
+				pressStartTime = System.currentTimeMillis();
+				descriptionShown = false;
+				
+				return true;
+			}
+
+			else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE
+					&& !wrongCardOnTable) {
+
 				ClipData data = ClipData.newPlainText("", "");
 				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
 						view);
 				view.startDrag(data, shadowBuilder, view, 0);
-				view.setVisibility(View.INVISIBLE);
+				// view.setVisibility(View.INVISIBLE);
+
 				return true;
+
 			} else {
 				return false;
 			}
@@ -514,32 +641,45 @@ public class GameActivity extends Activity implements OnClickListener {
 	}
 
 	class MyDragListener implements OnDragListener {
-		Drawable enterShape = getResources().getDrawable(
-				R.drawable.background01);
-		Drawable normalShape = getResources().getDrawable(
-				R.drawable.background01);
-
+		// Drawable enterShape = getResources().getDrawable(
+		// R.drawable.background01);
+		// Drawable normalShape = getResources().getDrawable(
+		// R.drawable.background01);
+		
+		
+		
+		
+		
 		@SuppressWarnings("deprecation")
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
+			
+			
+			
 			// int action = event.getAction();
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
-				// do nothing
+				touchX = event.getX();
+				touchY = event.getY();
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
-				v.setBackgroundDrawable(enterShape);
+				// v.setBackgroundDrawable(enterShape);
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
-				v.setBackgroundDrawable(normalShape);
+				// v.setBackgroundDrawable(normalShape);
 				break;
 			case DragEvent.ACTION_DROP:
 				// Dropped, reassign View to ViewGroup
+				
+				
 
 				GridLayout gl = (GridLayout) findViewById(R.id.gridlayout);
+
+				View view = (View) event.getLocalState();
+				ViewGroup owner = (ViewGroup) view.getParent();
+
 				if (v.getParent().equals(gl)) {
-					View view = (View) event.getLocalState();
-					ViewGroup owner = (ViewGroup) view.getParent();
+
 					owner.removeView(view);
 
 					Button b = (Button) view;
@@ -548,16 +688,41 @@ public class GameActivity extends Activity implements OnClickListener {
 
 					if (b.getText() == playableCards.get(0).getSchlagwort()) {
 						playedCard = playableCards.get(0);
-						// playableCards.remove(0);
+						playableCards.remove(0);
 					} else if (b.getText() == playableCards.get(1)
 							.getSchlagwort()) {
 						playedCard = playableCards.get(1);
-						// playableCards.remove(1);
+						playableCards.remove(1);
 					} else if (b.getText() == playableCards.get(2)
 							.getSchlagwort()) {
 						playedCard = playableCards.get(2);
-						// playableCards.remove(2);
+						playableCards.remove(2);
 					}
+					
+					playableCards.add(cardStack.remove(0));
+					
+					LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
+
+					Button button1 = new Button(getBaseContext());
+
+					button1.setTextColor(Color.WHITE);
+
+					button1.setOnTouchListener(new MyTouchListener());
+
+					button1.setText(playableCards.get(2).getSchlagwort());
+
+					
+
+					int bottomheight = height / 5; // Höhe der unteren Leiste
+					int bottomwidth = width / 5; // Breite der unteren Leiste
+
+					button1.setMinimumHeight(bottomheight);
+					button1.setMaxHeight(bottomheight);
+					button1.setMinimumWidth(bottomwidth);
+					button1.setMaxWidth(bottomwidth);
+
+					
+					bottomBar.addView(button1);
 
 					List<Card> cL = cardList;
 
@@ -590,12 +755,65 @@ public class GameActivity extends Activity implements OnClickListener {
 
 					// Log.d("liste2", cL.toString());
 					// Spielfeld neu zeichnen
-					setupCardArea(cL);
+					// setupCardArea(cL);
+					revealCards(view);
+
+				}
+
+				else {
+
+					// TODO Karten verschwinden wenn nicht auf Grid gedroppt
+
 				}
 
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
-				v.setBackgroundDrawable(normalShape);
+
+				long pressDuration = System.currentTimeMillis() - pressStartTime;
+				
+				if (pressDuration<100 && !descriptionShown){
+					
+					descriptionShown = true;
+				
+					LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+							.getSystemService(LAYOUT_INFLATER_SERVICE);
+					View popupView = layoutInflater.inflate(
+							R.layout.popupcarddescription, null);
+					final PopupWindow popupWindow2 = new PopupWindow(
+							popupView, LayoutParams.WRAP_CONTENT,
+							LayoutParams.WRAP_CONTENT);
+					
+					View view2 = (View) event.getLocalState();
+
+					Button button = (Button) view2;
+
+					String schlagwort = "";
+					String beschreibung = "";
+
+					for (Card card2 : playableCards) {
+						if (button.getText().equals(card2.getSchlagwort())) {
+							schlagwort = card2.getSchlagwort();
+							beschreibung = card2.getBeschreibung();
+						}
+					}
+
+					Button bigButton = (Button) popupView
+							.findViewById(R.id.cardDescriptionButton);
+					bigButton.setText(schlagwort + "\n" + beschreibung);
+					bigButton.setMinimumHeight(height * 3 / 5);
+					bigButton.setMinimumWidth(width / 2);
+
+					bigButton.setOnClickListener(new OnClickListener() {
+
+						@Override
+						public void onClick(View v) {
+							popupWindow2.dismiss();
+
+						}
+					});
+
+					popupWindow2.showAtLocation(v, 1, 50, 50);
+				}
 			default:
 				break;
 			}
@@ -603,8 +821,8 @@ public class GameActivity extends Activity implements OnClickListener {
 		}
 
 	}
-	
-	public void onClick(View e){
-		
+
+	public void onClick(View e) {
+
 	}
 }

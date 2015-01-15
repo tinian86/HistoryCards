@@ -4,14 +4,16 @@ public class Card {
 
 	int cardId;
 	String schlagwort;
-	String text;
+	String beschreibung;
 	int jahr;
+	boolean correct;
 
 	public Card(int cardId, String schlagwort, String text, int jahr) {
 		this.cardId = cardId;
 		this.schlagwort = schlagwort;
-		this.text = text;
+		this.beschreibung = text;
 		this.jahr = jahr;
+		this.correct = true;
 	}
 
 	public int getCardId() {
@@ -30,12 +32,12 @@ public class Card {
 		this.schlagwort = schlagwort;
 	}
 
-	public String getText() {
-		return text;
+	public String getBeschreibung() {
+		return beschreibung;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setBeschreibung(String text) {
+		this.beschreibung = text;
 	}
 
 	public int getJahr() {
@@ -48,6 +50,14 @@ public class Card {
 
 	public String toString() {
 		return "Card [cardId=" + cardId + ", schlagwort=" + schlagwort
-				+ ", text=" + text + ", jahr=" + jahr + "]";
+				+ ", text=" + beschreibung + ", jahr=" + jahr + "]";
+	}
+
+	public boolean isCorrect() {
+		return correct;
+	}
+
+	public void setCorrect(boolean correct) {
+		this.correct = correct;
 	}
 }

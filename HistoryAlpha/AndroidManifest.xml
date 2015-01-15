@@ -16,7 +16,6 @@
         
         <activity
             android:name=".MenueActivity"
-            android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="landscape" >
             <intent-filter>
@@ -27,35 +26,30 @@
         </activity>
         
         <activity
-            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:name=".CardViewer"
             android:label="@string/title_card_viewer" >
         </activity>
         
         <activity
-            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:name=".GameActivity"
             android:label="@string/title_game_activity" >
         </activity>
         
         <activity
-            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:name=".MultiActivity"
             android:label="@string/title_activity_multi" >
         </activity>
         
         <activity
-            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:name=".TutorialActivity"
             android:label="@string/title_tutorial" >
         </activity>
         
         <activity
-            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:name=".HighscoreAcitvity"
             android:label="@string/title_activity_highscore_acitvity" >
