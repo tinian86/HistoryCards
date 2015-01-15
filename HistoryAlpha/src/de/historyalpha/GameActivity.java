@@ -3,6 +3,7 @@ package de.historyalpha;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.Context;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.DragEvent;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,8 +30,10 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,7 +84,10 @@ public class GameActivity extends Activity implements OnClickListener {
 		Editor editor = prefs.edit();
 		editor.putInt(CURRENT_SCORE_KEY, score);
 		editor.commit();
-
+		
+		
+			
+		
 		Intent intent = new Intent(this, HighscoreAcitvity.class);
 		intent.putExtra(
 				getResources().getString(R.string.new_highscore_extra_key),
@@ -90,6 +97,43 @@ public class GameActivity extends Activity implements OnClickListener {
 		editor.commit();
 
 		startActivity(intent);
+	}
+	
+	public void popup(View v){
+		LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+				.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View popupView = layoutInflater.inflate(R.layout.popup, null);
+		final PopupWindow popupWindow = new PopupWindow(popupView,
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		
+		TextView tex = (TextView) popupView.findViewById(R.id.text);
+		TextView texPoints = (TextView) popupView.findViewById(R.id.userName);
+		EditText nameInput  = (EditText) popupView.findViewById(R.id.userName);
+
+		tex.setText("Spiel vorbei! Sie haben "+ score +" Punkte erreicht");
+		
+		
+		Button btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
+		btnDismiss.setOnClickListener(new Button.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				/*
+				SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, 0);
+
+				Editor editor = prefs.edit();
+				editor.putInt(CURRENT_SCORE_KEY, score);
+				editor.commit();
+				*/
+				
+				popupWindow.dismiss();
+				gotoHighscore();
+			}
+		});
+
+		// popupWindow.showAsDropDown(mapView, -50, +30);
+		popupWindow.showAtLocation(v, 1, 50, 50);
 	}
 
 	@Override
@@ -285,7 +329,8 @@ public class GameActivity extends Activity implements OnClickListener {
 			if (getLifes() > 0) {
 				decreaseLifes();
 			} else {
-				gotoHighscore();
+				//gotoHighscore();
+				popup(view);
 			}
 			// lifes = lifes - 1;
 
