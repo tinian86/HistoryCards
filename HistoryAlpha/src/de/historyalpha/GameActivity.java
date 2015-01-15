@@ -258,8 +258,9 @@ public class GameActivity extends Activity implements OnClickListener {
 		TextView txtScore = (TextView) findViewById(R.id.score_id);
 		TextView txtLife = (TextView) findViewById(R.id.life_id);
 
-		txtScore.setTextSize(50f);
-		txtLife.setTextSize(50f);
+		//TODO Schriftgröße dynamisch
+		//txtScore.setTextSize(50f);
+		//txtLife.setTextSize(50f);
 
 	}
 
