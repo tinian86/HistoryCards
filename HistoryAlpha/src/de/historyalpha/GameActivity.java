@@ -48,7 +48,7 @@ public class GameActivity extends Activity implements OnClickListener {
 	private int height;
 	private int lifes = 3;
 	ArrayList<Card> cardStack = CardQuestion.getCardStack();
-	boolean wrongCardOnTable = false;
+	boolean wrongCardOnTable;
 
 	public static String PREFS_NAME = "game";
 	private static String CURRENT_SCORE_KEY = "current_score";
@@ -59,14 +59,19 @@ public class GameActivity extends Activity implements OnClickListener {
 
 	private int score = 0;
 	private String name = "";
-	
+
 	float touchX = 0;
 	float touchY = 0;
 	float currentTouchX = 0;
 	float currentTouchY = 0;
-	
+
 	private long pressStartTime;
-	
+
+	int dragIndex = 0;
+	boolean dragEntered = false;
+
+	ArrayList<LinearLayout> gridList = new ArrayList<LinearLayout>();
+
 	boolean descriptionShown = false;
 
 	private void setScore(int i) {
@@ -129,7 +134,8 @@ public class GameActivity extends Activity implements OnClickListener {
 		final EditText nameInput = (EditText) popupView
 				.findViewById(R.id.userName);
 
-		tex.setText("Das Spiel ist vorbei! \nSie haben " + score + " Punkte erreicht.");
+		tex.setText("Das Spiel ist vorbei! \nSie haben " + score
+				+ " Punkte erreicht.");
 		tex.setTextSize(25f);
 
 		Button btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
@@ -137,7 +143,7 @@ public class GameActivity extends Activity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+
 				/*
 				 * SharedPreferences prefs =
 				 * this.getSharedPreferences(PREFS_NAME, 0);
@@ -147,14 +153,13 @@ public class GameActivity extends Activity implements OnClickListener {
 				 */
 
 				name = nameInput.getText().toString();
-				
 
-				//popupWindow.dismiss();
+				// popupWindow.dismiss();
 				gotoHighscore();
 			}
 		});
 
-		//popupWindow.showAsDropDown(mapView, -50, +30);
+		// popupWindow.showAsDropDown(mapView, -50, +30);
 		popupWindow.showAtLocation(v, 1, 50, 50);
 	}
 
@@ -187,6 +192,8 @@ public class GameActivity extends Activity implements OnClickListener {
 
 			setupCardArea(cardList);
 
+			wrongCardOnTable = false;
+
 		} catch (Exception e) {
 			Log.d("GameActivity", e.getMessage());
 		}
@@ -197,9 +204,6 @@ public class GameActivity extends Activity implements OnClickListener {
 
 		playableCards.clear();
 
-		// TODO: @Dennis war diese for-Schleife noetig? Scheint auch ohne zu
-		// funktionieren
-		// for (int i = 0; i < 3; i++) {
 		Card card1 = cardStack.remove(0);
 		Card card2 = cardStack.remove(0);
 		Card card3 = cardStack.remove(0);
@@ -207,7 +211,6 @@ public class GameActivity extends Activity implements OnClickListener {
 		playableCards.add(card1);
 		playableCards.add(card2);
 		playableCards.add(card3);
-		// }
 
 		LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
 
@@ -228,7 +231,7 @@ public class GameActivity extends Activity implements OnClickListener {
 		button1.setText(playableCards.get(0).getSchlagwort());
 		button2.setText(playableCards.get(1).getSchlagwort());
 		button3.setText(playableCards.get(2).getSchlagwort());
-		
+
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
@@ -262,30 +265,22 @@ public class GameActivity extends Activity implements OnClickListener {
 		txtScore.setTextColor(android.graphics.Color.YELLOW);
 		txtLife.setTextColor(android.graphics.Color.GREEN);
 
-		//TODO Schriftgröße dynamisch -> fuer Tablet 40f
-		txtScore.setTextSize(30f);
-		txtLife.setTextSize(30f);
+		// TODO Schriftgröße dynamisch -> fuer Tablet 40f
+		txtScore.setTextSize(25f);
+		txtLife.setTextSize(25f);
 
 	}
 
-	// TODO Ist die Methode so noetig? Sie ruft ja lediglich setupBottomBar()
-	// auf, daher besser direkt machen?
 	public void getNewCards(View view) {
 		setupBottomBar();
 
 	}
-
-	// TODO: Zur Zeit werden mit dem Button "Neue Karten" ALLE der drei Karten
-	// neu geholt -> sollten eigentlich nur die fehlenden ersetzt werden
 
 	// Methode, um die Karten aufzudecken und ihre Jahreszahl anzuzeigen
 	public void revealCards(View view) {
 
 		// Zwei counter, um die Punkte aufzusummieren die man fuer Karten
 		// bekommt
-		// TODO Summe enthaelt am Ende noch Werte fuer Start- und Endkarte (6)
-		// zuviel!
-		// Einfach 6 abziehen geht nicht, da geometrisch aufsummiert wird!
 		int counter = 0;
 		int sum = 0;
 
@@ -299,7 +294,7 @@ public class GameActivity extends Activity implements OnClickListener {
 			if (checkYear1 < checkYear2) {
 				counter = counter + 1;
 				sum = sum + counter;
-			} else {
+			} else if (cardList.size() > 3) {
 
 				Button button1 = (Button) view;
 
@@ -317,41 +312,6 @@ public class GameActivity extends Activity implements OnClickListener {
 
 		}
 
-		// Methode testet, ob Karten in der falschen Reihenfolge angelegt
-		// wurden. Falls ja, so wird ein Leben abgezogen
-		// TODO: Funktionalitaet fehlt bisher noch.
-		/*
-		 * for (int j = cardList.size() - 2; j > 0; j--) {
-		 * 
-		 * for (int i = 0; i < cardList.size(); i++) {
-		 * 
-		 * // Log.d("Listeninhalt", cardList.get(i).schlagwort.toString() // +
-		 * String.valueOf(cardList.get(i).jahr));
-		 * 
-		 * int checkYear = cardList.get(j).jahr;
-		 * 
-		 * Log.d("checkYear", "checkYear: " + String.valueOf(checkYear) + " " +
-		 * cardList.get(j).schlagwort + String.valueOf(cardList.get(j).jahr));
-		 * 
-		 * // Jahreszahlen vergleichen // TODO Glaube das ist noch nicht ganz
-		 * korrekt? if (checkYear < cardList.get(i).jahr) { //
-		 * Log.d("checkYear", // "checkYear: " + String.valueOf(checkYear) + " "
-		 * // + String.valueOf(cardList.get(i).jahr)); // Wenn eine Karte falsch
-		 * liegt, Variable auf true setzen wrongCard = true;
-		 * 
-		 * // TODO Kartenfarbe aendern, muss vermutlich direkt im Container
-		 * gemacht werden cardList.get(i).schlagwort = String
-		 * .valueOf(cardList.get(i).jahr) + " falsch"; }
-		 * 
-		 * else { // TODO Karten werden noch falsch mit "falsch / korrekt"
-		 * bezeichnet cardList.get(i).schlagwort = String
-		 * .valueOf(cardList.get(i).jahr) + " korrekt"; }
-		 * 
-		 * setupCardArea(cardList);
-		 * 
-		 * counter = counter + 1; sum = sum + counter; } }
-		 */
-
 		score = sum;
 
 		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste
@@ -364,7 +324,6 @@ public class GameActivity extends Activity implements OnClickListener {
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
 
-			// TODO methode benutzen
 			if (getLifes() > 0) {
 				decreaseLifes();
 			} else {
@@ -372,37 +331,14 @@ public class GameActivity extends Activity implements OnClickListener {
 				popup(view);
 			}
 
-			// lifes = lifes - 1;
-
-			// // Alle Karten aus der Liste entfernen
-			// // TODO: Buggy, unklar wieso
-			// for (int i = 0; i < cardList.size(); i++) {
-			// cardList.remove(i);
-			// }
-			//
-			// setupBottomBar();
-			//
-			// Card startCard = new Card(1, "startkarte",
-			// "Wann wurde das Teflon erfunden?", 1934);
-			//
-			// // Dummykarte für Anfangs und Endpunkt (nicht sichtbar)
-			//
-			// Card dummyCardBegin = new Card(0, "begin", "", 0);
-			// Card dummyCardEnd = new Card(0, "end", "", 0);
-			//
-			// this.cardList.add(dummyCardBegin);
-			// this.cardList.add(startCard);
-			// this.cardList.add(dummyCardEnd);
 		}
 
-		// Spielfeld neuzeichnen
-		// TODO: Ist noch buggy
 		setupCardArea(cardList);
 		// Scorefeld setzen
 		TextView scoreField = (TextView) findViewById(R.id.score_id);
 		scoreField.setText("Punkte: " + String.valueOf(score));
-		//scoreField.setHeight(height / 5);
-		//scoreField.setWidth(width / 6);
+		// scoreField.setHeight(height / 5);
+		// scoreField.setWidth(width / 6);
 		// scoreField.setTextSize(1.0f);
 		// Verbleibende Leben setzen
 		TextView actualLife = (TextView) findViewById(R.id.life_id);
@@ -415,6 +351,8 @@ public class GameActivity extends Activity implements OnClickListener {
 		GridLayout gl = (GridLayout) findViewById(R.id.gridlayout);
 
 		List<Card> cardDrawList = new ArrayList<Card>();
+
+		gridList.clear();
 
 		for (Card card : cL) {
 			cardDrawList.add(card);
@@ -466,6 +404,7 @@ public class GameActivity extends Activity implements OnClickListener {
 
 				lastElement.setGravity(Gravity.CENTER);
 				gl.addView(lastElement);
+				gridList.add(lastElement);
 
 				counter++;
 			}
@@ -530,7 +469,7 @@ public class GameActivity extends Activity implements OnClickListener {
 						Button bigButton = (Button) popupView
 								.findViewById(R.id.cardDescriptionButton);
 						bigButton.setText(schlagwort + "\n\n" + beschreibung);
-						//bigButton.setTextSize(20f);
+						// bigButton.setTextSize(20f);
 						bigButton.setMinimumHeight(height * 3 / 5);
 						bigButton.setMinimumWidth(width / 2);
 
@@ -581,6 +520,7 @@ public class GameActivity extends Activity implements OnClickListener {
 			}
 
 			gl.addView(container);
+			gridList.add(container);
 
 			counter++;
 
@@ -588,6 +528,19 @@ public class GameActivity extends Activity implements OnClickListener {
 				counter = 0;
 			}
 
+		}
+
+		// Sortiere Elemente der Liste für Layout neu (vertauschen von 3 und 4,
+		// 7 und 8, etc.)
+		for (int i = 0; i < gridList.size(); i++) {
+			// Pos i+1 durch 4 teilbar heißt, dass i und i-1 vertauscht werden
+			// müssen
+			if ((i + 1) % 4 == 0) {
+				// Plätze tauschen
+				LinearLayout temp = gridList.get(i);
+				gridList.set(i, gridList.get(i - 1));
+				gridList.set(i - 1, temp);
+			}
 		}
 		// Zum debuggen
 		// for (int i = 0; i < cardDrawList.size(); i++) {
@@ -621,12 +574,17 @@ public class GameActivity extends Activity implements OnClickListener {
 	private final class MyTouchListener implements OnTouchListener {
 
 		public boolean onTouch(View view, MotionEvent motionEvent) {
-			
+
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN
 					&& !wrongCardOnTable) {
 				pressStartTime = System.currentTimeMillis();
 				descriptionShown = false;
 				
+				ClipData data = ClipData.newPlainText("", "");
+				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
+						view);
+				view.startDrag(data, shadowBuilder, view, 0);
+
 				return true;
 			}
 
@@ -652,17 +610,14 @@ public class GameActivity extends Activity implements OnClickListener {
 		// R.drawable.background01);
 		// Drawable normalShape = getResources().getDrawable(
 		// R.drawable.background01);
-		
-		
-		
-		
-		
+
 		@SuppressWarnings("deprecation")
 		@Override
 		public boolean onDrag(View v, DragEvent event) {
-			
-			
-			
+
+			List<Card> cL = cardList;
+			LinearLayout container = (LinearLayout) v;
+
 			// int action = event.getAction();
 			switch (event.getAction()) {
 			case DragEvent.ACTION_DRAG_STARTED:
@@ -670,15 +625,30 @@ public class GameActivity extends Activity implements OnClickListener {
 				touchY = event.getY();
 				break;
 			case DragEvent.ACTION_DRAG_ENTERED:
-				// v.setBackgroundDrawable(enterShape);
+
+				if (container.getChildCount() != 0) {
+					for (int i = 1; i < cL.size() - 1; i++) {
+						Button but = (Button) container.getChildAt(0);
+						if (but.getText().equals(cL.get(i).getSchlagwort())) {
+							dragIndex = i;
+							break;
+						}
+					}
+					moveCards(dragIndex);
+					dragEntered = true;
+				}
+
 				break;
 			case DragEvent.ACTION_DRAG_EXITED:
-				// v.setBackgroundDrawable(normalShape);
+
+				if (dragEntered) {
+					moveCardsBack(dragIndex);
+				}
+
+				dragEntered = false;
 				break;
 			case DragEvent.ACTION_DROP:
 				// Dropped, reassign View to ViewGroup
-				
-				
 
 				GridLayout gl = (GridLayout) findViewById(R.id.gridlayout);
 
@@ -686,6 +656,12 @@ public class GameActivity extends Activity implements OnClickListener {
 				ViewGroup owner = (ViewGroup) view.getParent();
 
 				if (v.getParent().equals(gl)) {
+
+					if (dragEntered) {
+						moveCardsBack(dragIndex);
+					}
+
+					dragEntered = false;
 
 					owner.removeView(view);
 
@@ -705,9 +681,9 @@ public class GameActivity extends Activity implements OnClickListener {
 						playedCard = playableCards.get(2);
 						playableCards.remove(2);
 					}
-					
+
 					playableCards.add(cardStack.remove(0));
-					
+
 					LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
 
 					Button button1 = new Button(getBaseContext());
@@ -718,8 +694,6 @@ public class GameActivity extends Activity implements OnClickListener {
 
 					button1.setText(playableCards.get(2).getSchlagwort());
 
-					
-
 					int bottomheight = height / 5; // Höhe der unteren Leiste
 					int bottomwidth = width / 5; // Breite der unteren Leiste
 
@@ -728,14 +702,11 @@ public class GameActivity extends Activity implements OnClickListener {
 					button1.setMinimumWidth(bottomwidth);
 					button1.setMaxWidth(bottomwidth);
 
-					
 					bottomBar.addView(button1);
-
-					List<Card> cL = cardList;
 
 					// Log.d("liste", cL.toString());
 
-					LinearLayout container = (LinearLayout) v;
+					container = (LinearLayout) v;
 					if (container.getChildCount() == 0) {
 						// Container leer, prüfe ob Anfang oder Ende
 						if (gl.getChildAt(0).equals(container)) {
@@ -748,7 +719,7 @@ public class GameActivity extends Activity implements OnClickListener {
 						// Im Container befindet sich etwas, suche belegte
 						// Container
 						// in Grid ab
-						for (int i = 0; i < cL.size(); i++) {
+						for (int i = 1; i < cL.size() - 1; i++) {
 							Button but = (Button) container.getChildAt(0);
 							if (but.getText().equals(cL.get(i).getSchlagwort())) {
 								// Füge zu legende Karte vor der Karte des
@@ -769,27 +740,26 @@ public class GameActivity extends Activity implements OnClickListener {
 
 				else {
 
-					// TODO Karten verschwinden wenn nicht auf Grid gedroppt
-
 				}
 
 				break;
 			case DragEvent.ACTION_DRAG_ENDED:
 
-				long pressDuration = System.currentTimeMillis() - pressStartTime;
-				
-				if (pressDuration<100 && !descriptionShown){
-					
+				long pressDuration = System.currentTimeMillis()
+						- pressStartTime;
+
+				if (pressDuration < 200 && !descriptionShown) {
+
 					descriptionShown = true;
-				
+
 					LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
 							.getSystemService(LAYOUT_INFLATER_SERVICE);
 					View popupView = layoutInflater.inflate(
 							R.layout.popupcarddescription, null);
-					final PopupWindow popupWindow2 = new PopupWindow(
-							popupView, LayoutParams.WRAP_CONTENT,
+					final PopupWindow popupWindow2 = new PopupWindow(popupView,
+							LayoutParams.WRAP_CONTENT,
 							LayoutParams.WRAP_CONTENT);
-					
+
 					View view2 = (View) event.getLocalState();
 
 					Button button = (Button) view2;
@@ -825,6 +795,35 @@ public class GameActivity extends Activity implements OnClickListener {
 				break;
 			}
 			return true;
+		}
+
+		private void moveCards(int dragIndex) {
+
+			for (int j = gridList.size() - 1; j > dragIndex; j--) {
+				LinearLayout elem1 = gridList.get(j - 1);
+				LinearLayout elem2 = gridList.get(j);
+				if (elem1.getChildCount() != 0 && elem2.getChildCount() == 0) {
+					Button button = (Button) elem1.getChildAt(0);
+					elem1.removeAllViews();
+					elem2.addView(button);
+
+				}
+			}
+		}
+
+	}
+
+	private void moveCardsBack(int dragIndex) {
+
+		for (int j = dragIndex; j < gridList.size() - 1; j++) {
+			LinearLayout elem1 = gridList.get(j);
+			LinearLayout elem2 = gridList.get(j + 1);
+			if (elem1.getChildCount() == 0 && elem2.getChildCount() != 0) {
+				Button button = (Button) elem2.getChildAt(0);
+				elem2.removeAllViews();
+				elem1.addView(button);
+
+			}
 		}
 
 	}
