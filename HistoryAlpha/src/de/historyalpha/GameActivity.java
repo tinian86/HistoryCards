@@ -33,10 +33,12 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class GameActivity extends Activity implements OnClickListener {
 
@@ -66,6 +68,8 @@ public class GameActivity extends Activity implements OnClickListener {
 	float currentTouchY = 0;
 
 	private long pressStartTime;
+
+	boolean reveal = false;
 
 	int dragIndex = 0;
 	boolean dragEntered = false;
@@ -319,7 +323,7 @@ public class GameActivity extends Activity implements OnClickListener {
 		if (wrongCard) {
 			Context context = getApplicationContext();
 			CharSequence text = "Sie haben eine Karte falsch angelegt und verlieren ein Leben!";
-			int duration = Toast.LENGTH_LONG;
+			int duration = Toast.LENGTH_SHORT;
 
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
@@ -328,7 +332,9 @@ public class GameActivity extends Activity implements OnClickListener {
 				decreaseLifes();
 			} else {
 				// gotoHighscore();
-				popup(view);
+				wrongCardOnTable = false;
+				revealAll(view);
+				return;
 			}
 
 		}
@@ -343,6 +349,31 @@ public class GameActivity extends Activity implements OnClickListener {
 		// Verbleibende Leben setzen
 		TextView actualLife = (TextView) findViewById(R.id.life_id);
 		actualLife.setText("Leben: " + String.valueOf(lifes));
+	}
+
+	private void revealAll(final View view) {
+
+		this.reveal = true;
+		setupCardArea(cardList);
+
+		LinearLayout menu = (LinearLayout) findViewById(R.id.menuLayout);
+		
+		menu.removeAllViews();
+
+		Button endButton = new Button(getBaseContext());
+		endButton.setText("Zum HighScore");
+		
+		menu.addView(endButton);
+
+		endButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				popup(view);
+
+			}
+		});
+
 	}
 
 	@SuppressWarnings("deprecation")
@@ -441,79 +472,53 @@ public class GameActivity extends Activity implements OnClickListener {
 				b1.setMaxHeight(cardheight - margin);
 				b1.setMaxWidth(cardwidth - margin);
 
-				b1.setOnClickListener(new OnClickListener() {
+				if (!reveal) {
+					
+					showDetails(b1);
 
-					@Override
-					public void onClick(View v) {
-
-						LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
-								.getSystemService(LAYOUT_INFLATER_SERVICE);
-						View popupView = layoutInflater.inflate(
-								R.layout.popupcarddescription, null);
-						final PopupWindow popupWindow2 = new PopupWindow(
-								popupView, LayoutParams.WRAP_CONTENT,
-								LayoutParams.WRAP_CONTENT);
-
-						Button button = (Button) v;
-
-						String schlagwort = "";
-						String beschreibung = "";
-
-						for (Card card2 : cardList) {
-							if (button.getText().equals(card2.getSchlagwort())) {
-								schlagwort = card2.getSchlagwort();
-								beschreibung = card2.getBeschreibung();
-							}
-						}
-
-						Button bigButton = (Button) popupView
-								.findViewById(R.id.cardDescriptionButton);
-						bigButton.setText(schlagwort + "\n\n" + beschreibung);
-						// bigButton.setTextSize(20f);
-						bigButton.setMinimumHeight(height * 3 / 5);
-						bigButton.setMinimumWidth(width / 2);
-
-						bigButton.setOnClickListener(new OnClickListener() {
+					if (!card.isCorrect()) {
+						b1.setText(String.valueOf(card.getSchlagwort() + "\n"
+								+ card.getJahr()));
+						b1.setBackgroundColor(Color.RED);
+						// b1.setTextSize(40f);
+						b1.setOnClickListener(new OnClickListener() {
 
 							@Override
 							public void onClick(View v) {
-								popupWindow2.dismiss();
+
+								Card wrongCard = new Card(0, "dummy",
+										"du dummy", 2042);
+
+								for (Card card2 : cardList) {
+
+									if (!card2.isCorrect()) {
+										wrongCard = card2;
+									}
+								}
+
+								if (wrongCard.getCardId() != 0) {
+									cardList.remove(wrongCard);
+									wrongCardOnTable = false;
+									setupCardArea(cardList);
+								}
 
 							}
 						});
-
-						popupWindow2.showAtLocation(v, 1, 50, 50);
-
 					}
-				});
 
-				if (!card.isCorrect()) {
-					b1.setText(String.valueOf(card.getJahr()));
-					b1.setBackgroundColor(Color.RED);
-					b1.setTextSize(40f);
-					b1.setOnClickListener(new OnClickListener() {
+				} else {
+					
+					showDetails(b1);
+					b1.setText(String.valueOf(card.getSchlagwort() + "\n"
+							+ card.getJahr()));
 
-						@Override
-						public void onClick(View v) {
-
-							Card wrongCard = new Card(0, "dummy", "du dummy",
-									2042);
-
-							for (Card card2 : cardList) {
-
-								if (!card2.isCorrect()) {
-									wrongCard = card2;
-								}
-							}
-
-							if (wrongCard.getCardId() != 0) {
-								cardList.remove(wrongCard);
-								wrongCardOnTable = false;
-								setupCardArea(cardList);
-							}
-
-						}
-					});
+					if (card.isCorrect()) {
+						b1.setBackgroundColor(Color.GREEN);
+					} else {
+						b1.setBackgroundColor(Color.RED);
+					}
+					wrongCardOnTable = false;
+					
 				}
 
 				container.addView(b1);
@@ -552,6 +557,57 @@ public class GameActivity extends Activity implements OnClickListener {
 		// }
 	}
 
+	private void showDetails(Button b1) {
+		b1.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+						.getSystemService(LAYOUT_INFLATER_SERVICE);
+				View popupView = layoutInflater.inflate(
+						R.layout.popupcarddescription, null);
+				final PopupWindow popupWindow2 = new PopupWindow(
+						popupView, LayoutParams.WRAP_CONTENT,
+						LayoutParams.WRAP_CONTENT);
+
+				Button button = (Button) v;
+
+				String schlagwort = "";
+				String beschreibung = "";
+
+				for (Card card2 : cardList) {
+					if (((String) button.getText()).contains(
+							card2.getSchlagwort())) {
+						schlagwort = card2.getSchlagwort();
+						beschreibung = card2.getBeschreibung();
+					}
+				}
+
+				Button bigButton = (Button) popupView
+						.findViewById(R.id.cardDescriptionButton);
+				bigButton.setText(schlagwort + "\n\n"
+						+ beschreibung);
+				// bigButton.setTextSize(20f);
+				bigButton.setMinimumHeight(height * 3 / 5);
+				bigButton.setMinimumWidth(width / 2);
+
+				bigButton.setOnClickListener(new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						popupWindow2.dismiss();
+
+					}
+				});
+
+				popupWindow2.showAtLocation(v, 1, 50, 50);
+
+			}
+		});
+		
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -576,10 +632,10 @@ public class GameActivity extends Activity implements OnClickListener {
 		public boolean onTouch(View view, MotionEvent motionEvent) {
 
 			if (motionEvent.getAction() == MotionEvent.ACTION_DOWN
-					&& !wrongCardOnTable) {
+					&& !wrongCardOnTable && !reveal) {
 				pressStartTime = System.currentTimeMillis();
 				descriptionShown = false;
-				
+
 				ClipData data = ClipData.newPlainText("", "");
 				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
 						view);
@@ -589,7 +645,7 @@ public class GameActivity extends Activity implements OnClickListener {
 			}
 
 			else if (motionEvent.getAction() == MotionEvent.ACTION_MOVE
-					&& !wrongCardOnTable) {
+					&& !wrongCardOnTable && !reveal) {
 
 				ClipData data = ClipData.newPlainText("", "");
 				DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
