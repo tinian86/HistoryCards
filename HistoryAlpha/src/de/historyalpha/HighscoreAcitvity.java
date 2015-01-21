@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -96,7 +98,7 @@ public class HighscoreAcitvity extends Activity implements OnClickListener {
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-		layoutParams.setMargins(0, 15, 0, 15);
+		layoutParams.setMargins(0, 20, 0, 15);
 		
 		TextView view = new TextView(getBaseContext());
 		view.setTextColor(Color.BLACK);
@@ -140,6 +142,19 @@ public class HighscoreAcitvity extends Activity implements OnClickListener {
 		button.setBackgroundResource(R.drawable.gradientblau);
 		//button.setGravity(Gravity.CENTER);
 		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+
+		int bottomheight = (height / 7) - 25;
+		int bottomwidth = width / 3;
+		
+		button.setMinimumHeight(bottomheight);
+		button.setMaxHeight(bottomheight);
+		button.setMinimumWidth(bottomwidth);
+		button.setMaxWidth(bottomwidth);
 		
 		layout.addView(button, layoutParams);
 	}

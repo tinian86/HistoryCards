@@ -3,7 +3,9 @@ package de.historyalpha;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -35,18 +37,20 @@ public class MultiActivity extends Activity implements OnClickListener {
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-		layoutParams.setMargins(20, 10, 20, 60);
-		
-		/*
-		LinearLayout startLayout2 = (LinearLayout) findViewById(R.id.LinearLayout2);
-		startLayout.setOrientation(LinearLayout.HORIZONTAL);
-		*/
+		layoutParams.setMargins(0, 15, 0, 70);
 		
 		@SuppressWarnings("deprecation")
 		LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
 			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-		layoutParams2.setMargins(20, 10, 20, 15);
+		layoutParams2.setMargins(0, 0, 0, 20);
+		
+		@SuppressWarnings("deprecation")
+		LinearLayout.LayoutParams layoutParams3 = new LinearLayout.LayoutParams(
+			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		layoutParams3.setMargins(0, 60, 0, 10);
+		
 		
 		
 		TextView view = new TextView(getBaseContext());
@@ -54,8 +58,6 @@ public class MultiActivity extends Activity implements OnClickListener {
 		view.setText("Anzahl der Spieler?");
 		view.setGravity(Gravity.CENTER);
 		view.setTextSize(70);
-		
-		startLayout.addView(view, layoutParams);
 		
 		
 		Button button1 = new Button(getBaseContext());
@@ -86,11 +88,6 @@ public class MultiActivity extends Activity implements OnClickListener {
 		button2.setBackgroundResource(R.drawable.gradientgruen);
 		button3.setBackgroundResource(R.drawable.gradientgruen);
 		
-		startLayout.addView(button1, layoutParams2);
-		startLayout.addView(button2, layoutParams2);
-		startLayout.addView(button3, layoutParams);
-		
-		
 		Button button4 = new Button(getBaseContext());
 		button4.setTextColor(Color.BLACK);
 		button4.setText("Zurück");
@@ -105,7 +102,37 @@ public class MultiActivity extends Activity implements OnClickListener {
 		button4.setId(4);
 		button4.setBackgroundResource(R.drawable.gradientrot);
 		
-		startLayout.addView(button4, layoutParams2);
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+
+		int bottomheight = (height / 6) - 25;
+		int bottomwidth = width / 3;
+		
+		button1.setMinimumHeight(bottomheight);
+		button1.setMaxHeight(bottomheight);
+		button1.setMinimumWidth(bottomwidth);
+		button1.setMaxWidth(bottomwidth);
+
+		button2.setMinimumHeight(bottomheight);
+		button2.setMaxHeight(bottomheight);
+		button2.setMinimumWidth(bottomwidth);
+		button2.setMaxWidth(bottomwidth);
+
+		button3.setMinimumHeight(bottomheight);
+		button3.setMaxHeight(bottomheight);
+		button3.setMinimumWidth(bottomwidth);
+		button3.setMaxWidth(bottomwidth);
+		
+		startLayout.addView(view, layoutParams);
+		startLayout.addView(button1, layoutParams2);
+		startLayout.addView(button2, layoutParams2);
+		startLayout.addView(button3, layoutParams2);
+		
+		startLayout.addView(button4, layoutParams3);
 		
 	}
 	

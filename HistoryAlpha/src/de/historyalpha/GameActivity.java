@@ -217,6 +217,13 @@ public class GameActivity extends Activity implements OnClickListener {
 		playableCards.add(card3);
 
 		LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
+		
+		@SuppressWarnings("deprecation")
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		layoutParams.setMargins(0, 0, 15, 0);
+		
 
 		bottomBar.removeAllViews();
 
@@ -260,8 +267,8 @@ public class GameActivity extends Activity implements OnClickListener {
 		button3.setMinimumWidth(bottomwidth);
 		button3.setMaxWidth(bottomwidth);
 
-		bottomBar.addView(button1);
-		bottomBar.addView(button2);
+		bottomBar.addView(button1, layoutParams);
+		bottomBar.addView(button2, layoutParams);
 		bottomBar.addView(button3);
 
 		TextView txtScore = (TextView) findViewById(R.id.score_id);
@@ -362,6 +369,7 @@ public class GameActivity extends Activity implements OnClickListener {
 
 		Button endButton = new Button(getBaseContext());
 		endButton.setText("Zum Highscore");
+		endButton.setTextSize(35);
 		
 		menu.addView(endButton);
 

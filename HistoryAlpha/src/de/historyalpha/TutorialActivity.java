@@ -44,7 +44,7 @@ public class TutorialActivity extends Activity implements OnClickListener {
 		view.setTextColor(Color.BLACK);
 		view.setText("Anleitung");
 		view.setGravity(Gravity.CENTER);
-		view.setTextSize(70);
+		view.setTextSize(80);
 		
 		TextView text = new TextView(getBaseContext());
 		text.setTextColor(Color.BLACK);
@@ -66,6 +66,20 @@ public class TutorialActivity extends Activity implements OnClickListener {
 		button.setId(1);
 		button.setBackgroundResource(R.drawable.gradientrot);
 		button.setGravity(Gravity.CENTER);
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+
+		int bottomheight = (height / 7) - 25;
+		int bottomwidth = width / 3;
+		
+		button.setMinimumHeight(bottomheight);
+		button.setMaxHeight(bottomheight);
+		button.setMinimumWidth(bottomwidth);
+		button.setMaxWidth(bottomwidth);
 		
 		startLayout.addView(view, layoutParams);
 		startLayout.addView(text);
