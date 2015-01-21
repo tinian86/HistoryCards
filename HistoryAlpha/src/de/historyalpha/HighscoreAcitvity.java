@@ -7,18 +7,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.view.View.OnClickListener;
 //import android.view.MenuItem;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class HighscoreAcitvity extends Activity {
+public class HighscoreAcitvity extends Activity implements OnClickListener {
 
 	public static String PREFS_NAME = "game";
 	public static String NEW_HIGHSCORE_EXTRA_KEY = "newHighscore";
@@ -87,6 +90,22 @@ public class HighscoreAcitvity extends Activity {
 		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.highscoreList);
 		layout.removeAllViews();
+		layout.setOrientation(LinearLayout.VERTICAL);
+		
+		@SuppressWarnings("deprecation")
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		layoutParams.setMargins(0, 15, 0, 15);
+		
+		TextView view = new TextView(getBaseContext());
+		view.setTextColor(Color.BLACK);
+		view.setText("Punktestand");
+		view.setGravity(Gravity.CENTER);
+		view.setTextSize(70);
+		
+		layout.addView(view, layoutParams);
+		
 		
 		int count = 0;
 		for(HighscoreEntry entry : highscore) {
@@ -101,14 +120,28 @@ public class HighscoreAcitvity extends Activity {
 			
 			nameView.setText(++count + ". " + entry.playerName + "....");
 			scoreView.setText("...." + entry.playerScore);
-			nameView.setTextColor(android.graphics.Color.BLUE);
-			scoreView.setTextColor(android.graphics.Color.BLUE);
+			nameView.setTextSize(35);
+			scoreView.setTextSize(35);
+			nameView.setTextColor(android.graphics.Color.BLACK);
+			scoreView.setTextColor(android.graphics.Color.BLACK);
 			
 			highscoreLine.addView(nameView);
 			highscoreLine.addView(scoreView);
 			
 			layout.addView(highscoreLine);
 		}
+		
+		Button button = new Button(getBaseContext());
+		button.setTextColor(Color.BLACK);
+		button.setText("Menü");
+		button.setTextSize(40);
+		button.setOnClickListener(this);
+		button.setId(1);
+		button.setBackgroundResource(R.drawable.gradientblau);
+		//button.setGravity(Gravity.CENTER);
+		
+		
+		layout.addView(button, layoutParams);
 	}
 
 	// insert new Highscoore, if any, in the right slot
@@ -168,21 +201,11 @@ public class HighscoreAcitvity extends Activity {
 	
 	
 	
-	@Override
-	public void onBackPressed() {
-		Intent i = new Intent(this, de.historyalpha.MenueActivity.class);
-		startActivity(i);
-	}
-	
-	public void goBack(View view){
-		Intent i = new Intent(this, MenueActivity.class);
-		startActivity(i);
-	}
-	
-	
-	
-	
-	
-	
+	public void onClick(View v) {
+		
+		startActivity(new Intent(this, MenueActivity.class));
+		
+	}	
+
 	
 }

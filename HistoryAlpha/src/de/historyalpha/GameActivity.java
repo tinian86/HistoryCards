@@ -270,8 +270,8 @@ public class GameActivity extends Activity implements OnClickListener {
 		txtLife.setTextColor(android.graphics.Color.GREEN);
 
 		// TODO Schriftgröße dynamisch -> fuer Tablet 40f
-		txtScore.setTextSize(25f);
-		txtLife.setTextSize(25f);
+		txtScore.setTextSize(45);
+		txtLife.setTextSize(45);
 
 	}
 
@@ -361,7 +361,7 @@ public class GameActivity extends Activity implements OnClickListener {
 		menu.removeAllViews();
 
 		Button endButton = new Button(getBaseContext());
-		endButton.setText("Zum HighScore");
+		endButton.setText("Zum Highscore");
 		
 		menu.addView(endButton);
 
@@ -513,6 +513,7 @@ public class GameActivity extends Activity implements OnClickListener {
 							+ card.getJahr()));
 
 					if (card.isCorrect()) {
+						b1.setTextColor(Color.BLACK);
 						b1.setBackgroundColor(Color.GREEN);
 					} else {
 						b1.setBackgroundColor(Color.RED);

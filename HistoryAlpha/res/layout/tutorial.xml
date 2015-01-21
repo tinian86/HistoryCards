@@ -8,79 +8,16 @@
 	    android:background="@drawable/afrikanischholz" >
 	    
     
-        <ScrollView
-	  		android:layout_width="match_parent"
-	  		android:layout_height="match_parent"
-	  		android:layout_marginLeft="6dp" 
-		    android:fillViewport="true"
-		    android:background="@drawable/afrikanischholz" >
-	    
-     		<LinearLayout
+       	<LinearLayout
 	            android:id="@+id/LinearLayout1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:orientation="vertical" >
+            	android:layout_centerHorizontal="true" 
+            	android:orientation="vertical">
 			
          
-   			 <TextView
-                android:id="@+id/choose_Player"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                
-                android:text="@string/btn_tutorial"
-                android:textColor="#000000"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                android:typeface="serif" />
-    
-    
-    		<TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-               
-                
-                android:text="\tZiel des Spiels ist es, die unten aufgeführten Karten durch Beantworten der Fragen mit einem Klick erscheinen, in die richtige historisch-zeitliche Reihenfolge einzusortieren.\n
-					Als Starthilfe ist die erste Karte vorgegeben, welche das Bestimmen der Jahreszahl unterstützen soll.
-                								\n
-						Sobald eine Karte falsch einsortiert wird, erscheint die Jahreszahl der gelegten Karte. Eins von den drei Leben geht dabei verloren. Nach einem antippen auf diesem kann eine weitere Karten eingesetzt werden.
-						\n
-						Die Anzahl jeder richtig eingesetzten Karte wird summiert und gibt den Punktestand an. Bei jeder falsch gelegten gibt es keinen Punktabzug."
-						
-                android:textColor="#191970"
-                android:textSize="15sp"
-                
-                android:typeface="serif" />
-         	
-    		
-    		<Button
-		        android:id="@+id/btn_back"
-		        android:layout_width="100dp"
-		        android:layout_height="25dp"
-		        
-		        android:layout_alignParentBottom="true"
-		        android:layout_centerHorizontal="true"
-		        android:layout_marginTop="10dp"
-		        android:layout_marginBottom="10dp"
-		        android:layout_gravity="center"
-                
-		        android:text="@string/btn_back" 
-		        android:textColor="#000000"
-		        android:textSize="12sp"
-		        android:textStyle="bold"
-		        android:typeface="serif"
-		        android:background="@drawable/gradientrot"
-		        android:onClick="goBack" />
-    
-     
      	</LinearLayout>
      
-     </ScrollView>
-    		
-         	
             
       </RelativeLayout>
     

@@ -57,16 +57,4 @@
         
     </application>
         
-    <supports-screens
-        android:resizeable="true"
-        android:smallScreens="true" 
-        android:normalScreens="true" 
-        android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:anyDensity="true"
-        android:requiresSmallestWidthDp="320"
-        android:compatibleWidthLimitDp="600"
-        >
-    </supports-screens>
-
 </manifest>

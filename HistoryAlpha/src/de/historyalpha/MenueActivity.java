@@ -2,143 +2,113 @@ package de.historyalpha;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class MenueActivity extends Activity {	//implements OnClickListener {
-	
-	//GUI_Elemente
-	Button btn_single;
-	Button btn_multi;
-	Button btn_tut;
-	Button btn_score;
-	
-	//German/English_Button on First_Menue
-	ImageButton img_btn_de;
-	ImageButton img_btn_en;
 
+public class MenueActivity extends Activity implements OnClickListener {
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.startseite);
+		setContentView(R.layout.activity_menue);
 		
-		//GUI_Elemente
-		btn_single = (Button) findViewById(R.id.btn_single);
-		btn_multi = (Button) findViewById(R.id.btn_multi);
-		btn_tut = (Button) findViewById(R.id.btn_tutorial);
-		btn_score = (Button) findViewById(R.id.btn_score);
-			
-		
-		/*
-		//German_Button on First_Menue
-		img_btn_de = (ImageButton) findViewById(R.id.img_de);
-		img_btn_de.setOnClickListener(this);
-		
-		//English_Button on First_Menue
-		img_btn_en = (ImageButton) findViewById(R.id.img_en);
-		img_btn_en.setOnClickListener(this);
-		
-		
-//		Button singlePlayerButton = (Button) findViewById(R.id.btn_single);
-//		singlePlayerButton.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View arg0) {
-//				Intent nextScreen = new Intent(getApplicationContext(),
-//						GameActivity.class);
-//				startActivity(nextScreen);
-//			}
-//		});
+		setupStartPage();
+				
 	}
 	
-	//Click on German
+	public void setupStartPage() {
+		
+		LinearLayout startLayout = (LinearLayout) findViewById(R.id.menueStart);
+		startLayout.setOrientation(LinearLayout.VERTICAL);
+		
+		@SuppressWarnings("deprecation")
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		layoutParams.setMargins(0, 0, 0, 20);  //left, top, right, bottom
+		
+		@SuppressWarnings("deprecation")
+		LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(
+			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		layoutParams2.setMargins(0, 0, 0, 35);  //left, top, right, bottom
+		
+		
+		TextView view = new TextView(getBaseContext());
+		Button button1 = new Button(getBaseContext());
+		Button button2 = new Button(getBaseContext());
+		Button button3 = new Button(getBaseContext());
+		Button button4 = new Button(getBaseContext());
+		
+		view.setTextColor(Color.BLACK);
+		button1.setTextColor(Color.BLACK);
+		button2.setTextColor(Color.BLACK);
+		button3.setTextColor(Color.BLACK);
+		button4.setTextColor(Color.BLACK);
+		
+		view.setText("History Cards");
+		button1.setText("Einzelspieler");
+		button2.setText("Mehrspieler");
+		button3.setText("Anleitung");
+		button4.setText("Punktestand");
+
+		view.setGravity(Gravity.CENTER);
+		view.setTextSize(120);
+		button1.setTextSize(50);
+		button2.setTextSize(50);
+		button3.setTextSize(50);
+		button4.setTextSize(50);
+		
+		button1.setOnClickListener(this);
+		button2.setOnClickListener(this);
+		button3.setOnClickListener(this);
+		button4.setOnClickListener(this);
+		
+		button1.setId(1);
+		button2.setId(2);
+		button3.setId(3);
+		button4.setId(4);
+		
+		button1.setBackgroundResource(R.drawable.gradientgelb);
+		button2.setBackgroundResource(R.drawable.gradientgruen);
+		button3.setBackgroundResource(R.drawable.gradientblau);
+		button4.setBackgroundResource(R.drawable.gradientlila);
+		
+		startLayout.addView(view, layoutParams2);
+		startLayout.addView(button1, layoutParams);
+		startLayout.addView(button2, layoutParams);
+		startLayout.addView(button3, layoutParams);
+		startLayout.addView(button4, layoutParams);
+		
+	}
+	
 	@Override
 	public void onClick(View v) {
+		
 		switch(v.getId()){
-		
-		case R.id.img_en:
-			//img_btn_en.setVisibility(v.INVISIBLE);
-			//img_btn_de.setVisibility(v.VISIBLE);
-			btn_single.setText("Single Player");
-			btn_multi.setText("Multi Player");
-			btn_tut.setText("Tutorial");
-			btn_score.setText("Highscore");
-		
-		case R.id.img_de:
-			img_btn_de.setVisibility(v.INVISIBLE);
-			img_btn_en.setVisibility(v.VISIBLE);
-			
-			//btn_single.setText("Einzelspieler");
-			//btn_multi.setText("Mehrspieler");
-			//btn_tut.setText("Anleitung");
-			//btn_score.setText("Punktestand");
+		case 1:
+			startActivity(new Intent(this, GameActivity.class));
+			break;
+		case 2:
+			startActivity(new Intent(this, MultiActivity.class));
+			break;
+		case 3:
+			startActivity(new Intent(this, TutorialActivity.class));
+			break;
+		case 4:
+			startActivity(new Intent(this, HighscoreAcitvity.class));		
 		}
 		
-		*/
-		
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menue, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-	/*
-	
-	public void startGame(View view){
-		Intent intent = new Intent(this, GameActivity.class);
-		startActivity(intent);
-		//Hier koennen ueber getRandomCards() neue Karten aus dem Stapel-Array geholt werden
-		//Log.d("MenueActivity", "Stapel" + CardQuestion.getRandomCards().toString());
-	}
-	
-	
-	*/
-	
-	public void cardView(View view){
-		Intent intent = new Intent(this, GameActivity.class);
-		startActivity(intent);
-	}
-	
-	public void showScore(View view){
-		Intent intent = new Intent(this, HighscoreAcitvity.class);
-		startActivity(intent);
-	}
-	
-	public void closeApp(View view){
-		super.onStop();
-	}
-
-	public void showMulti(View view){
-		Intent intent = new Intent(this, MultiActivity.class);
-		startActivity(intent);
-	}
-	
-	public void readMe(View view){
-		Intent intent = new Intent(this, TutorialActivity.class);
-		startActivity(intent);
-	}
-	
+	}	
 
 }
