@@ -5,8 +5,10 @@ import java.util.List;
 
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -30,6 +32,8 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
@@ -38,7 +42,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 public class GameActivity extends Activity implements OnClickListener {
 
@@ -49,14 +52,13 @@ public class GameActivity extends Activity implements OnClickListener {
 	private int width;
 	private int height;
 	private int lifes = 3;
-	ArrayList<Card> cardStack = CardQuestion.getCardStack();
+	ArrayList<Card> cardStack;
 	boolean wrongCardOnTable;
+	
+	private Toast toast;
 
 	public static String PREFS_NAME = "game";
 	private static String CURRENT_SCORE_KEY = "current_score";
-	private static String QUESTION_INDEX_KEY = "questionIdx";
-	private static String GAME_DIFFICULTY = "difficulty";
-
 	public static String CARD_TEMP = "leer";
 
 	private int score = 0;
@@ -78,100 +80,18 @@ public class GameActivity extends Activity implements OnClickListener {
 
 	boolean descriptionShown = false;
 
-	private void setScore(int i) {
-		score = i;
-	}
-
-	private int getScore() {
-		return score;
-	}
-
-	private void decreaseLifes() {
-		if (lifes > 0) {
-			lifes--;
-		}
-	}
-
-	private int getLifes() {
-		return lifes;
-	}
-
-	// Hier wird nachdem alle leben aufgebraucht sind, die Highscore Aktivity
-	// aufgerufen und der score
-	// dem intent uebergeben und für das naechste spiel auf 0 gesetzt(in dem
-	// globaen Speicher)
-	private void gotoHighscore() {
-		SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, 0);
-
-		Editor editor = prefs.edit();
-		editor.putInt(CURRENT_SCORE_KEY, score);
-
-		editor.commit();
-
-		Intent intent = new Intent(this, HighscoreAcitvity.class);
-		intent.putExtra(
-				getResources().getString(R.string.new_highscore_extra_key),
-				score);
-
-		intent.putExtra("Name", name);
-
-		editor.putInt(CURRENT_SCORE_KEY, 0);
-		editor.commit();
-
-		startActivity(intent);
-	}
-
-	public void popup(View v) {
-
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-		LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
-				.getSystemService(LAYOUT_INFLATER_SERVICE);
-		View popupView = layoutInflater.inflate(R.layout.popup, null);
-		final PopupWindow popupWindow = new PopupWindow(popupView,
-				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-		popupWindow.setFocusable(true);
-		popupWindow.update();
-
-		TextView tex = (TextView) popupView.findViewById(R.id.text);
-		TextView texPoints = (TextView) popupView.findViewById(R.id.userName);
-		final EditText nameInput = (EditText) popupView
-				.findViewById(R.id.userName);
-
-		tex.setText("Das Spiel ist vorbei! \nSie haben " + score
-				+ " Punkte erreicht.");
-		tex.setTextSize(25f);
-
-		Button btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
-		btnDismiss.setOnClickListener(new Button.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				/*
-				 * SharedPreferences prefs =
-				 * this.getSharedPreferences(PREFS_NAME, 0);
-				 * 
-				 * Editor editor = prefs.edit();
-				 * editor.putInt(CURRENT_SCORE_KEY, score); editor.commit();
-				 */
-
-				name = nameInput.getText().toString();
-
-				// popupWindow.dismiss();
-				gotoHighscore();
-			}
-		});
-
-		// popupWindow.showAsDropDown(mapView, -50, +30);
-		popupWindow.showAtLocation(v, 1, 50, 50);
-	}
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
+
+		cardList.clear();
+		playableCards.clear();
+
+		cardStack = CardQuestion.getCardStack();
+		
+		wrongCardOnTable = false;
 
 		try {
 
@@ -194,9 +114,7 @@ public class GameActivity extends Activity implements OnClickListener {
 			// this.cardList.add(startCard2);
 			this.cardList.add(dummyCardEnd);
 
-			setupCardArea(cardList);
-
-			wrongCardOnTable = false;
+			setupCardArea();
 
 		} catch (Exception e) {
 			Log.d("GameActivity", e.getMessage());
@@ -204,215 +122,37 @@ public class GameActivity extends Activity implements OnClickListener {
 
 	}
 
-	public void setupBottomBar() {
-
-		playableCards.clear();
-
-		Card card1 = cardStack.remove(0);
-		Card card2 = cardStack.remove(0);
-		Card card3 = cardStack.remove(0);
-
-		playableCards.add(card1);
-		playableCards.add(card2);
-		playableCards.add(card3);
-
-		LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
-		
-		@SuppressWarnings("deprecation")
-		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-			     LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-		layoutParams.setMargins(0, 0, 15, 0);
-		
-
-		bottomBar.removeAllViews();
-
-		Button button1 = new Button(getBaseContext());
-		Button button2 = new Button(getBaseContext());
-		Button button3 = new Button(getBaseContext());
-
-		button1.setTextColor(Color.WHITE);
-		button2.setTextColor(Color.WHITE);
-		button3.setTextColor(Color.WHITE);
-
-		button1.setOnTouchListener(new MyTouchListener());
-		button2.setOnTouchListener(new MyTouchListener());
-		button3.setOnTouchListener(new MyTouchListener());
-
-		button1.setText(playableCards.get(0).getSchlagwort());
-		button2.setText(playableCards.get(1).getSchlagwort());
-		button3.setText(playableCards.get(2).getSchlagwort());
-
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		width = size.x;
-		height = size.y;
-
-		int bottomheight = height / 5; // Höhe der unteren Leiste
-		int bottomwidth = width / 5; // Breite der unteren Leiste
-
-		button1.setMinimumHeight(bottomheight);
-		button1.setMaxHeight(bottomheight);
-		button1.setMinimumWidth(bottomwidth);
-		button1.setMaxWidth(bottomwidth);
-
-		button2.setMinimumHeight(bottomheight);
-		button2.setMaxHeight(bottomheight);
-		button2.setMinimumWidth(bottomwidth);
-		button2.setMaxWidth(bottomwidth);
-
-		button3.setMinimumHeight(bottomheight);
-		button3.setMaxHeight(bottomheight);
-		button3.setMinimumWidth(bottomwidth);
-		button3.setMaxWidth(bottomwidth);
-
-		bottomBar.addView(button1, layoutParams);
-		bottomBar.addView(button2, layoutParams);
-		bottomBar.addView(button3);
-
-		TextView txtScore = (TextView) findViewById(R.id.score_id);
-		TextView txtLife = (TextView) findViewById(R.id.life_id);
-		txtScore.setTextColor(android.graphics.Color.YELLOW);
-		txtLife.setTextColor(android.graphics.Color.GREEN);
-
-		// TODO Schriftgröße dynamisch -> fuer Tablet 40f
-		txtScore.setTextSize(45);
-		txtLife.setTextSize(45);
-
-	}
-
-	public void getNewCards(View view) {
-		setupBottomBar();
-
-	}
-
-	// Methode, um die Karten aufzudecken und ihre Jahreszahl anzuzeigen
-	public void revealCards(View view) {
-
-		// Zwei counter, um die Punkte aufzusummieren die man fuer Karten
-		// bekommt
-		int counter = 0;
-		int sum = 0;
-
-		boolean wrongCard = false;
-
-		for (int j = 1; j < cardList.size() - 2; j++) {
-
-			int checkYear1 = cardList.get(j).jahr;
-			int checkYear2 = cardList.get(j + 1).jahr;
-
-			if (checkYear1 < checkYear2) {
-				counter = counter + 1;
-				sum = sum + counter;
-			} else if (cardList.size() > 3) {
-
-				Button button1 = (Button) view;
-
-				if (button1.getText().equals(cardList.get(j).getSchlagwort())) {
-					wrongCard = true;
-					wrongCardOnTable = true;
-					cardList.get(j).setCorrect(false);
-				} else {
-					wrongCard = true;
-					wrongCardOnTable = true;
-					cardList.get(j + 1).setCorrect(false);
-				}
-
-			}
-
-		}
-
-		score = sum;
-
-		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste
-		// wird geleert und das Spielfeld neu initialisiert
-		if (wrongCard) {
-			Context context = getApplicationContext();
-			CharSequence text = "Sie haben eine Karte falsch angelegt und verlieren ein Leben!";
-			int duration = Toast.LENGTH_SHORT;
-
-			Toast toast = Toast.makeText(context, text, duration);
-			toast.show();
-
-			if (getLifes() > 0) {
-				decreaseLifes();
-			} else {
-				// gotoHighscore();
-				wrongCardOnTable = false;
-				revealAll(view);
-				return;
-			}
-
-		}
-
-		setupCardArea(cardList);
-		// Scorefeld setzen
-		TextView scoreField = (TextView) findViewById(R.id.score_id);
-		scoreField.setText("Punkte: " + String.valueOf(score));
-		// scoreField.setHeight(height / 5);
-		// scoreField.setWidth(width / 6);
-		// scoreField.setTextSize(1.0f);
-		// Verbleibende Leben setzen
-		TextView actualLife = (TextView) findViewById(R.id.life_id);
-		actualLife.setText("Leben: " + String.valueOf(lifes));
-	}
-
-	private void revealAll(final View view) {
-
-		this.reveal = true;
-		setupCardArea(cardList);
-
-		LinearLayout menu = (LinearLayout) findViewById(R.id.menuLayout);
-		
-		menu.removeAllViews();
-
-		Button endButton = new Button(getBaseContext());
-		endButton.setText("Zum Highscore");
-		endButton.setTextSize(35);
-		
-		menu.addView(endButton);
-
-		endButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				popup(view);
-
-			}
-		});
-
-	}
-
 	@SuppressWarnings("deprecation")
-	public void setupCardArea(List<Card> cL) {
-
+	public void setupCardArea() {
+	
 		GridLayout gl = (GridLayout) findViewById(R.id.gridlayout);
-
+	
 		List<Card> cardDrawList = new ArrayList<Card>();
-
+		
+		cardDrawList.clear();
+	
 		gridList.clear();
-
-		for (Card card : cL) {
+	
+		for (Card card : cardList) {
 			cardDrawList.add(card);
 		}
-
+	
 		gl.removeAllViews();
-
+	
 		int topheight = height * 3 / 5; // Höhe des Spielfensters (ScrollView)
 		int topwidth = width; // ganze Breite des Spielfensters (ScrollView)
-
+	
 		// Höhe und Breite eines Kästchens in der ScrollView
 		int cardheight = topheight / 2;
 		int cardwidth = topwidth / 4; // nicht Quadratisch
-
+	
 		// Log.d("height", String.valueOf(cardheight));
 		// Log.d("width", String.valueOf(cardwidth));
-
+	
 		int margin = (int) (cardwidth * 0.1);
-
+	
 		// Log.d("margin", String.valueOf(margin));
-
+	
 		// Sortiere Elemente der Liste für Layout neu (vertauschen von 3 und 4,
 		// 7 und 8, etc.)
 		for (int i = 0; i < cardDrawList.size(); i++) {
@@ -425,31 +165,31 @@ public class GameActivity extends Activity implements OnClickListener {
 				cardDrawList.set(i - 1, temp);
 			}
 		}
-
+	
 		// Erzeuge LinearLayouts mit Buttons für jedes Kartenelement in der
 		// Liste
 		int counter = 0; // Zähler für Bilder mit Pfeilen
 		for (Card card : cardDrawList) {
-
+	
 			// Sonderfall Liste hat 3, 7, 11 Elemente etc. - Leeres Feld
 			// zwischenschieben
 			if ((card.equals(cardDrawList.get(cardDrawList.size() - 1)) && (cardDrawList
 					.size() + 1) % 4 == 0)) {
-
+	
 				// Erzeuge leeres (unsichtbares) Element
 				LinearLayout lastElement = new LinearLayout(getBaseContext());
 				lastElement.setMinimumHeight(cardheight);
 				lastElement.setMinimumWidth(cardwidth);
-
+	
 				lastElement.setGravity(Gravity.CENTER);
 				gl.addView(lastElement);
 				gridList.add(lastElement);
-
+	
 				counter++;
 			}
-
+	
 			LinearLayout container = new LinearLayout(getBaseContext());
-
+	
 			if (counter == 0) {
 				container.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.background01));
@@ -463,14 +203,14 @@ public class GameActivity extends Activity implements OnClickListener {
 				container.setBackgroundDrawable(getResources().getDrawable(
 						R.drawable.background04));
 			}
-
+	
 			container.setGravity(Gravity.CENTER);
-
+	
 			container.setMinimumHeight(cardheight);
 			container.setMinimumWidth(cardwidth);
-
+	
 			container.setOnDragListener(new MyDragListener());
-
+	
 			// Buttons hinzufügen wenn nicht das erste oder letzte Element
 			if (card.getCardId() != 0) {
 				Button b1 = new Button(getBaseContext());
@@ -479,71 +219,83 @@ public class GameActivity extends Activity implements OnClickListener {
 				b1.setMinimumWidth(cardwidth - margin);
 				b1.setMaxHeight(cardheight - margin);
 				b1.setMaxWidth(cardwidth - margin);
-
+	
 				if (!reveal) {
-					
+	
 					showDetails(b1);
-
+	
 					if (!card.isCorrect()) {
 						b1.setText(String.valueOf(card.getSchlagwort() + "\n"
 								+ card.getJahr()));
 						b1.setBackgroundColor(Color.RED);
+						Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+						b1.startAnimation(shake);
 						// b1.setTextSize(40f);
 						b1.setOnClickListener(new OnClickListener() {
-
+	
 							@Override
 							public void onClick(View v) {
-
+	
 								Card wrongCard = new Card(0, "dummy",
 										"du dummy", 2042);
-
+	
 								for (Card card2 : cardList) {
-
+	
 									if (!card2.isCorrect()) {
 										wrongCard = card2;
 									}
 								}
-
+	
 								if (wrongCard.getCardId() != 0) {
 									cardList.remove(wrongCard);
 									wrongCardOnTable = false;
-									setupCardArea(cardList);
+									setupCardArea();
 								}
-
+								toast.cancel();
+	
 							}
 						});
 					}
-
+	
 				} else {
-					
+	
 					showDetails(b1);
 					b1.setText(String.valueOf(card.getSchlagwort() + "\n"
 							+ card.getJahr()));
-
+	
 					if (card.isCorrect()) {
-						b1.setTextColor(Color.BLACK);
 						b1.setBackgroundColor(Color.GREEN);
+						b1.setTextColor(Color.BLACK);
 					} else {
 						b1.setBackgroundColor(Color.RED);
 					}
-					wrongCardOnTable = false;
 					
+					LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
+					
+					//funktioniert nicht...
+					for (int i=0; i<playableCards.size(); i++) {
+						Button bottomButton = (Button) bottomBar.getChildAt(i);
+						bottomButton.setText(playableCards.get(i).getSchlagwort() +"\n" +playableCards.get(i).getJahr());
+					}
+					
+					wrongCardOnTable = false;
+	
 				}
-
+	
 				container.addView(b1);
 			}
-
+	
 			gl.addView(container);
 			gridList.add(container);
-
+	
 			counter++;
-
+	
 			if (counter > 3) {
 				counter = 0;
 			}
-
+	
 		}
-
+	
 		// Sortiere Elemente der Liste für Layout neu (vertauschen von 3 und 4,
 		// 7 und 8, etc.)
 		for (int i = 0; i < gridList.size(); i++) {
@@ -566,6 +318,242 @@ public class GameActivity extends Activity implements OnClickListener {
 		// }
 	}
 
+	public void setupBottomBar() {
+	
+		playableCards.clear();
+	
+		Card card1 = cardStack.remove(0);
+		Card card2 = cardStack.remove(0);
+		Card card3 = cardStack.remove(0);
+	
+		playableCards.add(card1);
+		playableCards.add(card2);
+		playableCards.add(card3);
+	
+		LinearLayout bottomBar = (LinearLayout) findViewById(R.id.playableCardLayout);
+		
+		bottomBar.setGravity(Gravity.CENTER);
+	
+		bottomBar.removeAllViews();
+	
+		Button button1 = new Button(getBaseContext());
+		Button button2 = new Button(getBaseContext());
+		Button button3 = new Button(getBaseContext());
+	
+		button1.setTextColor(Color.WHITE);
+		button2.setTextColor(Color.WHITE);
+		button3.setTextColor(Color.WHITE);
+	
+		button1.setOnTouchListener(new MyTouchListener());
+		button2.setOnTouchListener(new MyTouchListener());
+		button3.setOnTouchListener(new MyTouchListener());
+	
+		button1.setText(playableCards.get(0).getSchlagwort());
+		button2.setText(playableCards.get(1).getSchlagwort());
+		button3.setText(playableCards.get(2).getSchlagwort());
+	
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		width = size.x;
+		height = size.y;
+	
+		int bottomheight = height / 5; // Höhe der unteren Leiste
+		int bottomwidth = width / 5; // Breite der unteren Leiste
+	
+		button1.setMinimumHeight(bottomheight);
+		button1.setMaxHeight(height / 4);
+		button1.setMinimumWidth(bottomwidth);
+		button1.setMaxWidth(height / 4);
+	
+		button2.setMinimumHeight(bottomheight);
+		button2.setMaxHeight(height / 4);
+		button2.setMinimumWidth(bottomwidth);
+		button2.setMaxWidth(height / 4);
+	
+		button3.setMinimumHeight(bottomheight);
+		button3.setMaxHeight(height / 4);
+		button3.setMinimumWidth(bottomwidth);
+		button3.setMaxWidth(height / 4);
+	
+		bottomBar.addView(button1);
+		bottomBar.addView(button2);
+		bottomBar.addView(button3);
+	
+		TextView txtScore = (TextView) findViewById(R.id.score_id);
+		TextView txtLife = (TextView) findViewById(R.id.life_id);
+		txtScore.setTextColor(android.graphics.Color.YELLOW);
+		txtLife.setTextColor(android.graphics.Color.GREEN);
+	
+		// TODO Schriftgröße dynamisch -> fuer Tablet 40f
+		txtScore.setTextSize(25f);
+		txtLife.setTextSize(25f);
+	
+	}
+
+	// Methode, um die Karten aufzudecken und ihre Jahreszahl anzuzeigen
+	public void revealCards(View view) {
+	
+		// Zwei counter, um die Punkte aufzusummieren die man fuer Karten
+		// bekommt
+		int counter = 0;
+		int sum = 0;
+	
+		boolean wrongCard = false;
+	
+		for (int j = 1; j < cardList.size() - 2; j++) {
+	
+			int checkYear1 = cardList.get(j).jahr;
+			int checkYear2 = cardList.get(j + 1).jahr;
+	
+			if (checkYear1 < checkYear2) {
+				counter = counter + 1;
+				sum = sum + counter;
+			} else if (cardList.size() > 3) {
+	
+				Button button1 = (Button) view;
+	
+				if (button1.getText().equals(cardList.get(j).getSchlagwort())) {
+					wrongCard = true;
+					wrongCardOnTable = true;
+					cardList.get(j).setCorrect(false);
+				} else {
+					wrongCard = true;
+					wrongCardOnTable = true;
+					cardList.get(j + 1).setCorrect(false);
+				}
+	
+			}
+	
+		}
+	
+		score = sum;
+	
+		// Wenn eine Karte falsch gelegt wird, erscheint eine Meldung, die Liste
+		// wird geleert und das Spielfeld neu initialisiert
+		if (wrongCard) {
+			
+	
+			if (getLifes() > 0) {
+				Context context = getApplicationContext();
+				CharSequence text = "Sie haben eine Karte falsch angelegt und verlieren ein Leben! Rote Karte antippen zum Weiterspielen!";
+				int duration = Toast.LENGTH_LONG;
+		
+				toast = Toast.makeText(context, text, duration);
+				toast.setGravity(Gravity.BOTTOM, 0, 0);
+				toast.show();
+				
+				decreaseLifes();
+			} else {
+				
+				Context context = getApplicationContext();
+				CharSequence text = "Sie haben keine Leben mehr. Game over! :-( \"Zum Highscore\" antippen um zum Highscore zu gelangen!";
+				int duration = Toast.LENGTH_LONG;
+		
+				toast = Toast.makeText(context, text, duration);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				
+				wrongCardOnTable = false;
+				revealAll(view);
+				return;
+			}
+	
+		}
+	
+		setupCardArea();
+		// Scorefeld setzen
+		TextView scoreField = (TextView) findViewById(R.id.score_id);
+		scoreField.setText("Punkte: " + String.valueOf(score));
+		// scoreField.setHeight(height / 5);
+		// scoreField.setWidth(width / 6);
+		// scoreField.setTextSize(1.0f);
+		// Verbleibende Leben setzen
+		TextView actualLife = (TextView) findViewById(R.id.life_id);
+		actualLife.setText("Leben: " + String.valueOf(lifes));
+	}
+
+	private void revealAll(final View view) {
+	
+		this.reveal = true;
+		setupCardArea();
+	
+		LinearLayout menu = (LinearLayout) findViewById(R.id.menuLayout);
+	
+		menu.removeAllViews();
+	
+		Button endButton = new Button(getBaseContext());
+		endButton.setMinimumHeight(height/5);
+		endButton.setText("Zum HighScore");
+		endButton.setBackgroundColor(Color.GREEN);
+		endButton.setTextColor(Color.BLACK);
+		Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
+		endButton.startAnimation(shake);
+	
+		menu.addView(endButton);
+	
+		endButton.setOnClickListener(new OnClickListener() {
+	
+			@Override
+			public void onClick(View v) {
+				popup(view);
+	
+			}
+		});
+	
+	}
+
+	public void popup(View v) {
+	
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+		LayoutInflater layoutInflater = (LayoutInflater) getBaseContext()
+				.getSystemService(LAYOUT_INFLATER_SERVICE);
+		View popupView = layoutInflater.inflate(R.layout.popup, null);
+		final PopupWindow popupWindow = new PopupWindow(popupView,
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		popupWindow.setFocusable(true);
+		popupWindow.update();
+	
+		TextView tex = (TextView) popupView.findViewById(R.id.text);
+		popupView.findViewById(R.id.userName);
+		final EditText nameInput = (EditText) popupView
+				.findViewById(R.id.userName);
+	
+		tex.setText("Das Spiel ist vorbei! \nSie haben " + score
+				+ " Punkte erreicht.");
+		tex.setTextSize(25f);
+	
+		Button btnDismiss = (Button) popupView.findViewById(R.id.dismiss);
+		btnDismiss.setOnClickListener(new Button.OnClickListener() {
+	
+			@Override
+			public void onClick(View v) {
+	
+				/*
+				 * SharedPreferences prefs =
+				 * this.getSharedPreferences(PREFS_NAME, 0);
+				 * 
+				 * Editor editor = prefs.edit();
+				 * editor.putInt(CURRENT_SCORE_KEY, score); editor.commit();
+				 */
+	
+				name = nameInput.getText().toString();
+	
+				// popupWindow.dismiss();
+				gotoHighscore();
+			}
+		});
+	
+		// popupWindow.showAsDropDown(mapView, -50, +30);
+		popupWindow.showAtLocation(v, 1, 50, 50);
+	}
+
+	public void getNewCards(View view) {
+		setupBottomBar();
+
+	}
+
 	private void showDetails(Button b1) {
 		b1.setOnClickListener(new OnClickListener() {
 
@@ -576,9 +564,8 @@ public class GameActivity extends Activity implements OnClickListener {
 						.getSystemService(LAYOUT_INFLATER_SERVICE);
 				View popupView = layoutInflater.inflate(
 						R.layout.popupcarddescription, null);
-				final PopupWindow popupWindow2 = new PopupWindow(
-						popupView, LayoutParams.WRAP_CONTENT,
-						LayoutParams.WRAP_CONTENT);
+				final PopupWindow popupWindow2 = new PopupWindow(popupView,
+						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
 				Button button = (Button) v;
 
@@ -586,8 +573,8 @@ public class GameActivity extends Activity implements OnClickListener {
 				String beschreibung = "";
 
 				for (Card card2 : cardList) {
-					if (((String) button.getText()).contains(
-							card2.getSchlagwort())) {
+					if (((String) button.getText()).contains(card2
+							.getSchlagwort())) {
 						schlagwort = card2.getSchlagwort();
 						beschreibung = card2.getBeschreibung();
 					}
@@ -595,8 +582,7 @@ public class GameActivity extends Activity implements OnClickListener {
 
 				Button bigButton = (Button) popupView
 						.findViewById(R.id.cardDescriptionButton);
-				bigButton.setText(schlagwort + "\n\n"
-						+ beschreibung);
+				bigButton.setText(schlagwort + "\n\n" + beschreibung);
 				// bigButton.setTextSize(20f);
 				bigButton.setMinimumHeight(height * 3 / 5);
 				bigButton.setMinimumWidth(width / 2);
@@ -614,7 +600,42 @@ public class GameActivity extends Activity implements OnClickListener {
 
 			}
 		});
-		
+
+	}
+
+	// Hier wird nachdem alle leben aufgebraucht sind, die Highscore Aktivity
+	// aufgerufen und der score
+	// dem intent uebergeben und für das naechste spiel auf 0 gesetzt(in dem
+	// globaen Speicher)
+	private void gotoHighscore() {
+		SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, 0);
+	
+		Editor editor = prefs.edit();
+		editor.putInt(CURRENT_SCORE_KEY, score);
+	
+		editor.commit();
+	
+		Intent intent = new Intent(this, HighscoreAcitvity.class);
+		intent.putExtra(
+				getResources().getString(R.string.new_highscore_extra_key),
+				score);
+	
+		intent.putExtra("Name", name);
+	
+		editor.putInt(CURRENT_SCORE_KEY, 0);
+		editor.commit();
+	
+		startActivity(intent);
+	}
+
+	private void decreaseLifes() {
+		if (lifes > 0) {
+			lifes--;
+		}
+	}
+
+	private int getLifes() {
+		return lifes;
 	}
 
 	@Override
@@ -634,6 +655,33 @@ public class GameActivity extends Activity implements OnClickListener {
 		// return true;
 		// }
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void onBackPressed(){
+		final Intent intent = new Intent(this, MenuActivity.class);
+		new AlertDialog.Builder(this)
+        .setTitle("Spiel beenden?")
+        .setMessage("Wollen sie das Spiel wirklich beenden? Der bisherige Spielstand wird nicht gespeichert.")
+        .setNegativeButton(android.R.string.no, null)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				startActivity(intent);
+				
+			}
+
+            
+        }).create().show();
+	}
+
+	private void setScore(int i) {
+		score = i;
+	}
+
+	private int getScore() {
+		return score;
 	}
 
 	private final class MyTouchListener implements OnTouchListener {
@@ -763,9 +811,9 @@ public class GameActivity extends Activity implements OnClickListener {
 					int bottomwidth = width / 5; // Breite der unteren Leiste
 
 					button1.setMinimumHeight(bottomheight);
-					button1.setMaxHeight(bottomheight);
+					button1.setMaxHeight(height / 4);
 					button1.setMinimumWidth(bottomwidth);
-					button1.setMaxWidth(bottomwidth);
+					button1.setMaxWidth(height / 4);
 
 					bottomBar.addView(button1);
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+	    android:paddingRight="@dimen/activity_horizontal_margin"  
+	    android:background="@drawable/afrikanischholz" >
+	    
+    
+        <ScrollView
+	  		android:layout_width="match_parent"
+	  		android:layout_height="match_parent"
+	  		android:layout_marginLeft="6dp" 
+		    android:fillViewport="true"
+		    android:background="@drawable/afrikanischholz" >
+	    
+     		<LinearLayout
+	            android:id="@+id/LinearLayout1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical" >
+			
+         
+   			 <TextView
+                android:id="@+id/choose_Player"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                
+                android:text="@string/btn_tutorial"
+                android:textColor="#000000"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
+    
+    
+    		<TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+               
+                
+                android:text="\tIn History Cards geht es darum historische Ereignisse in die richtige chronologische Reihenfolge zu bringen.\n
+Ziehe dazu eine der drei unteren Ereignis-Karten mit dem Finger an die richtige Position auf dem Spielfeld - vor oder nach das vorgebene Start-Ereignis.\n
+Für alle richtig angelegten Karten gibt es Punkte - je mehr Karten schon liegen desto mehr Punkte!\n
+Wird eine Karte falsch angelegt, so wird diese rot markiert und kann mit einem Tipp auf sie entfernt werden. Außerdem verlierst du ein Leben.\n
+Sind alle Leben aufgebraucht ist das Spiel vorbei und du kannst du deine Punkte in die HighScore-Liste eintragen."
+						
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                
+                android:typeface="serif" />
+         	
+    		
+    		<Button
+		        android:id="@+id/btn_back"
+		        android:layout_width="100dp"
+		        android:layout_height="25dp"
+		        
+		        android:layout_alignParentBottom="true"
+		        android:layout_centerHorizontal="true"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginBottom="10dp"
+		        android:layout_gravity="center"
+                
+		        android:text="@string/btn_back" 
+		        android:textColor="#000000"
+		        android:textSize="12sp"
+		        android:textStyle="bold"
+		        android:typeface="serif"
+		        android:background="@drawable/gradientrot"
+		        android:onClick="goBack" />
+    
+     
+     	</LinearLayout>
+     
+     </ScrollView>
+    		
+         	
+            
+      </RelativeLayout>
+    

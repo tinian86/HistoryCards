@@ -80,6 +80,7 @@ public class CardQuestion {
 //		Log.d("CardQuestion2", auswahlKarten[2].toString());
 		
 		for (int i=0; i<25; i++){
+			stapel[sack.get(i)].setCorrect(true);
 			KartenStapel.add(stapel[sack.get(i)]);
 		}
 
